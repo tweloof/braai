@@ -748,3 +748,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   padding: 14px 20px;
 }
 .trans-note a { color: var(--flame); }
+
+/* recipe photos */
+.recipe-photo{margin:1.2rem 0 2rem;border-radius:14px;overflow:hidden;border:1px solid rgba(244,157,55,.14)}
+.recipe-photo img{width:100%;height:auto;display:block;vertical-align:middle}

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contribute — recipes, words &amp; braai stories | braai.co.za</title>
+<meta name="description" content="braai.co.za is community-built and editor-curated, the way it was in 2009. Submit a family braai recipe, a Braaictionary word, a photo story or a hard-won tip — and get credited when it's published.">
+<link rel="canonical" href="https://braai.co.za/contribute/">
+<link rel="alternate" hreflang="en" href="https://braai.co.za/contribute/">
+<link rel="alternate" hreflang="af" href="https://braai.co.za/af/contribute/">
+<link rel="alternate" hreflang="zu" href="https://braai.co.za/zu/contribute/">
+<link rel="alternate" hreflang="x-default" href="https://braai.co.za/contribute/">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#191512">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="braai.co.za">
+<meta property="og:title" content="Contribute to braai.co.za">
+<meta property="og:description" content="Submit a family braai recipe, a Braaictionary word, a photo story or a tip — community-built, editor-curated, credited.">
+<meta property="og:url" content="https://braai.co.za/contribute/">
+<meta property="og:image" content="https://braai.co.za/assets/og/home.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="/assets/fonts/fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"Contribute to braai.co.za","url":"https://braai.co.za/contribute/","description":"Submit a braai recipe, a Braaictionary word, a photo story or a tip to South Africa's braai community site.","inLanguage":"en-ZA"}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="braai.co.za home">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 7c1.5 6.5 5.8 9.4 8.9 13.1 3 3.6 4.6 7.4 4.1 12.1-.6 6.2-5 10.6-10.4 11.6 2.1-2.2 3.2-4.6 3.2-7.4 0-4.9-3.6-7.4-5.5-11.8-1.1 2.6-3.4 4.5-4.9 7-1.3 2.1-1.9 4.1-1.7 6.5.2 2.2 1.1 4.1 2.8 5.8-5.5-.9-10-5.4-10.5-11.7-.4-4.5 1.2-8.3 4-11.8C25.2 16.6 30.6 13.6 32 7z" fill="#f49d37"/><rect x="14" y="48" width="36" height="3" rx="1.5" fill="#c89b3c"/><rect x="18" y="54" width="28" height="3" rx="1.5" fill="#7a6d62"/></svg>
+      <span class="word">braai<em>.co.za</em></span>
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="/">Home</a>
+      <a href="/what-is-a-braai/">What is a braai?</a>
+      <a href="/fire/">Wood &amp; Coals</a>
+      <a href="/cuts/">The Cuts</a>
+      <a href="/recipes/">Recipes</a>
+      <a href="/potjie/">Potjie</a>
+      <a href="/gear/">Gear</a>
+      <a href="/vuur/">The Braai</a>
+      <a href="/braai-day/">Braai Day</a>
+    </nav>
+    <div class="lang-sw" aria-label="Language / Taal / Ulimi"><span class="on">EN</span><a href="/af/contribute/" lang="af" hreflang="af">AF</a><a href="/zu/contribute/" lang="zu" hreflang="zu">ZU</a></div>
+  </div>
+</header>
+
+<div class="hero hero-small" id="main">
+  <span class="overline">The community</span>
+  <h1>This site was built<br>around a <em>fire</em>.</h1>
+  <p class="lead">In 2009 the Braaictionary was written by readers, one word at a time. We're bringing that back: send us your family recipe, a word we're missing, a braai story or a hard-won tip. Everything published is curated to this site's standard — and <strong>credited to you by name</strong>.</p>
+</div>
+
+<section>
+  <div class="wrap">
+
+    <div class="callout" style="margin-bottom:28px">
+      <strong>How it works:</strong> you submit, the editor reads every single one, and the best get rewritten into the house style and published with your name on them. Photos? Submit the story first — we'll reply by email so you can attach the pictures.
+    </div>
+
+    <form id="contribForm" class="contrib" novalidate>
+      <input type="text" name="oond" id="oond" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
+
+      <label for="cType">What are you sending?</label>
+      <select id="cType" name="type" required>
+        <option value="recipe">A braai recipe</option>
+        <option value="word">A Braaictionary word</option>
+        <option value="photo">A braai photo story</option>
+        <option value="tip">A braai tip</option>
+      </select>
+
+      <label for="cName">Your name (for the credit)</label>
+      <input type="text" id="cName" name="name" placeholder="Oom Piet van der Merwe" required maxlength="120">
+
+      <label for="cEmail">Your email (so we can reply — never published)</label>
+      <input type="email" id="cEmail" name="email" placeholder="you@example.co.za" required>
+
+      <label for="cText">The contribution</label>
+      <textarea id="cText" name="text" rows="10" required maxlength="8000" placeholder="For a recipe: ingredients, method, and the story behind it. For a word: the word, what it means, and how it's used. For a tip or photo story: just tell it like you would at the fire."></textarea>
+
+      <button class="btn" type="submit" id="cBtn">Send it to the editor</button>
+      <p class="form-note" id="cNote" aria-live="polite">By submitting you give braai.co.za permission to publish an edited version, credited to you.</p>
+    </form>
+
+  </div>
+</section>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div>
+      <strong style="color:var(--cream)">braai.co.za</strong> — Proudly South African.<br>
+      <a href="/what-is-a-braai/">What is a braai?</a> · <a href="/fire/">Wood &amp; Coals</a> · <a href="/cuts/">The Cuts</a> · <a href="/recipes/">Recipes</a> · <a href="/potjie/">Potjie</a> · <a href="/gear/">Gear</a> · <a href="/braaictionary/">Braaictionary</a> · <a href="/vuur/">The Braai</a> · <a href="/braai-day/">Braai Day</a> · <a href="/contribute/">Contribute</a>
+    </div>
+    <div class="stamp">Build 25 Aug 2026 · v9</div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // Prefill type from ?type= param (e.g. braaictionary CTA links /contribute/?type=word)
+  var t = new URLSearchParams(location.search).get('type');
+  if (t && document.querySelector('#cType option[value="' + t + '"]')) {
+    document.getElementById('cType').value = t;
+  }
+  var form = document.getElementById('contribForm');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var note = document.getElementById('cNote');
+    var btn = document.getElementById('cBtn');
+    var payload = {
+      type: document.getElementById('cType').value,
+      name: document.getElementById('cName').value.trim(),
+      email: document.getElementById('cEmail').value.trim(),
+      text: document.getElementById('cText').value.trim(),
+      hp: document.getElementById('oond').value
+    };
+    if (!payload.name) { note.textContent = 'Tell us your name — contributions get credited.'; return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(payload.email)) { note.textContent = 'That email doesn\'t look right — give it another go.'; return; }
+    if (payload.text.length < 20) { note.textContent = 'Give us a bit more than that — at least a few sentences.'; return; }
+    btn.disabled = true; btn.textContent = 'Sending…';
+    fetch('/api/contribute', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function (r) { return r.json(); }).then(function (d) {
+      if (d.ok) {
+        form.style.display = 'none';
+        note.textContent = 'Dankie, ' + payload.name.split(' ')[0] + ' — it\'s with the editor. If it makes the cut, you\'ll see your name on it.';
+      } else {
+        note.textContent = d.error || 'Something went wrong. Please try again in a minute.';
+        btn.disabled = false; btn.textContent = 'Send it to the editor';
+      }
+    }).catch(function () {
+      note.textContent = 'Something went wrong. Please try again in a minute.';
+      btn.disabled = false; btn.textContent = 'Send it to the editor';
+    });
+  });
+})();
+</script>
+
+<script>if('serviceWorker' in navigator){addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')})}</script>
+</body>
+</html>

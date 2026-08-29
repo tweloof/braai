@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Braai — one fire, kept alive by everyone | braai.co.za</title>
+<meta name="description" content="One communal fire for the whole country. It burns down on its own; it stays lit only if real people keep putting things on it — words, wood wisdom, braai spots, family recipes. If it goes out, this page stays up forever.">
+<link rel="canonical" href="https://braai.co.za/vuur/">
+<link rel="alternate" hreflang="en" href="https://braai.co.za/vuur/">
+<link rel="alternate" hreflang="af" href="https://braai.co.za/af/vuur/">
+<link rel="alternate" hreflang="zu" href="https://braai.co.za/zu/vuur/">
+<link rel="alternate" hreflang="x-default" href="https://braai.co.za/vuur/">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#191512">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="braai.co.za">
+<meta property="og:title" content="The Braai — one fire, kept alive by everyone">
+<meta property="og:description" content="It burns down every hour. It stays lit only if somebody feeds it. Put something on the fire.">
+<meta property="og:url" content="https://braai.co.za/vuur/">
+<meta property="og:image" content="https://braai.co.za/assets/og/vuur.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="/assets/fonts/fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* Die Vuur is the one page on braai.co.za with its own committed theme:
+   this is a fire, at night. Fonts are the site's own, self-hosted. */
+@font-face{font-family:'Fraunces';src:url('/assets/fonts/fraunces-var.woff2') format('woff2');font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:'Inter';src:url('/assets/fonts/inter-var.woff2') format('woff2');font-weight:100 900;font-style:normal;font-display:swap}
+:root{
+  --char:#191512; --char-2:#231d18; --char-3:#2e2620; --char-4:#3a3029;
+  --smoke:#695d52; --smoke-2:#a89a8c;
+  --cream:#faf4e8; --cream-2:#f1e6d2; --cream-3:#e7d9bf;
+  --ember:#d04912; --ember-2:#bd3f0e; --flame:#f49d37; --gold:#c89b3c;
+  --maxw:640px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--char); color:var(--cream);
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-size:16px; line-height:1.62; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+h1,h2,h3{font-family:'Fraunces',Georgia,serif;font-weight:600;line-height:1.14;text-wrap:balance}
+button{font:inherit}
+a{color:var(--flame)}
+.skip-link{position:absolute;left:-9999px;top:0;background:var(--ember);color:#fff;padding:10px 16px;z-index:100}
+.skip-link:focus{left:0}
+
+/* ---------- dark site header ---------- */
+.site-head{background:var(--char-2);border-bottom:1px solid rgba(244,157,55,.14)}
+.site-head .hwrap{max-width:960px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:9px;text-decoration:none}
+.brand svg{width:30px;height:30px}
+.brand .word{font-family:'Fraunces',Georgia,serif;font-weight:700;font-size:1.2rem;color:var(--cream)}
+.brand .word em{font-style:normal;color:var(--flame);font-weight:600}
+.site-nav{display:flex;gap:2px 14px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin-left:auto}
+.site-nav::-webkit-scrollbar{display:none}
+.site-nav a{color:var(--smoke-2);text-decoration:none;font-size:.86rem;font-weight:500;padding:6px 2px;white-space:nowrap}
+.site-nav a:hover{color:var(--cream)}
+.site-nav a.on{color:var(--flame);font-weight:600}
+.lang-sw{display:flex;gap:4px;align-items:center;font-size:.72rem;font-weight:700}
+.lang-sw a,.lang-sw .on{padding:4px 9px;border-radius:999px;text-decoration:none;color:var(--smoke-2)}
+.lang-sw a:hover{color:var(--flame);background:rgba(244,157,55,.12)}
+.lang-sw .on{background:var(--ember);color:#fff}
+
+/* ---------- the fire ---------- */
+.hearth{position:relative;background:var(--char);overflow:hidden}
+#fireCanvas{display:block;width:100%;height:330px}
+.hearth-over{
+  position:absolute; inset:0; display:flex; flex-direction:column;
+  align-items:center; justify-content:flex-start; padding-top:22px;
+  pointer-events:none; text-align:center;
+}
+.state{
+  font-size:.66rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--flame); margin-bottom:7px;
+}
+.age{font-family:'Fraunces',Georgia,serif;font-size:clamp(1.5rem,6.4vw,2rem);font-weight:700;color:var(--cream)}
+.age em{font-style:normal;color:var(--flame)}
+.tongs{
+  margin-top:9px;font-size:.8rem;color:var(--smoke-2);
+  background:rgba(25,21,18,.62);padding:4px 12px;border-radius:999px;
+}
+.tongs b{color:var(--cream-2);font-weight:600}
+.fireno{margin-top:7px;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--smoke)}
+
+/* fuel gauge */
+.gauge{background:var(--char-2);border-top:1px solid rgba(244,157,55,.14)}
+.gauge-inner{max-width:var(--maxw);margin:0 auto;padding:14px 20px}
+.gauge-row{display:flex;align-items:baseline;gap:10px;margin-bottom:8px}
+.gauge-label{font-size:.66rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--smoke-2)}
+.gauge-val{margin-left:auto;font-size:.82rem;font-weight:700;color:var(--flame);font-variant-numeric:tabular-nums}
+.gauge-track{height:8px;background:var(--char-4);border-radius:999px;overflow:hidden}
+.gauge-fill{height:100%;width:0;border-radius:999px;transition:width .5s ease,background .5s ease}
+.gauge-note{font-size:.78rem;color:var(--smoke);margin-top:8px}
+
+/* ---------- feed ---------- */
+main{padding:30px 0 70px}
+.sec-h{font-size:1.24rem;margin-bottom:4px}
+.sec-p{font-size:.9rem;color:var(--smoke-2);margin-bottom:20px}
+
+.addbar{
+  width:100%;background:var(--ember);color:#fff;border:0;border-radius:14px;
+  padding:16px;font-size:1rem;font-weight:600;cursor:pointer;min-height:54px;margin-bottom:26px;
+  transition:background .16s,transform .12s;
+}
+.addbar:hover{background:var(--ember-2);transform:translateY(-1px)}
+.addbar:focus-visible{outline:2px solid var(--flame);outline-offset:2px}
+
+.notice{background:var(--char-2);border-radius:12px;padding:13px 16px;font-size:.86rem;color:var(--smoke-2);margin-bottom:20px}
+.notice.err{color:#ef8b5f;border-left:3px solid var(--ember)}
+
+.logs{display:flex;flex-direction:column;gap:14px}
+.log{background:var(--char-2);border-radius:14px;padding:17px 18px;border-left:3px solid var(--char-4)}
+.log.kind-word{border-left-color:var(--flame)}
+.log.kind-wood{border-left-color:var(--gold)}
+.log.kind-spot{border-left-color:#7a9e6b}
+.log.kind-recipe{border-left-color:var(--ember)}
+.log.kind-fire{border-left-color:#c2603a}
+.log.mine{box-shadow:0 0 0 1px rgba(244,157,55,.35)}
+
+.log-top{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin-bottom:8px}
+.log-who{font-weight:600;font-size:.92rem;color:var(--cream)}
+.log-town{font-size:.82rem;color:var(--smoke-2)}
+.log-kind{
+  margin-left:auto;font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--smoke-2);border:1px solid rgba(244,157,55,.2);border-radius:999px;padding:2px 9px;
+}
+.log-text{font-size:.95rem;color:var(--cream-3)}
+.log-when{font-size:.74rem;color:var(--smoke);margin-top:9px}
+
+.log-reply{
+  margin-top:12px;padding-left:14px;border-left:2px solid var(--char-4);
+  font-size:.89rem;color:var(--cream-3);
+}
+.log-reply .rw{display:block;font-size:.74rem;color:var(--smoke);margin-top:4px}
+
+.replybtn{
+  margin-top:11px;background:transparent;border:1px solid rgba(244,157,55,.3);
+  color:var(--flame);border-radius:999px;padding:6px 14px;font-size:.78rem;font-weight:600;
+  cursor:pointer;min-height:36px;
+}
+.replybtn:hover{background:rgba(244,157,55,.1)}
+.replybtn:focus-visible{outline:2px solid var(--flame);outline-offset:2px}
+.spoken{font-size:.74rem;color:var(--smoke);margin-top:10px;font-style:italic}
+.replyform{margin-top:11px;display:flex;gap:8px}
+.replyform input{
+  flex:1;font:inherit;font-size:.9rem;background:var(--char-3);color:var(--cream);
+  border:1px solid rgba(244,157,55,.25);border-radius:999px;padding:8px 14px;min-height:40px;
+}
+.replyform button{
+  background:var(--ember);color:#fff;border:0;border-radius:999px;padding:8px 16px;
+  font-size:.8rem;font-weight:600;cursor:pointer;min-height:40px;
+}
+
+/* ---------- sheet ---------- */
+.sheet{
+  position:fixed;inset:0;background:rgba(12,10,9,.82);z-index:60;
+  display:flex;align-items:flex-end;justify-content:center;padding:0;
+}
+.sheet[hidden]{display:none}
+.sheet-in{
+  background:var(--char-2);width:100%;max-width:var(--maxw);
+  border-radius:20px 20px 0 0;padding:26px 22px 30px;max-height:92vh;overflow-y:auto;
+}
+@media(min-width:560px){.sheet{align-items:center;padding:20px}.sheet-in{border-radius:20px}}
+.sheet-in h2{font-size:1.34rem;margin-bottom:5px}
+.sheet-in .sub{font-size:.88rem;color:var(--smoke-2);margin-bottom:20px}
+.field{display:flex;flex-direction:column;gap:7px;margin-bottom:16px}
+.field label{font-size:.82rem;font-weight:600}
+.field input,.field select,.field textarea{
+  font:inherit;font-size:1rem;background:var(--char-3);color:var(--cream);
+  border:1px solid rgba(244,157,55,.2);border-radius:11px;padding:12px 14px;min-height:48px;width:100%;
+}
+.field textarea{min-height:110px;resize:vertical;line-height:1.55}
+.field input:focus,.field select:focus,.field textarea:focus{outline:2px solid var(--flame);outline-offset:1px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+@media(max-width:460px){.frow{grid-template-columns:1fr}}
+.hp-field{position:absolute;left:-9999px;top:-9999px;height:1px;width:1px;overflow:hidden}
+.sheet-btns{display:flex;gap:10px;margin-top:6px}
+.sheet-btns button{flex:1;border-radius:999px;padding:13px;min-height:50px;font-weight:600;cursor:pointer;border:0}
+.b-go{background:var(--ember);color:#fff}
+.b-go:hover{background:var(--ember-2)}
+.b-go:disabled{opacity:.5;cursor:wait}
+.b-no{background:transparent;color:var(--smoke-2);border:1px solid rgba(244,157,55,.22)}
+.err{font-size:.84rem;color:#ef8b5f;margin-top:-8px;margin-bottom:12px}
+
+/* ---------- dead fire ---------- */
+.gone{background:var(--char-2);border-radius:18px;padding:30px 24px;text-align:center;margin-bottom:26px}
+.gone h2{font-size:1.6rem;margin-bottom:10px;color:var(--cream)}
+.gone .stat{font-family:'Fraunces',Georgia,serif;font-size:2.6rem;font-weight:700;color:var(--smoke);line-height:1.1}
+.gone p{font-size:.93rem;color:var(--smoke-2);margin:12px auto 0;max-width:40ch}
+.gone .btn-light{
+  margin-top:20px;background:var(--ember);color:#fff;border:0;border-radius:999px;
+  padding:14px 28px;font-weight:600;cursor:pointer;min-height:50px;
+}
+
+.rules{margin-top:40px;padding-top:24px;border-top:1px solid rgba(244,157,55,.14)}
+.rules h3{font-size:1.02rem;margin-bottom:12px}
+.rules ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.rules li{font-size:.88rem;color:var(--smoke-2);padding-left:16px;position:relative}
+.rules li::before{content:"—";position:absolute;left:0;color:var(--ember)}
+.rules b{color:var(--cream-2);font-weight:600}
+
+/* ---------- custodians ---------- */
+.cust{margin-top:40px;background:var(--char-2);border-radius:18px;padding:26px 24px;border:1px solid rgba(244,157,55,.16)}
+.cust .overline{display:block;font-size:.64rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.cust h3{font-size:1.3rem;margin-bottom:10px}
+.cust p{font-size:.9rem;color:var(--smoke-2);margin-bottom:12px}
+.cust p:last-child{margin-bottom:0}
+.cust b{color:var(--cream-2);font-weight:600}
+
+/* ---------- dark footer ---------- */
+.site-foot{background:var(--char-2);border-top:1px solid rgba(244,157,55,.14);margin-top:0}
+.site-foot .fwrap{max-width:960px;margin:0 auto;padding:26px 20px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.84rem;color:var(--smoke-2)}
+.site-foot a{color:var(--smoke-2);text-decoration:none}
+.site-foot a:hover{color:var(--cream)}
+.site-foot .stamp{color:var(--smoke);font-size:.76rem}
+
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <div class="hwrap">
+    <a class="brand" href="/" aria-label="braai.co.za home">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 7c1.5 6.5 5.8 9.4 8.9 13.1 3 3.6 4.6 7.4 4.1 12.1-.6 6.2-5 10.6-10.4 11.6 2.1-2.2 3.2-4.6 3.2-7.4 0-4.9-3.6-7.4-5.5-11.8-1.1 2.6-3.4 4.5-4.9 7-1.3 2.1-1.9 4.1-1.7 6.5.2 2.2 1.1 4.1 2.8 5.8-5.5-.9-10-5.4-10.5-11.7-.4-4.5 1.2-8.3 4-11.8C25.2 16.6 30.6 13.6 32 7z" fill="#f49d37"/><rect x="14" y="48" width="36" height="3" rx="1.5" fill="#c89b3c"/><rect x="18" y="54" width="28" height="3" rx="1.5" fill="#7a6d62"/></svg>
+      <span class="word">braai<em>.co.za</em></span>
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="/">Home</a>
+      <a href="/what-is-a-braai/">What is a braai?</a>
+      <a href="/fire/">Wood &amp; Coals</a>
+      <a href="/cuts/">The Cuts</a>
+      <a href="/recipes/">Recipes</a>
+      <a href="/potjie/">Potjie</a>
+      <a href="/gear/">Gear</a>
+      <a href="/vuur/" class="on">The Braai</a>
+      <a href="/braai-day/">Braai Day</a>
+    </nav>
+    <div class="lang-sw" aria-label="Language / Taal / Ulimi"><span class="on">EN</span><a href="/af/vuur/" lang="af" hreflang="af">AF</a><a href="/zu/vuur/" lang="zu" hreflang="zu">ZU</a></div>
+  </div>
+</header>
+
+<div class="hearth" id="main">
+  <canvas id="fireCanvas" aria-hidden="true"></canvas>
+  <div class="hearth-over">
+    <div class="state" id="fState">&nbsp;</div>
+    <div class="age" id="fAge">Fetching the fire&hellip;</div>
+    <div class="tongs" id="fTongs" style="display:none"></div>
+    <div class="fireno" id="fNo"></div>
+  </div>
+</div>
+
+<div class="gauge">
+  <div class="gauge-inner">
+    <div class="gauge-row">
+      <span class="gauge-label">Fuel</span>
+      <span class="gauge-val" id="gVal">&mdash;</span>
+    </div>
+    <div class="gauge-track"><div class="gauge-fill" id="gFill"></div></div>
+    <p class="gauge-note" id="gNote">This is one fire, shared by everyone reading this page. It is really burning down right now.</p>
+  </div>
+</div>
+
+<main class="wrap">
+  <div id="deadZone"></div>
+  <div class="notice err" id="apiErr" hidden></div>
+  <h2 class="sec-h">On this fire</h2>
+  <p class="sec-p" id="secP">Everything anyone has put on it since it was lit.</p>
+  <button class="addbar" id="addBtn" style="display:none">Put something on the fire</button>
+  <div class="logs" id="logs" aria-live="polite"></div>
+
+  <noscript><p class="notice">The Braai needs JavaScript &mdash; the fire is live, shared state. Without it, know this: there is one fire, it burns down every hour, and it stays lit only if somebody feeds it.</p></noscript>
+
+  <div class="rules">
+    <h3>The rules of this fire</h3>
+    <ul>
+      <li><b>Advise once, from a distance, and never twice.</b> You may reply to anything here one time. The button then stops working. Every argument on the internet is the second reply.</li>
+      <li><b>Nobody counts the tjops.</b> No likes, no scores, no leaderboard, no follower counts.</li>
+      <li><b>Bring en braai.</b> Read as long as you like. To speak, put something on the fire first.</li>
+      <li><b>The braaier holds the tongs.</b> Whoever fed the fire last is named at the top. It confers nothing. It moves on its own.</li>
+      <li><b>The fire burns as long as it is fed.</b> Fuel burns down every hour. If it reaches nothing, this fire goes out and becomes a page that stays up forever.</li>
+    </ul>
+  </div>
+
+  <div class="cust">
+    <span class="overline">Before 24 September</span>
+    <h3>Wanted: founding custodians</h3>
+    <p>This site is being rebuilt as a community thing, and a community thing needs people who hold the tongs when nobody is looking. We are looking for a small founding council &mdash; people who know fire, know the country, and can keep a thing alive: feed this fire, look after the <a href="/braaictionary/">Braaictionary</a>, triage what comes in through <a href="/contribute/">contributions</a>, and argue about wood with authority.</p>
+    <p><b>How to put your hand up:</b> put something on this fire, then email <a href="/cdn-cgi/l/email-protection#c0aca5ababa5b280a2b2a1a1a9eea3afeebaa1"><span class="__cf_email__" data-cfemail="acc0c9c7c7c9deeccedecdcdc582cfc382d6cd">[email&#160;protected]</span></a> &mdash; say who you are, where you braai, and what part of the site you would look after. The founding council will be named here on <a href="/braai-day/">Braai Day, 24 September 2026</a>.</p>
+    <p>Custodians are people. The software that runs this site does its own chores and says so when it speaks &mdash; it never poses as one of you. Everything on this fire comes from a real person.</p>
+  </div>
+</main>
+
+<div class="sheet" id="sheet" hidden>
+  <div class="sheet-in" role="dialog" aria-modal="true" aria-labelledby="shTitle">
+    <h2 id="shTitle">Put something on the fire</h2>
+    <p class="sub" id="shSub">Anything a fire in this country knows and the internet doesn't. One good sentence is plenty. Everyone on this page will see it.</p>
+    <div class="field">
+      <label for="sKind">What is it?</label>
+      <select id="sKind">
+        <option value="word">A word your fire uses</option>
+        <option value="spot">A braai spot worth knowing</option>
+        <option value="wood">What wood burns where you are</option>
+        <option value="recipe">A family recipe</option>
+        <option value="fire">A photograph of your fire tonight</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="sText">Say it</label>
+      <textarea id="sText" maxlength="500" placeholder="However it comes out. Engels, Afrikaans, or both in one sentence like everybody actually speaks."></textarea>
+    </div>
+    <div class="frow">
+      <div class="field"><label for="sWho">Your name</label><input id="sWho" type="text" maxlength="40" autocomplete="name"></div>
+      <div class="field"><label for="sTown">Your town</label><input id="sTown" type="text" maxlength="40" autocomplete="address-level2"></div>
+    </div>
+    <div class="hp-field" aria-hidden="true"><label for="sWeb">Website</label><input id="sWeb" type="text" tabindex="-1" autocomplete="off"></div>
+    <p class="err" id="sErr" hidden></p>
+    <div class="sheet-btns">
+      <button class="b-no" id="sCancel" type="button">Not now</button>
+      <button class="b-go" id="sGo" type="button">On the fire</button>
+    </div>
+  </div>
+</div>
+
+<footer class="site-foot">
+  <div class="fwrap">
+    <div>
+      <strong style="color:var(--cream)">braai.co.za</strong> &mdash; Proudly South African.<br>
+      <a href="/what-is-a-braai/">What is a braai?</a> &middot; <a href="/fire/">Wood &amp; Coals</a> &middot; <a href="/cuts/">The Cuts</a> &middot; <a href="/recipes/">Recipes</a> &middot; <a href="/potjie/">Potjie</a> &middot; <a href="/gear/">Gear</a> &middot; <a href="/braaictionary/">Braaictionary</a> &middot; <a href="/vuur/">The Braai</a> &middot; <a href="/braai-day/">Braai Day</a> &middot; <a href="/contribute/">Contribute</a>
+    </div>
+    <div class="stamp">Build 25 Aug 2026 &middot; v9</div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+(function(){
+'use strict';
+
+/* Mechanics arrive from the server too, but these are the canon values —
+   the same numbers the API replays. */
+var FUEL_PER_LOG=14, BURN_PER_HOUR=0.42, MAX_FUEL=100;
+var API='/api/vuur';
+var KINDS={word:'Word',spot:'Braai spot',wood:'Wood',recipe:'Recipe',fire:'Tonight'};
+
+var esc=function(s){return String(s).replace(/[&<>"']/g,function(c){
+  return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});};
+
+/* ---------------- identity (anonymous, local) ---------------- */
+function getToken(){
+  try{
+    var t=localStorage.getItem('vuur-token');
+    if(t&&/^[A-Za-z0-9-]{8,64}$/.test(t))return t;
+    t=(window.crypto&&crypto.randomUUID)?crypto.randomUUID()
+      :('v'+Math.random().toString(36).slice(2)+Date.now().toString(36));
+    localStorage.setItem('vuur-token',t);
+    return t;
+  }catch(e){return 'v'+Math.random().toString(36).slice(2)+Date.now().toString(36);}
+}
+var TOKEN=getToken();
+function getMe(){try{return JSON.parse(localStorage.getItem('vuur-me'))||null;}catch(e){return null;}}
+function setMe(m){try{localStorage.setItem('vuur-me',JSON.stringify(m));}catch(e){}}
+
+/* ---------------- shared state (server-owned) ---------------- */
+var S=null;          // latest server state
+var fetchedAt=0;     // local ms when S arrived
+var lightMode=false; // sheet is lighting a new fire, not feeding this one
+
+function elapsedH(){return S?(Date.now()-fetchedAt)/3600000:0;}
+function fuelNow(){
+  if(!S)return 0;
+  if(S.out)return 0;
+  return Math.max(0,Math.min(MAX_FUEL,S.fuel-elapsedH()*BURN_PER_HOUR));
+}
+function ageH(){
+  if(!S)return 0;
+  var end=S.out&&S.fire.outAt?S.fire.outAt:S.now;
+  return (end-S.fire.litAt)/3600+(S.out?0:elapsedH());
+}
+function agoH(ts){return (S.now-ts)/3600+elapsedH();}
+
+function sync(){
+  return fetch(API,{headers:{'X-Vuur-Token':TOKEN},cache:'no-store'})
+    .then(function(r){return r.json();})
+    .then(function(d){
+      if(!d.ok)throw new Error(d.error||'Unreachable');
+      S=d;fetchedAt=Date.now();
+      document.getElementById('apiErr').hidden=true;
+      render();
+    })
+    .catch(function(){
+      var e=document.getElementById('apiErr');
+      if(!S){e.textContent='The fire is briefly unreachable. It is still burning — reload in a minute.';e.hidden=false;}
+    });
+}
+
+/* ---------------- fire canvas ---------------- */
+var cv=document.getElementById('fireCanvas'),cx=cv.getContext('2d');
+var flames=[],sparks=[],smoke=[],W=0,H=0,DPR=Math.min(window.devicePixelRatio||1,2);
+var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var T=0,STARS=[],EMBERS=[];
+
+function sizeCanvas(){
+  W=cv.clientWidth;H=cv.clientHeight;
+  cv.width=W*DPR;cv.height=H*DPR;cx.setTransform(DPR,0,0,DPR,0,0);
+  STARS=[];EMBERS=[];
+  var i;
+  for(i=0;i<24;i++){STARS.push({x:Math.random()*W,y:Math.random()*H*.5,r:.4+Math.random()*.9,ph:Math.random()*6.28,sp:.2+Math.random()*.5});}
+  for(i=0;i<16;i++){EMBERS.push({x:W/2-52+Math.random()*104,y:H-16-Math.random()*12,r:1+Math.random()*2,ph:Math.random()*6.28,sp:.8+Math.random()*2.2});}
+}
+window.addEventListener('resize',sizeCanvas);
+
+function intensity(){return Math.max(0,Math.min(1,fuelNow()/MAX_FUEL));}
+function flick(sp,ph){return .5+.28*Math.sin(T*sp+ph)+.15*Math.sin(T*sp*1.9+ph*2.7)+.07*Math.sin(T*sp*.53+ph*5.1);}
+
+function spawnFlame(I){
+  var n=Math.round(1+I*3.2);
+  for(var i=0;i<n;i++){
+    var spread=20+I*36;
+    flames.push({
+      x:W/2+(Math.random()-.5)*spread,
+      y:H-30+Math.random()*8,
+      vx:(Math.random()-.5)*.3,
+      vy:-(1.35+Math.random()*2.3*(0.55+I)),
+      life:1,decay:.010+Math.random()*.014,
+      r:3.5+Math.random()*(5+I*11),
+      seed:Math.random()*6.28
+    });
+  }
+}
+function spawnSpark(I){
+  if(Math.random()<.10+I*.22){
+    sparks.push({
+      x:W/2+(Math.random()-.5)*(18+I*40),
+      y:H-30,
+      vx:(Math.random()-.5)*1.1,
+      vy:-(2.2+Math.random()*2.6),
+      life:1,decay:.012+Math.random()*.02,
+      ph:Math.random()*6.28
+    });
+  }
+}
+function spawnSmoke(I){
+  if(Math.random()<.16&&I>0.02){
+    smoke.push({
+      x:W/2+(Math.random()-.5)*30,
+      y:H-90-I*60,
+      vx:(Math.random()-.5)*.22,
+      vy:-(.35+Math.random()*.4),
+      life:1,decay:.004+Math.random()*.004,
+      r:8+Math.random()*14
+    });
+  }
+}
+
+function drawStars(I){
+  var a=(1-I*.55);
+  for(var i=0;i<STARS.length;i++){
+    var s=STARS[i];
+    var tw=.12+.16*(0.5+0.5*Math.sin(T*s.sp+s.ph));
+    cx.fillStyle='rgba(250,244,232,'+(tw*a)+')';
+    cx.beginPath();cx.arc(s.x,s.y,s.r,0,6.283);cx.fill();
+  }
+}
+
+function drawBed(){
+  var I=intensity();
+  var i;
+  // breathing ground glow
+  var f=flick(2.1,0.7);
+  var g=cx.createRadialGradient(W/2,H-22,2,W/2,H-22,(58+I*46)*(0.85+f*.3));
+  g.addColorStop(0,'rgba(244,157,55,'+(0.08+I*(0.26+f*.14))+')');
+  g.addColorStop(.5,'rgba(208,73,18,'+(0.04+I*(0.13+f*.06))+')');
+  g.addColorStop(1,'rgba(25,21,18,0)');
+  cx.fillStyle=g;cx.fillRect(0,H-150,W,150);
+  // ember pips between the logs
+  for(i=0;i<EMBERS.length;i++){
+    var e=EMBERS[i];
+    var a=Math.max(0,(I-.03))*flick(e.sp,e.ph);
+    if(a<=0)continue;
+    cx.fillStyle='rgba(255,'+Math.round(120+80*a)+',40,'+(a*.75)+')';
+    cx.beginPath();cx.arc(e.x,e.y,e.r,0,6.283);cx.fill();
+  }
+  // the log bed — charred wood with glowing cracks
+  for(i=0;i<5;i++){
+    var lx=W/2-56+i*26, ly=H-20-(i%2)*5;
+    var heat=Math.max(0,I-(i*0.055));
+    cx.fillStyle='rgba('+Math.round(46+heat*70)+','+Math.round(30+heat*26)+',24,.97)';
+    cx.beginPath();
+    if(cx.roundRect){cx.roundRect(lx,ly,34,9,4);}else{cx.rect(lx,ly,34,9);}
+    cx.fill();
+    if(heat>0.02){
+      var ca=heat*(.35+.5*flick(1.6+i*.31,i*2.1));
+      cx.strokeStyle='rgba(255,150,50,'+ca+')';
+      cx.lineWidth=1;
+      cx.beginPath();
+      cx.moveTo(lx+6,ly+6.5);cx.lineTo(lx+13,ly+3.5);cx.lineTo(lx+20,ly+6);cx.lineTo(lx+28,ly+3.8);
+      cx.stroke();
+    }
+  }
+}
+
+function frame(){
+  T+=0.016;
+  cx.clearRect(0,0,W,H);
+  var I=intensity();
+  var i,p,t;
+  drawStars(I);
+  // smoke behind the flames, normal composite
+  for(i=smoke.length-1;i>=0;i--){
+    p=smoke[i];
+    p.x+=p.vx+Math.sin(T*.8+p.r)*.12;p.y+=p.vy;p.r+=.06;p.life-=p.decay;
+    if(p.life<=0||p.y<-30){smoke.splice(i,1);continue;}
+    cx.fillStyle='rgba(122,110,100,'+(p.life*.05)+')';
+    cx.beginPath();cx.arc(p.x,p.y,p.r,0,6.283);cx.fill();
+  }
+  drawBed();
+  if(!reduce&&S&&!S.out&&I>0.01){spawnFlame(I);spawnSpark(I);spawnSmoke(I);}
+  cx.globalCompositeOperation='lighter';
+  // flames: soft halo + hot core per particle
+  for(i=flames.length-1;i>=0;i--){
+    p=flames[i];
+    p.x+=p.vx+Math.sin(T*3+p.seed)*.4*(1.15-p.life);
+    p.y+=p.vy;p.vy*=.988;p.life-=p.decay;
+    if(p.life<=0){flames.splice(i,1);continue;}
+    t=p.life;
+    var col=t>.72?'250,208,120':t>.42?'244,157,55':t>.2?'208,73,18':'96,52,30';
+    var r=p.r*t;
+    cx.fillStyle='rgba('+col+','+(t*.08)+')';
+    cx.beginPath();cx.arc(p.x,p.y,r*1.9,0,6.283);cx.fill();
+    cx.fillStyle='rgba('+col+','+(t*.32)+')';
+    cx.beginPath();cx.arc(p.x,p.y,r,0,6.283);cx.fill();
+    if(t>.8){
+      cx.fillStyle='rgba(255,236,190,'+((t-.8)*.85)+')';
+      cx.beginPath();cx.arc(p.x,p.y+r*.25,r*.34,0,6.283);cx.fill();
+    }
+  }
+  // sparks: tiny bright motes that twinkle out
+  for(i=sparks.length-1;i>=0;i--){
+    p=sparks[i];
+    p.x+=p.vx+Math.sin(T*6+p.ph)*.3;p.y+=p.vy;p.vy*=.985;p.life-=p.decay;
+    if(p.life<=0){sparks.splice(i,1);continue;}
+    var sa=p.life*(.5+.5*Math.sin(T*14+p.ph));
+    cx.fillStyle='rgba(255,214,140,'+sa+')';
+    cx.beginPath();cx.arc(p.x,p.y,.9+p.life*.9,0,6.283);cx.fill();
+  }
+  cx.globalCompositeOperation='source-over';
+  requestAnimationFrame(frame);
+}
+
+/* ---------------- rendering ---------------- */
+function stateOf(){
+  var f=fuelNow();
+  if(!S)          return {k:'wait',   label:'',         col:'#695d52'};
+  if(S.out||f<=0) return {k:'out',    label:'Uit',      col:'#695d52'};
+  if(f<10)        return {k:'embers', label:'Kole',     col:'#c89b3c'};
+  if(f<30)        return {k:'low',    label:'Low',      col:'#d0821e'};
+  if(f<70)        return {k:'burning',label:'Burning',  col:'#f49d37'};
+  return            {k:'roaring',label:'Roaring', col:'#f4b437'};
+}
+
+function humanAge(h){
+  var n,u;
+  if(h<1){n=Math.max(1,Math.round(h*60));u='minute';}
+  else if(h<48){n=Math.round(h);u='hour';}
+  else{n=(h/24).toFixed(h<240?1:0).replace(/\.0$/,'');u='day';}
+  return n+' '+u+(String(n)==='1'?'':'s');
+}
+
+function render(){
+  if(!S)return;
+  var st=stateOf();
+  var fs=document.getElementById('fState');
+  fs.textContent=st.label;fs.style.color=st.col;
+
+  var age=document.getElementById('fAge');
+  if(S.out){age.innerHTML='This fire is <em>out</em>';}
+  else{age.innerHTML='Burning for <em>'+humanAge(ageH())+'</em>';}
+
+  document.getElementById('fNo').textContent='Braai No. '+S.fire.no+' · one fire for the whole country';
+
+  var tongs=document.getElementById('fTongs');
+  var last=S.logs.length?S.logs[S.logs.length-1]:null;
+  if(!S.out&&last){tongs.innerHTML='Tongs: <b>'+esc(last.who)+'</b>'+(last.town?', '+esc(last.town):'');tongs.style.display='';}
+  else{tongs.style.display='none';}
+
+  var pct=Math.max(0,Math.min(100,fuelNow()));
+  var fill=document.getElementById('gFill');
+  fill.style.width=pct+'%';
+  fill.style.background=pct<10?'linear-gradient(90deg,#8a6b28,#c89b3c)'
+    :pct<30?'linear-gradient(90deg,#a83e10,#d0821e)'
+    :'linear-gradient(90deg,#d04912,#f49d37)';
+  document.getElementById('gVal').textContent=Math.round(pct)+'%';
+
+  var note=document.getElementById('gNote');
+  if(S.out){note.textContent='It went out. Someone has to light the next one.';}
+  else{
+    var hoursLeft=pct/BURN_PER_HOUR;
+    note.textContent='This is one fire, shared by everyone on this page, and it is really burning down. At this rate it has about '+
+      humanAge(hoursLeft)+' left unless someone feeds it.';
+  }
+
+  var dz=document.getElementById('deadZone');
+  if(S.out){
+    dz.innerHTML='<div class="gone"><h2>The fire went out</h2>'+
+      '<div class="stat">'+humanAge(ageH())+'</div>'+
+      '<p>It burned that long, '+S.count+' thing'+(S.count===1?' was':'s were')+' put on it, and '+
+      S.people+' '+(S.people===1?'person':'people')+' stood around it. This page stays up. '+
+      'That is how every braai ends — and it is why anybody remembers them.</p>'+
+      '<button class="btn-light" id="relight" type="button">Light a new fire</button></div>';
+    document.getElementById('relight').addEventListener('click',function(){openSheet(true);});
+  }else{dz.innerHTML='';}
+
+  document.getElementById('addBtn').style.display=S.out?'none':'';
+  document.getElementById('secP').textContent=S.count
+    ? 'Everything anyone has put on it since it was lit. These are real people.'
+    : 'Nothing on it yet. It needs a first log or it will not last the night.';
+
+  renderLogs();
+}
+
+function renderLogs(){
+  var el=document.getElementById('logs');
+  el.innerHTML=S.logs.slice().reverse().map(function(l){
+    var rep=l.reply?('<div class="log-reply">'+esc(l.reply.text)+
+      '<span class="rw">'+esc(l.reply.who)+(l.reply.town?', '+esc(l.reply.town):'')+'</span></div>'):'';
+    var btn;
+    if(l.reply){btn='<p class="spoken">Someone has already advised on this one. Never twice.</p>';}
+    else if(S.out){btn='';}
+    else if(!S.spoken){btn='<p class="spoken">Put something on the fire and you may reply once.</p>';}
+    else{btn='<button class="replybtn" data-r="'+l.id+'">Advise, once</button>';}
+    return '<article class="log kind-'+esc(l.kind)+(l.mine?' mine':'')+'">'+
+      '<div class="log-top"><span class="log-who">'+esc(l.who)+'</span>'+
+      '<span class="log-town">'+esc(l.town)+'</span>'+
+      '<span class="log-kind">'+esc(KINDS[l.kind]||l.kind)+'</span></div>'+
+      '<p class="log-text">'+esc(l.text)+'</p>'+
+      '<p class="log-when">'+humanAge(agoH(l.ts))+' ago</p>'+rep+btn+'</article>';
+  }).join('');
+}
+
+/* ---------------- replies: advise once, inline ---------------- */
+document.getElementById('logs').addEventListener('click',function(e){
+  var b=e.target.closest?e.target.closest('.replybtn'):null;
+  if(b){
+    var id=b.getAttribute('data-r');
+    var f=document.createElement('div');
+    f.className='replyform';
+    f.innerHTML='<input type="text" maxlength="300" placeholder="You may say this once. Not twice.">'+
+      '<button type="button" data-send="'+id+'">Say it</button>';
+    b.parentNode.replaceChild(f,b);
+    f.querySelector('input').focus();
+    return;
+  }
+  var s=e.target.closest?e.target.closest('[data-send]'):null;
+  if(s){
+    var fid=parseInt(s.getAttribute('data-send'),10);
+    var input=s.parentNode.querySelector('input');
+    var txt=(input.value||'').trim();
+    if(!txt)return;
+    s.disabled=true;
+    var me=getMe()||{};
+    post({action:'reply',feedId:fid,text:txt,who:me.who||'Someone',town:me.town||'',token:TOKEN})
+      .then(function(d){
+        if(!d.ok){showApiErr(d.error);sync();return;}
+        S=d;fetchedAt=Date.now();render();
+      });
+  }
+});
+
+function showApiErr(msg){
+  var e=document.getElementById('apiErr');
+  e.textContent=msg||'That did not work. The fire is unbothered.';
+  e.hidden=false;
+  setTimeout(function(){e.hidden=true;},6000);
+}
+
+function post(body){
+  return fetch(API,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(body)
+  }).then(function(r){return r.json();})
+    .catch(function(){return {ok:false,error:'The fire is briefly unreachable. Try again in a minute.'};});
+}
+
+/* ---------------- the sheet ---------------- */
+var sheet=document.getElementById('sheet');
+function openSheet(light){
+  lightMode=!!light;
+  document.getElementById('shTitle').textContent=lightMode?'Light the next fire':'Put something on the fire';
+  document.getElementById('shSub').textContent=lightMode
+    ?'A fire is lit by putting the first thing on it. Whatever you write starts Braai No. '+(S?S.fire.no+1:'?')+'.'
+    :'Anything a fire in this country knows and the internet doesn’t. One good sentence is plenty. Everyone on this page will see it.';
+  sheet.hidden=false;
+  var me=getMe();
+  if(me){document.getElementById('sWho').value=me.who||'';document.getElementById('sTown').value=me.town||'';}
+  document.getElementById('sText').focus();
+}
+document.getElementById('addBtn').addEventListener('click',function(){openSheet(false);});
+document.getElementById('sCancel').addEventListener('click',function(){sheet.hidden=true;});
+sheet.addEventListener('click',function(e){if(e.target===sheet)sheet.hidden=true;});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')sheet.hidden=true;});
+
+document.getElementById('sGo').addEventListener('click',function(){
+  var kind=document.getElementById('sKind').value;
+  var text=document.getElementById('sText').value.trim();
+  var who=document.getElementById('sWho').value.trim();
+  var town=document.getElementById('sTown').value.trim();
+  var err=document.getElementById('sErr');
+  var go=document.getElementById('sGo');
+  var fail=function(m){err.textContent=m;err.hidden=false;};
+  if(text.length<12)return fail('Tell us a bit more — one good sentence is enough.');
+  if(!who)return fail('We need a name to put on it.');
+  if(!town)return fail('Which town? It matters more than you think.');
+  err.hidden=true;go.disabled=true;
+
+  post({
+    action:lightMode?'light':'feed',
+    kind:kind,text:text,who:who,town:town,
+    token:TOKEN,hp:document.getElementById('sWeb').value||''
+  }).then(function(d){
+    go.disabled=false;
+    if(!d.ok){fail(d.error||'That did not work. Try again.');return;}
+    setMe({who:who,town:town});
+    document.getElementById('sText').value='';
+    sheet.hidden=true;
+    S=d;fetchedAt=Date.now();render();
+  });
+});
+
+/* ---------------- clocks ---------------- */
+setInterval(function(){if(S&&!S.out){render();}},30000); // re-render ages + burn-down
+setInterval(function(){
+  if(S&&!S.out&&fuelNow()<=0){sync();}                    // it died under us — let the server say so
+},5000);
+setInterval(sync,90000);                                  // re-sync shared state
+
+sizeCanvas();frame();sync();
+})();
+</script>
+
+<script>if('serviceWorker' in navigator){addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')})}</script>
+</body>
+</html>

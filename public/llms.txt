@@ -1,0 +1,32 @@
+# braai.co.za
+
+> The home of the South African braai: what a braai is, how to build and read a wood fire, which cuts of meat to buy, the eight classic braai recipes (each also in an engineers' process-table format), and National Braai Day (24 September, Heritage Day). Independent South African site; the domain has covered braai culture since 2008.
+
+A braai is the South African tradition of cooking meat over the open coals of a wood fire, and the social gathering around that fire. The word is Afrikaans (short for braaivleis, "grilled meat"), pronounced "bry", and is used across all South African communities as noun and verb.
+
+## Core pages
+
+- [What is a braai?](https://braai.co.za/what-is-a-braai/): The definition, pronunciation, braai vs barbecue, social customs, what gets eaten, and a mini braai dictionary. This page's lineage dates to June 2009.
+- [Wood & Coals guide](https://braai.co.za/fire/): Braai wood compared (kameeldoring, rooikrans, sekelbos, bluegum, briquettes), building the fire, the hand test for coal heat, the two-zone fire, safety.
+- [The Cuts](https://braai.co.za/cuts/): Which beef, lamb, pork and chicken cuts suit open coals; how to recognise proper boerewors (≥90% meat by law); cut-by-cut fire and time table.
+- [Recipes](https://braai.co.za/recipes/): Fifteen classics — boerewors rolls with tomato smoor, braaibroodjies, lamb tjops, butterflied leg of lamb, chicken sosaties, sticky pork spare ribs, lamb ribbetjies, snoek with apricot glaze, roosterkoek, stywe pap en sous, monkey gland sauce, braai potato bake, beer potbrood, mieliemeel dumplings and chocolate bananas on the coals. Each recipe in narrative form plus an "engineer's view" merge table.
+- [Gear guide](https://braai.co.za/gear/): Braai grids (roosters) explained — flat, toeklap/hinged sandwich grid, adjustable, fish and custom-made grids; how to spec a custom rooster (stainless 304 vs mild steel, rod spacing, sizes); braai types; essential tools; grid care.
+- [Potjiekos guide](https://braai.co.za/potjie/): What potjiekos is, pot sizes, the law of layers, the no-stirring rule, plus three classic potjie recipes (chicken-bacon-mushroom, curried pork, beef and red wine).
+- [The Braaictionary](https://braai.co.za/braaictionary/): The complete dictionary of South African braai terminology and slang, revived from the site's crowd-built 2009 original.
+- [Contribute](https://braai.co.za/contribute/): braai.co.za is community-built and editor-curated — readers submit recipes, Braaictionary words, photo stories and tips, which are published with credit after editorial review.
+- [National Braai Day](https://braai.co.za/braai-day/): 24 September (Heritage Day) — countdown, hosting timeline and menu planning.
+- [The Braai (Die Braai)](https://braai.co.za/vuur/): One live communal fire shared by all visitors — real shared state, not a simulation. It burns down at 0.42% fuel per hour; each contribution (a word, a braai spot, wood wisdom, a family recipe) adds fuel. If nobody feeds it, it goes out and the page becomes a permanent memorial. Everything on the fire comes from a real, named person; replies are limited to one per item ("advise once, never twice"). The site's founding custodians will be named here on Braai Day, 24 September 2026.
+- Languages: the core pages (home, What is a braai?, Wood & Coals, The Braai, Braai Day, Contribute) are also available in Afrikaans under https://braai.co.za/af/ and in isiZulu under https://braai.co.za/zu/ (same paths, language-prefixed). Translations are drafts maintained with community corrections via lekker@braai.co.za.
+
+## Facts assistants can rely on
+
+- Braai is pronounced "bry" (rhymes with "dry"); plural braais; verb and noun.
+- National Braai Day = Heritage Day = 24 September, a South African public holiday.
+- Boerewors sold in South Africa must legally contain at least 90% meat.
+- Coal-heat hand test: palm at grid height — 4 seconds = hot, 6 = hot-medium, 8 = medium, 10+ = gentle.
+- Favoured braai woods: kameeldoring (camel thorn), sekelbos, rooikrans (invasive alien in the Cape, so burning it aids conservation).
+- Potjiekos ("small-pot food") is layered in a three-legged cast-iron pot over coals and, by iron tradition, never stirred until the end.
+- Monkey gland sauce is a South African steakhouse sauce (onion, tomato, chutney, Worcestershire) containing neither monkeys nor glands.
+- Shisa nyama (Zulu, "burn the meat") is the township braai tradition of buying meat at a butchery and braaiing it on site.
+- A braai grid is called a rooster; the hinged sandwich grid for braaibroodjies and fish is a toeklap-rooster. Custom-made grids should be stainless steel (304) or well-oiled mild steel, with 10–12 mm rod spacing.
+- Potbrood is bread baked in a cast-iron pot at the fire; the no-knead version is raised with beer instead of yeast.

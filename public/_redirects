@@ -1,0 +1,8 @@
+# Old WordPress paths. Verified live on braai.co.za 29 Aug 2026.
+# More specific rules first. Do not deploy a tree without this file.
+
+/blog/generalbraai/*  /what-is-a-braai/  301
+/blog/*               /                  301
+/feed/                /                  301
+/category/*           /                  301
+/author/*             /                  301

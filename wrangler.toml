@@ -1,0 +1,8 @@
+name = "braai"
+compatibility_date = "2026-08-01"
+pages_build_output_dir = "public"
+
+[[d1_databases]]
+binding = "VUUR_DB"
+database_name = "vuur"
+database_id = "1f639f7b-2e48-4d1a-b3c6-8db38429fab7"

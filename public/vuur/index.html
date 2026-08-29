@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Braai — one fire, kept alive by everyone | braai.co.za</title>
-<meta name="description" content="One communal fire for the whole country. It burns down on its own; it stays lit only if real people keep putting things on it — words, wood wisdom, braai spots, family recipes. If it goes out, this page stays up forever.">
+<title>The Braai — the national fire as a sports score | braai.co.za</title>
+<meta name="description" content="One communal fire for the whole country. The score you forward: the fire is OUT, or it has been lit N hours with N logs. It stays lit only if real people keep putting things on it.">
 <link rel="canonical" href="https://braai.co.za/vuur/">
 <link rel="alternate" hreflang="en" href="https://braai.co.za/vuur/">
 <link rel="alternate" hreflang="af" href="https://braai.co.za/af/vuur/">
@@ -16,11 +16,14 @@
 <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="braai.co.za">
-<meta property="og:title" content="The Braai — one fire, kept alive by everyone">
-<meta property="og:description" content="It burns down every hour. It stays lit only if somebody feeds it. Put something on the fire.">
+<meta property="og:title" content="The national fire — is it OUT, or still burning?">
+<meta property="og:description" content="One sentence you'll forward: the fire is OUT, or it has been lit N hours with N logs. One communal braai for the whole country.">
 <meta property="og:url" content="https://braai.co.za/vuur/">
 <meta property="og:image" content="https://braai.co.za/assets/og/vuur.png">
+<meta property="og:locale" content="en_ZA">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The national fire — is it OUT, or still burning?">
+<meta name="twitter:description" content="One sentence you'll forward: the fire is OUT, or it has been lit N hours with N logs.">
 <link rel="preload" href="/assets/fonts/fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
 <style>
@@ -96,6 +99,31 @@ a{color:var(--flame)}
 .gauge-track{height:8px;background:var(--char-4);border-radius:999px;overflow:hidden}
 .gauge-fill{height:100%;width:0;border-radius:999px;transition:width .5s ease,background .5s ease}
 .gauge-note{font-size:.78rem;color:var(--smoke);margin-top:8px}
+
+/* screenshot-ready sports score */
+.scoreboard{background:var(--char);padding:8px 20px 28px}
+.score-card{
+  max-width:var(--maxw);margin:0 auto;text-align:center;
+  background:var(--char-2);border:1px solid rgba(244,157,55,.22);
+  border-radius:18px;padding:26px 22px 22px;
+}
+.score-kicker{font-size:.66rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.score-line{
+  font-family:'Fraunces',Georgia,serif;
+  font-size:clamp(1.7rem,6.6vw,2.55rem);
+  font-weight:700;line-height:1.18;color:var(--cream);text-wrap:balance;
+}
+.score-line em{font-style:normal;color:var(--flame)}
+.score-card.out .score-line{color:var(--smoke-2)}
+.score-card.out .score-line em{color:var(--smoke-2)}
+.score-stamp{margin-top:14px;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--smoke)}
+.score-copy{
+  display:block;margin:14px auto 0;background:transparent;
+  border:1px solid rgba(244,157,55,.35);color:var(--flame);
+  border-radius:999px;padding:10px 18px;font-weight:600;cursor:pointer;min-height:44px;
+}
+.score-copy:hover{background:rgba(244,157,55,.1)}
+.score-copy:focus-visible{outline:2px solid var(--flame);outline-offset:2px}
 
 /* ---------- feed ---------- */
 main{padding:30px 0 70px}
@@ -269,6 +297,15 @@ main{padding:30px 0 70px}
   </div>
 </div>
 
+<div class="scoreboard">
+  <div class="score-card" id="scoreCard">
+    <p class="score-kicker">National fire · sports score</p>
+    <p class="score-line" id="scoreLine">Fetching the fire&hellip;</p>
+    <p class="score-stamp">braai.co.za/vuur</p>
+    <button type="button" class="score-copy" id="scoreCopy">Copy for WhatsApp</button>
+  </div>
+</div>
+
 <main class="wrap">
   <div id="deadZone"></div>
   <div class="notice err" id="apiErr" hidden></div>
@@ -334,7 +371,7 @@ main{padding:30px 0 70px}
   <div class="fwrap">
     <div>
       <strong style="color:var(--cream)">braai.co.za</strong> &mdash; Proudly South African.<br>
-      <a href="/what-is-a-braai/">What is a braai?</a> &middot; <a href="/fire/">Wood &amp; Coals</a> &middot; <a href="/cuts/">The Cuts</a> &middot; <a href="/recipes/">Recipes</a> &middot; <a href="/potjie/">Potjie</a> &middot; <a href="/gear/">Gear</a> &middot; <a href="/braaictionary/">Braaictionary</a> &middot; <a href="/vuur/">The Braai</a> &middot; <a href="/braai-day/">Braai Day</a> &middot; <a href="/contribute/">Contribute</a>
+      <a href="/what-is-a-braai/">What is a braai?</a> &middot; <a href="/fire/">Wood &amp; Coals</a> &middot; <a href="/cuts/">The Cuts</a> &middot; <a href="/recipes/">Recipes</a> &middot; <a href="/potjie/">Potjie</a> &middot; <a href="/gear/">Gear</a> &middot; <a href="/braaictionary/">Braaictionary</a> &middot; <a href="/vuur/">The Braai</a> &middot; <a href="/braai-index/">Braai Index</a> &middot; <a href="/tonight/">Tonight</a> &middot; <a href="/braai-day/">Braai Day</a> &middot; <a href="/contribute/">Contribute</a>
     </div>
     <div class="stamp">Build 29 Aug 2026 &middot; v10</div>
   </div>
@@ -574,6 +611,17 @@ function humanAge(h){
   return n+' '+u+(String(n)==='1'?'':'s');
 }
 
+function scoreSentence(){
+  if(!S)return '';
+  if(S.out)return 'The fire is OUT.';
+  var logs=S.count||0;
+  var logWord=logs===1?'log':'logs';
+  var h=ageH();
+  if(h<1)return 'The fire has been lit under an hour with '+logs+' '+logWord+'.';
+  var n=Math.round(h);
+  return 'The fire has been lit '+n+' hour'+(n===1?'':'s')+' with '+logs+' '+logWord+'.';
+}
+
 function render(){
   if(!S)return;
   var st=stateOf();
@@ -583,6 +631,23 @@ function render(){
   var age=document.getElementById('fAge');
   if(S.out){age.innerHTML='This fire is <em>out</em>';}
   else{age.innerHTML='Burning for <em>'+humanAge(ageH())+'</em>';}
+
+  var card=document.getElementById('scoreCard');
+  var line=document.getElementById('scoreLine');
+  if(line){
+    if(S.out){line.innerHTML='The fire is <em>OUT</em>.';}
+    else{
+      var logs=S.count||0;
+      var logWord=logs===1?'log':'logs';
+      var h=ageH();
+      if(h<1){line.innerHTML='The fire has been lit <em>under an hour</em> with '+logs+' '+logWord+'.';}
+      else{
+        var n=Math.round(h);
+        line.innerHTML='The fire has been lit <em>'+n+' hour'+(n===1?'':'s')+'</em> with '+logs+' '+logWord+'.';
+      }
+    }
+  }
+  if(card){if(S.out)card.classList.add('out');else card.classList.remove('out');}
 
   document.getElementById('fNo').textContent='Braai No. '+S.fire.no+' · one fire for the whole country';
 
@@ -733,6 +798,18 @@ document.getElementById('sGo').addEventListener('click',function(){
     sheet.hidden=true;
     S=d;fetchedAt=Date.now();render();
   });
+});
+
+/* ---------------- copy the score ---------------- */
+document.getElementById('scoreCopy').addEventListener('click',function(){
+  var t=scoreSentence()||(document.getElementById('scoreLine').textContent||'').trim();
+  if(!t)return;
+  var msg=t+' https://braai.co.za/vuur/';
+  var btn=document.getElementById('scoreCopy');
+  var done=function(){btn.textContent='Copied — paste into WhatsApp';setTimeout(function(){btn.textContent='Copy for WhatsApp';},2400);};
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(msg).then(done).catch(function(){btn.textContent=msg;});
+  }else{btn.textContent=msg;}
 });
 
 /* ---------------- clocks ---------------- */

@@ -63,3 +63,5 @@
 /favicon.ico /assets/favicon.svg 301
 /about-us* / 301
 /blog/* / 301
+/map/ /tonight/ 301
+/map /tonight/ 301

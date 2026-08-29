@@ -1,0 +1,45 @@
+{
+  "name": "National Braai Index",
+  "status": "latest-known",
+  "example": true,
+  "as_of": "2026-08-29",
+  "week": "24–30 August 2026",
+  "currency": "ZAR",
+  "total_rand": 280,
+  "headline": "R280",
+  "blurb": "A family Saturday fire this week, if you buy the basket below and nothing fancy.",
+  "basket_name": "Family Saturday fire",
+  "feeds": 4,
+  "note": "These are latest-known example figures from public South African grocery catalogues and shelf listings in the week of 24–30 August 2026. Mid-range prices — not the deepest midweek special, not a butcher's quote, not a live scrape. Wood is left out on purpose: a bag of permitted braai wood swings wildly by province. Nothing here is for sale. There is no 'buy here'. A later updater should edit this file, not the HTML.",
+  "items": [
+    {
+      "id": "boerewors",
+      "name": "Boerewors, 1 kg",
+      "qty_kg": 1,
+      "price_rand": 110,
+      "basis": "Public supermarket listings for a typical thick beef-and-pork boerewors. Championship-style wors was listed around R109.99/kg; own-brand farmstyle sat near R90 on special and about R120 off it. We took R110 — a mid figure, legally ≥90% meat.",
+      "source_kind": "public grocery catalogue / shelf listing"
+    },
+    {
+      "id": "pork-loin-chops",
+      "name": "Pork loin chops, 1 kg",
+      "qty_kg": 1,
+      "price_rand": 90,
+      "basis": "Fresh pork loin / pork braai chops on public catalogues that week ran from about R65/kg on a deep bulk special to around R120/kg regular. We took R90, not the cheapest sticker in the flyer.",
+      "source_kind": "public grocery catalogue"
+    },
+    {
+      "id": "chicken-braai-pack",
+      "name": "Chicken braai pack, 1 kg",
+      "qty_kg": 1,
+      "price_rand": 80,
+      "basis": "A typical 5 kg frozen chicken braai pack was listed at R399 — R79.80 a kilo. Rounded to R80 for one honest kilogram.",
+      "source_kind": "public grocery catalogue"
+    }
+  ],
+  "excluded": [
+    "Braai wood (permitted suppliers; price is local)",
+    "Bread, smoor, pap, onions, ice",
+    "Lamb, beef steak, snoek — those are a different Saturday"
+  ]
+}

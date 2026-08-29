@@ -16,11 +16,13 @@
 <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="braai.co.za">
-<meta property="og:title" content="I-Braai — umlilo owodwa, ogcinwa uphila yibo bonke">
-<meta property="og:description" content="Wehla njalo ngehora. Uhlala uvutha kuphela uma othile ewondla. Beka okuthile emlilweni.">
+<meta property="og:title" content="Umlilo kazwelonke — ucimile, noma usavutha?">
+<meta property="og:description" content="Umusho ozodlulisa: umlilo UCIMILE, noma uvuthe amahora angu-N ngezingodo ezingu-N. Umlilo owodwa wezwe lonke.">
 <meta property="og:url" content="https://braai.co.za/zu/vuur/">
 <meta property="og:image" content="https://braai.co.za/assets/og/vuur.png">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Umlilo kazwelonke — ucimile, noma usavutha?">
+<meta name="twitter:description" content="Umusho ozodlulisa: umlilo UCIMILE, noma uvuthe amahora angu-N ngezingodo ezingu-N.">
 <link rel="preload" href="/assets/fonts/fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
 <style>
@@ -96,6 +98,30 @@ a{color:var(--flame)}
 .gauge-track{height:8px;background:var(--char-4);border-radius:999px;overflow:hidden}
 .gauge-fill{height:100%;width:0;border-radius:999px;transition:width .5s ease,background .5s ease}
 .gauge-note{font-size:.78rem;color:var(--smoke);margin-top:8px}
+
+.scoreboard{background:var(--char);padding:8px 20px 28px}
+.score-card{
+  max-width:var(--maxw);margin:0 auto;text-align:center;
+  background:var(--char-2);border:1px solid rgba(244,157,55,.22);
+  border-radius:18px;padding:26px 22px 22px;
+}
+.score-kicker{font-size:.66rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.score-line{
+  font-family:'Fraunces',Georgia,serif;
+  font-size:clamp(1.7rem,6.6vw,2.55rem);
+  font-weight:700;line-height:1.18;color:var(--cream);text-wrap:balance;
+}
+.score-line em{font-style:normal;color:var(--flame)}
+.score-card.out .score-line{color:var(--smoke-2)}
+.score-card.out .score-line em{color:var(--smoke-2)}
+.score-stamp{margin-top:14px;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--smoke)}
+.score-copy{
+  display:block;margin:14px auto 0;background:transparent;
+  border:1px solid rgba(244,157,55,.35);color:var(--flame);
+  border-radius:999px;padding:10px 18px;font-weight:600;cursor:pointer;min-height:44px;
+}
+.score-copy:hover{background:rgba(244,157,55,.1)}
+.score-copy:focus-visible{outline:2px solid var(--flame);outline-offset:2px}
 
 /* ---------- feed ---------- */
 main{padding:30px 0 70px}
@@ -266,6 +292,15 @@ main{padding:30px 0 70px}
     </div>
     <div class="gauge-track"><div class="gauge-fill" id="gFill"></div></div>
     <p class="gauge-note" id="gNote">Lona umlilo owodwa, owabiwe yibo bonke abafunda leli khasi. Wehla ngempela njengamanje.</p>
+  </div>
+</div>
+
+<div class="scoreboard">
+  <div class="score-card" id="scoreCard">
+    <p class="score-kicker">Umlilo kazwelonke · isikolo</p>
+    <p class="score-line" id="scoreLine">Silanda umlilo&hellip;</p>
+    <p class="score-stamp">braai.co.za/zu/vuur</p>
+    <button type="button" class="score-copy" id="scoreCopy">Kopisha ku-WhatsApp</button>
   </div>
 </div>
 
@@ -576,6 +611,17 @@ function humanAge(h){
   return n+' '+u;
 }
 
+function scoreSentence(){
+  if(!S)return '';
+  if(S.out)return 'Umlilo UCIMILE.';
+  var logs=S.count||0;
+  var logWord=logs===1?'inkuni':'izingodo';
+  var h=ageH();
+  if(h<1)return 'Umlilo uvuthe isikhathi esingaphansi kwehora nge-'+logs+' '+logWord+'.';
+  var n=Math.round(h);
+  return 'Umlilo uvuthe amahora angu-'+n+' nge-'+logs+' '+logWord+'.';
+}
+
 function render(){
   if(!S)return;
   var st=stateOf();
@@ -585,6 +631,21 @@ function render(){
   var age=document.getElementById('fAge');
   if(S.out){age.innerHTML='Lo mlilo <em>ucimile</em>';}
   else{age.innerHTML='Uvutha <em>'+humanAge(ageH())+'</em>';}
+
+  var card=document.getElementById('scoreCard');
+  var line=document.getElementById('scoreLine');
+  var logs=S.count||0;
+  var logWord=logs===1?'inkuni':'izingodo';
+  var h=ageH();
+  if(line){
+    if(S.out){line.innerHTML='Umlilo <em>UCIMILE</em>.';}
+    else if(h<1){line.innerHTML='Umlilo uvuthe <em>isikhathi esingaphansi kwehora</em> nge-'+logs+' '+logWord+'.';}
+    else{
+      var n=Math.round(h);
+      line.innerHTML='Umlilo uvuthe <em>amahora angu-'+n+'</em> nge-'+logs+' '+logWord+'.';
+    }
+  }
+  if(card){if(S.out)card.classList.add('out');else card.classList.remove('out');}
 
   document.getElementById('fNo').textContent='I-Braai No. '+S.fire.no+' · umlilo owodwa wezwe lonke';
 
@@ -735,6 +796,17 @@ document.getElementById('sGo').addEventListener('click',function(){
     sheet.hidden=true;
     S=d;fetchedAt=Date.now();render();
   });
+});
+
+document.getElementById('scoreCopy').addEventListener('click',function(){
+  var t=scoreSentence()||(document.getElementById('scoreLine').textContent||'').trim();
+  if(!t)return;
+  var msg=t+' https://braai.co.za/zu/vuur/';
+  var btn=document.getElementById('scoreCopy');
+  var done=function(){btn.textContent='Kukopishiwe — namathisela ku-WhatsApp';setTimeout(function(){btn.textContent='Kopisha ku-WhatsApp';},2400);};
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(msg).then(done).catch(function(){btn.textContent=msg;});
+  }else{btn.textContent=msg;}
 });
 
 /* ---------------- clocks ---------------- */

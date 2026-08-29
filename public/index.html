@@ -17,7 +17,9 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="braai.co.za">
 <meta property="og:title" content="braai.co.za — The home of the South African braai">
-<meta property="og:description" content="Fire, wood, meat and the people around it. The definitive South African braai guide.">
+<meta property="og:description" content="The national fire as a sports score, this week's Saturday in rand, and who is braaiing tonight. Fire, wood, meat and the people around it.">
+<meta name="twitter:title" content="braai.co.za — The home of the South African braai">
+<meta name="twitter:description" content="The national fire as a sports score, this week's Saturday in rand, and who is braaiing tonight.">
 <meta property="og:url" content="https://braai.co.za/">
 <meta property="og:image" content="https://braai.co.za/assets/og/home.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -68,14 +70,47 @@
   <div>24 September — Heritage Day. <a href="/braai-day/">Start planning your fire</a></div>
 </div>
 
-<section class="vuur-band">
+<section class="vuur-band" id="vuurBand">
   <div class="wrap">
     <span class="flame-dot" aria-hidden="true"></span>
     <div>
-      <h2>The Braai is <em>burning</em></h2>
-      <p>One communal fire for the whole country, live on this site. It burns down every hour and stays lit only if somebody puts something on it — a word, a braai spot, wood wisdom, a family recipe. If it goes out, the page stays up forever.</p>
+      <h2 id="vuurScoreH">The Braai is <em>burning</em></h2>
+      <p class="score-sent" id="vuurScoreP">One communal fire for the whole country. Fetching the live score&hellip;</p>
     </div>
     <a class="btn" href="/vuur/">Stand around it</a>
+  </div>
+</section>
+
+<section class="sat-os tint">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="overline">Saturday OS</span>
+      <h2>Three things worth forwarding</h2>
+      <p>The fire as a score, the week as a rand figure, the country as a map. Nothing for sale — just things a person would send on a group chat.</p>
+    </div>
+    <div class="grid">
+      <a class="card" href="/vuur/" style="text-decoration:none">
+        <span class="mark">The national fire</span>
+        <p class="num" id="homeFireNum">…</p>
+        <h3>One sentence. Screenshot it.</h3>
+        <p id="homeFireP">The fire is OUT, or it has been lit N hours with N logs. Live on The Braai.</p>
+        <span class="go">Open the scoreboard →</span>
+      </a>
+      <a class="card" href="/braai-index/" style="text-decoration:none">
+        <span class="mark">National Braai Index</span>
+        <p class="num" id="homeIdxNum">R280</p>
+        <h3>This week&rsquo;s Saturday, in rand</h3>
+        <p>1 kg wors, 1 kg pork loin chops, 1 kg chicken braai pack. Latest-known public grocery figures. Not a shop.</p>
+        <span class="go">Read the basket →</span>
+      </a>
+      <a class="card" href="/tonight/" style="text-decoration:none">
+        <span class="mark">Tonight</span>
+        <p class="num" id="homeTnNum">Map</p>
+        <h3>Who is braaiing tonight?</h3>
+        <p>Tap your town. The country lights up. No accounts — counts only, one Saturday at a time.</p>
+        <span class="go">Put your town on it →</span>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -181,7 +216,7 @@
   <div class="wrap">
     <div>
       <strong style="color:var(--cream)">braai.co.za</strong> — Proudly South African.<br>
-      <a href="/what-is-a-braai/">What is a braai?</a> · <a href="/fire/">Wood &amp; Coals</a> · <a href="/cuts/">The Cuts</a> · <a href="/recipes/">Recipes</a> · <a href="/potjie/">Potjie</a> · <a href="/gear/">Gear</a> · <a href="/braaictionary/">Braaictionary</a> · <a href="/vuur/">The Braai</a> · <a href="/braai-day/">Braai Day</a> · <a href="/contribute/">Contribute</a>
+      <a href="/what-is-a-braai/">What is a braai?</a> · <a href="/fire/">Wood &amp; Coals</a> · <a href="/cuts/">The Cuts</a> · <a href="/recipes/">Recipes</a> · <a href="/potjie/">Potjie</a> · <a href="/gear/">Gear</a> · <a href="/braaictionary/">Braaictionary</a> · <a href="/vuur/">The Braai</a> · <a href="/braai-index/">Braai Index</a> · <a href="/tonight/">Tonight</a> · <a href="/braai-day/">Braai Day</a> · <a href="/contribute/">Contribute</a>
     </div>
     <div class="stamp">Build 29 Aug 2026 · v10</div>
   </div>
@@ -200,6 +235,59 @@
   if (days === 0) {
     document.getElementById('countStrip').firstElementChild.innerHTML = '<span class="num">Today</span> is National Braai Day!';
   }
+
+  // Live fire score (GET /api/vuur — never cached)
+  function fireSentence(d) {
+    if (!d || !d.ok) return '';
+    if (d.out) return 'The fire is OUT.';
+    var now = d.now || Math.floor(Date.now() / 1000);
+    var hours = d.fire && d.fire.litAt ? (now - d.fire.litAt) / 3600 : 0;
+    var nLogs = d.count || 0;
+    var logs = nLogs + ' log' + (nLogs === 1 ? '' : 's');
+    if (hours < 1) return 'The fire has been lit under an hour with ' + logs + '.';
+    var n = Math.round(hours);
+    return 'The fire has been lit ' + n + ' hour' + (n === 1 ? '' : 's') + ' with ' + logs + '.';
+  }
+  fetch('/api/vuur', { cache: 'no-store' })
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      var sent = fireSentence(d);
+      if (!sent) return;
+      var band = document.getElementById('vuurBand');
+      var h = document.getElementById('vuurScoreH');
+      var p = document.getElementById('vuurScoreP');
+      var num = document.getElementById('homeFireNum');
+      var hp = document.getElementById('homeFireP');
+      if (d.out) {
+        if (band) band.classList.add('out');
+        if (h) h.innerHTML = 'The Braai is <em>out</em>';
+        if (num) num.textContent = 'OUT';
+      } else {
+        var hrs = d.fire && d.fire.litAt ? Math.max(0, Math.round((d.now - d.fire.litAt) / 3600)) : 0;
+        if (h) h.innerHTML = 'The Braai is <em>burning</em>';
+        if (num) num.textContent = hrs + 'h · ' + (d.count || 0);
+      }
+      if (p) p.textContent = sent;
+      if (hp) hp.textContent = sent;
+    })
+    .catch(function () {});
+
+  fetch('/data/braai-index.json', { cache: 'no-store' })
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      if (d && d.headline) document.getElementById('homeIdxNum').textContent = d.headline;
+    })
+    .catch(function () {});
+
+  fetch('/api/tonight', { cache: 'no-store' })
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      if (!d || !d.ok) return;
+      var el = document.getElementById('homeTnNum');
+      if (!el) return;
+      el.textContent = d.total ? String(d.total) : '0';
+    })
+    .catch(function () {});
 
   // Newsletter signup
   var form = document.getElementById('subForm');

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Who is braaiing tonight? — Saturday heat map | braai.co.za</title>
+<meta name="description" content="One tap: pick your South African town and say you are braaiing. A simple heat map lights up. No accounts. Counts only. Resets each Saturday.">
+<link rel="canonical" href="https://braai.co.za/tonight/">
+<link rel="alternate" hreflang="en" href="https://braai.co.za/tonight/">
+<link rel="alternate" hreflang="x-default" href="https://braai.co.za/tonight/">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#191512">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="braai.co.za">
+<meta property="og:title" content="Who is braaiing tonight? — Saturday heat map">
+<meta property="og:description" content="Tap your town. See the country light up. No accounts, just fires.">
+<meta property="og:url" content="https://braai.co.za/tonight/">
+<meta property="og:image" content="https://braai.co.za/assets/og/home.png">
+<meta property="og:locale" content="en_ZA">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Who is braaiing tonight? — Saturday heat map">
+<meta name="twitter:description" content="Tap your town. See the country light up. No accounts, just fires.">
+<link rel="preload" href="/assets/fonts/fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"Who is braaiing tonight?","url":"https://braai.co.za/tonight/","description":"A Saturday heat map of who is braaiing in South Africa tonight. No accounts, counts only.","inLanguage":"en-ZA","isAccessibleForFree":true}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="braai.co.za home">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 7c1.5 6.5 5.8 9.4 8.9 13.1 3 3.6 4.6 7.4 4.1 12.1-.6 6.2-5 10.6-10.4 11.6 2.1-2.2 3.2-4.6 3.2-7.4 0-4.9-3.6-7.4-5.5-11.8-1.1 2.6-3.4 4.5-4.9 7-1.3 2.1-1.9 4.1-1.7 6.5.2 2.2 1.1 4.1 2.8 5.8-5.5-.9-10-5.4-10.5-11.7-.4-4.5 1.2-8.3 4-11.8C25.2 16.6 30.6 13.6 32 7z" fill="#f49d37"/><rect x="14" y="48" width="36" height="3" rx="1.5" fill="#c89b3c"/><rect x="18" y="54" width="28" height="3" rx="1.5" fill="#7a6d62"/></svg>
+      <span class="word">braai<em>.co.za</em></span>
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="/">Home</a>
+      <a href="/what-is-a-braai/">What is a braai?</a>
+      <a href="/fire/">Wood &amp; Coals</a>
+      <a href="/cuts/">The Cuts</a>
+      <a href="/recipes/">Recipes</a>
+      <a href="/potjie/">Potjie</a>
+      <a href="/gear/">Gear</a>
+      <a href="/vuur/">The Braai</a>
+      <a href="/braai-day/">Braai Day</a>
+    </nav>
+    <div class="lang-sw" aria-label="Language / Taal / Ulimi"><span class="on">EN</span><a href="/af/" lang="af" hreflang="af">AF</a><a href="/zu/" lang="zu" hreflang="zu">ZU</a></div>
+  </div>
+</header>
+
+<div class="hero hero-small" id="main">
+  <span class="overline">Saturday heat map</span>
+  <h1>Who is braaiing <em>tonight</em>?</h1>
+  <p class="lead">One tap. Your town lights up. No accounts, no leaderboard, no fake names — a count, and an optional first name if you want it on the table.</p>
+</div>
+
+<section class="tonight-band">
+  <div class="wrap">
+    <p class="tonight-kicker" id="tnKicker">Saturday window · Africa/Johannesburg</p>
+    <p class="tonight-total" id="tnTotal">…</p>
+    <p class="tonight-sent" id="tnSent">Fetching the map&hellip;</p>
+
+    <form class="tonight-form" id="tnForm" novalidate>
+      <input type="text" name="hp" id="tnHp" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <label for="tnTown">Your town</label>
+      <input id="tnTown" type="text" list="tnTowns" maxlength="40" autocomplete="address-level2" placeholder="Cape Town, Soweto, Gqeberha…">
+      <datalist id="tnTowns"></datalist>
+      <label for="tnWho">First name <span class="opt">(optional)</span></label>
+      <input id="tnWho" type="text" maxlength="40" autocomplete="given-name" placeholder="Leave blank if you like">
+      <button class="btn" type="submit" id="tnGo">I am braaiing</button>
+      <p class="form-note" id="tnNote" aria-live="polite">One tap per connection per Saturday. The map is counts, not a social network.</p>
+    </form>
+
+    <div class="tonight-mapwrap">
+      <svg class="tonight-map" id="tnMap" viewBox="0 0 400 360" role="img" aria-labelledby="tnMapTitle">
+        <title id="tnMapTitle">South Africa, towns lighting up where people said they are braaiing</title>
+        <path class="sa-land" d="M 69.5,310.0 L 59.7,287.7 L 67.3,265.2 L 46.6,221.4 L 29.1,178.5 L 60.9,176.0 L 101.9,174.8 L 104.0,116.0 L 122.4,67.0 L 142.9,30.2 L 204.4,22.9 L 255.7,21.7 L 306.9,22.9 L 333.6,29.0 L 347.9,67.0 L 354.0,103.8 L 365.9,137.8 L 356.5,174.3 L 328.0,210.6 L 316.1,232.1 L 297.5,253.9 L 264.1,288.0 L 216.7,311.0 L 200.9,317.1 L 146.0,316.4 L 102.1,332.3 L 70.5,320.8 Z"/>
+        <g id="tnPins"></g>
+      </svg>
+    </div>
+
+    <ol class="tonight-list" id="tnList"></ol>
+    <noscript><p class="form-note">This map needs JavaScript — it is live, shared state. Without it, know this: pick a town on Saturday and the country lights up, one fire at a time.</p></noscript>
+  </div>
+</section>
+
+<section>
+  <div class="wrap prose">
+    <h2>How the window works</h2>
+    <p>A check-in belongs to <strong>one Saturday</strong>, measured in South African Standard Time (Africa/Johannesburg). From Saturday 00:00 through Sunday 06:00 it is tonight. Any other day, you are saying you will braai this coming Saturday — the map still takes the tap. When the next Saturday key opens, the counts start again. We do not keep a hall of fame.</p>
+    <p>Rate limit is simple: one check-in per connection per Saturday. A first name is optional and never required. There are no accounts, no AI personas, and nobody here is invented so the map looks busy.</p>
+    <p>Afrikaans and isiZulu versions of this page are pending.</p>
+  </div>
+</section>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div>
+      <strong style="color:var(--cream)">braai.co.za</strong> — Proudly South African.<br>
+      <a href="/what-is-a-braai/">What is a braai?</a> · <a href="/fire/">Wood &amp; Coals</a> · <a href="/cuts/">The Cuts</a> · <a href="/recipes/">Recipes</a> · <a href="/potjie/">Potjie</a> · <a href="/gear/">Gear</a> · <a href="/braaictionary/">Braaictionary</a> · <a href="/vuur/">The Braai</a> · <a href="/braai-index/">Braai Index</a> · <a href="/tonight/">Tonight</a> · <a href="/braai-day/">Braai Day</a> · <a href="/contribute/">Contribute</a>
+    </div>
+    <div class="stamp">Build 29 Aug 2026 · v10</div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  var API = '/api/tonight';
+  var catalog = [];
+  var state = null;
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function pinXY(lat, lng) {
+    return [24 + (lng - 16.2) * 20.5, 18 + ((-22.0) - lat) * 24.5];
+  }
+
+  function fillDatalist() {
+    var dl = document.getElementById('tnTowns');
+    dl.innerHTML = catalog.map(function (t) {
+      return '<option value="' + esc(t.name) + '"></option>';
+    }).join('');
+  }
+
+  function render() {
+    if (!state || !state.ok) return;
+    var tonight = !!state.tonight;
+    document.getElementById('tnKicker').textContent =
+      (tonight ? 'Tonight' : 'This coming Saturday') +
+      (state.saturday ? ' · ' + state.saturday : '') +
+      ' · Africa/Johannesburg';
+    var n = state.total || 0;
+    document.getElementById('tnTotal').textContent = n
+      ? (n + ' fire' + (n === 1 ? '' : 's') + ' on the map')
+      : 'The map is still cold';
+    document.getElementById('tnSent').textContent = n
+      ? (tonight
+        ? 'These towns said they are braaiing tonight.'
+        : 'These towns have already put their hand up for Saturday.')
+      : (tonight
+        ? 'Nobody has tapped yet. Be the first fire.'
+        : 'Saturday is coming. Put your town on the map.');
+
+    var pins = document.getElementById('tnPins');
+    pins.innerHTML = (state.towns || []).map(function (t) {
+      if (t.lat == null || t.lng == null) return '';
+      var xy = pinXY(t.lat, t.lng);
+      var r = Math.min(16, 5 + Math.sqrt(t.count) * 3.2);
+      return '<circle class="sa-pin" cx="' + xy[0].toFixed(1) + '" cy="' + xy[1].toFixed(1) +
+        '" r="' + r.toFixed(1) + '" data-n="' + t.count + '">' +
+        '<title>' + esc(t.name) + ' · ' + t.count + '</title></circle>';
+    }).join('');
+
+    var list = document.getElementById('tnList');
+    if (!state.towns || !state.towns.length) {
+      list.innerHTML = '';
+      return;
+    }
+    list.innerHTML = state.towns.map(function (t) {
+      return '<li><span class="tn-name">' + esc(t.name) + '</span><span class="tn-n">' + t.count + '</span></li>';
+    }).join('');
+  }
+
+  function apply(d) {
+    if (!d || !d.ok) return;
+    state = d;
+    render();
+  }
+
+  function load() {
+    return fetch(API, { cache: 'no-store' })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (!d.ok) throw new Error(d.error || 'Unreachable');
+        apply(d);
+        document.getElementById('tnNote').textContent =
+          d.already
+            ? 'You are already on this Saturday\'s map. One tap is enough.'
+            : 'One tap per connection per Saturday. The map is counts, not a social network.';
+      })
+      .catch(function () {
+        document.getElementById('tnSent').textContent =
+          'The map is briefly unreachable. The country is unbothered — try again in a minute.';
+      });
+  }
+
+  fetch('/data/sa-towns.json', { cache: 'force-cache' })
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      catalog = d.towns || [];
+      fillDatalist();
+    })
+    .catch(function () {});
+
+  document.getElementById('tnForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var town = document.getElementById('tnTown').value.trim();
+    var who = document.getElementById('tnWho').value.trim();
+    var note = document.getElementById('tnNote');
+    var go = document.getElementById('tnGo');
+    if (town.length < 2) {
+      note.textContent = 'Which town? The map needs a place.';
+      return;
+    }
+    go.disabled = true;
+    fetch(API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        town: town,
+        who: who,
+        hp: document.getElementById('tnHp').value || ''
+      })
+    }).then(function (r) { return r.json(); }).then(function (d) {
+      go.disabled = false;
+      if (!d.ok) {
+        note.textContent = d.error || 'That did not work. Try again in a minute.';
+        return;
+      }
+      apply(d);
+      try { localStorage.setItem('tonight-sat', d.saturday || ''); } catch (err) {}
+      note.textContent = d.already
+        ? 'You were already on the map for this Saturday. One tap is enough.'
+        : 'Lekker. ' + town + ' is on the map.';
+    }).catch(function () {
+      go.disabled = false;
+      note.textContent = 'The map is briefly unreachable. Try again in a minute.';
+    });
+  });
+
+  load();
+})();
+</script>
+
+<script>if('serviceWorker' in navigator){addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')})}</script>
+</body>
+</html>

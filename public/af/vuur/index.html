@@ -16,11 +16,13 @@
 <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="braai.co.za">
-<meta property="og:title" content="Die Braai — een vuur, deur almal aan die lewe gehou">
-<meta property="og:description" content="Dit brand elke uur af. Dit bly net brand as iemand dit voer. Sit iets op die vuur.">
+<meta property="og:title" content="Die nasionale vuur — is dit UIT, of brand dit nog?">
+<meta property="og:description" content="'n Sin wat jy aanstuur: die vuur is UIT, of dit brand al N uur met N stompe. Een vuur vir die hele land.">
 <meta property="og:url" content="https://braai.co.za/af/vuur/">
 <meta property="og:image" content="https://braai.co.za/assets/og/vuur.png">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Die nasionale vuur — is dit UIT, of brand dit nog?">
+<meta name="twitter:description" content="'n Sin wat jy aanstuur: die vuur is UIT, of dit brand al N uur met N stompe.">
 <link rel="preload" href="/assets/fonts/fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
 <style>
@@ -96,6 +98,30 @@ a{color:var(--flame)}
 .gauge-track{height:8px;background:var(--char-4);border-radius:999px;overflow:hidden}
 .gauge-fill{height:100%;width:0;border-radius:999px;transition:width .5s ease,background .5s ease}
 .gauge-note{font-size:.78rem;color:var(--smoke);margin-top:8px}
+
+.scoreboard{background:var(--char);padding:8px 20px 28px}
+.score-card{
+  max-width:var(--maxw);margin:0 auto;text-align:center;
+  background:var(--char-2);border:1px solid rgba(244,157,55,.22);
+  border-radius:18px;padding:26px 22px 22px;
+}
+.score-kicker{font-size:.66rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.score-line{
+  font-family:'Fraunces',Georgia,serif;
+  font-size:clamp(1.7rem,6.6vw,2.55rem);
+  font-weight:700;line-height:1.18;color:var(--cream);text-wrap:balance;
+}
+.score-line em{font-style:normal;color:var(--flame)}
+.score-card.out .score-line{color:var(--smoke-2)}
+.score-card.out .score-line em{color:var(--smoke-2)}
+.score-stamp{margin-top:14px;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--smoke)}
+.score-copy{
+  display:block;margin:14px auto 0;background:transparent;
+  border:1px solid rgba(244,157,55,.35);color:var(--flame);
+  border-radius:999px;padding:10px 18px;font-weight:600;cursor:pointer;min-height:44px;
+}
+.score-copy:hover{background:rgba(244,157,55,.1)}
+.score-copy:focus-visible{outline:2px solid var(--flame);outline-offset:2px}
 
 /* ---------- feed ---------- */
 main{padding:30px 0 70px}
@@ -266,6 +292,15 @@ main{padding:30px 0 70px}
     </div>
     <div class="gauge-track"><div class="gauge-fill" id="gFill"></div></div>
     <p class="gauge-note" id="gNote">Dit is een vuur, gedeel deur almal wat hierdie bladsy lees. Dit brand op die oomblik regtig af.</p>
+  </div>
+</div>
+
+<div class="scoreboard">
+  <div class="score-card" id="scoreCard">
+    <p class="score-kicker">Nasionale vuur · sporttelling</p>
+    <p class="score-line" id="scoreLine">Gaan haal die vuur&hellip;</p>
+    <p class="score-stamp">braai.co.za/af/vuur</p>
+    <button type="button" class="score-copy" id="scoreCopy">Kopieer vir WhatsApp</button>
   </div>
 </div>
 
@@ -576,6 +611,17 @@ function humanAge(h){
   return n+' '+u;
 }
 
+function scoreSentence(){
+  if(!S)return '';
+  if(S.out)return 'Die vuur is UIT.';
+  var logs=S.count||0;
+  var logWord=logs===1?'stomp':'stompe';
+  var h=ageH();
+  if(h<1)return 'Die vuur brand al minder as \'n uur met '+logs+' '+logWord+'.';
+  var n=Math.round(h);
+  return 'Die vuur brand al '+n+' '+(n===1?'uur':'ure')+' met '+logs+' '+logWord+'.';
+}
+
 function render(){
   if(!S)return;
   var st=stateOf();
@@ -585,6 +631,21 @@ function render(){
   var age=document.getElementById('fAge');
   if(S.out){age.innerHTML='Hierdie vuur is <em>uit</em>';}
   else{age.innerHTML='Brand al <em>'+humanAge(ageH())+'</em>';}
+
+  var card=document.getElementById('scoreCard');
+  var line=document.getElementById('scoreLine');
+  var logs=S.count||0;
+  var logWord=logs===1?'stomp':'stompe';
+  var h=ageH();
+  if(line){
+    if(S.out){line.innerHTML='Die vuur is <em>UIT</em>.';}
+    else if(h<1){line.innerHTML='Die vuur brand al <em>minder as \'n uur</em> met '+logs+' '+logWord+'.';}
+    else{
+      var n=Math.round(h);
+      line.innerHTML='Die vuur brand al <em>'+n+' '+(n===1?'uur':'ure')+'</em> met '+logs+' '+logWord+'.';
+    }
+  }
+  if(card){if(S.out)card.classList.add('out');else card.classList.remove('out');}
 
   document.getElementById('fNo').textContent='Braai Nr. '+S.fire.no+' · een vuur vir die hele land';
 
@@ -735,6 +796,17 @@ document.getElementById('sGo').addEventListener('click',function(){
     sheet.hidden=true;
     S=d;fetchedAt=Date.now();render();
   });
+});
+
+document.getElementById('scoreCopy').addEventListener('click',function(){
+  var t=scoreSentence()||(document.getElementById('scoreLine').textContent||'').trim();
+  if(!t)return;
+  var msg=t+' https://braai.co.za/af/vuur/';
+  var btn=document.getElementById('scoreCopy');
+  var done=function(){btn.textContent='Gekopieer — plak in WhatsApp';setTimeout(function(){btn.textContent='Kopieer vir WhatsApp';},2400);};
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(msg).then(done).catch(function(){btn.textContent=msg;});
+  }else{btn.textContent=msg;}
 });
 
 /* ---------------- clocks ---------------- */

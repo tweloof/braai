@@ -748,3 +748,154 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   padding: 14px 20px;
 }
 .trans-note a { color: var(--flame); }
+
+/* ---------- Saturday OS: live fire score, Braai Index, tonight map ---------- */
+
+.vuur-band .score-sent {
+  font-family: 'Fraunces', Georgia, serif;
+  color: var(--cream);
+  font-size: clamp(1.15rem, 2.6vw, 1.45rem);
+  font-weight: 600;
+  margin: 0 0 6px;
+  max-width: 40ch;
+}
+.vuur-band.out .flame-dot {
+  background: var(--smoke);
+  box-shadow: none;
+  animation: none;
+}
+.vuur-band .score-sent em { font-style: normal; color: var(--flame); }
+
+.sat-os { padding: 56px 0; }
+.sat-os .grid { align-items: stretch; }
+.sat-os .card .num {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(2rem, 4vw, 2.6rem);
+  font-weight: 700;
+  color: var(--ember);
+  line-height: 1.05;
+  margin: 8px 0 10px;
+}
+.sat-os .card .mark {
+  font-size: .75rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--smoke);
+  font-weight: 700;
+}
+
+.index-band {
+  background: var(--char);
+  color: var(--cream);
+  text-align: center;
+  padding: 56px 24px 64px;
+  border-top: 1px solid rgba(244, 157, 55, .18);
+}
+.index-kicker, .tonight-kicker {
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+.index-rand {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(4.2rem, 16vw, 8rem);
+  font-weight: 700;
+  line-height: .95;
+  color: var(--flame);
+  margin: 0 0 16px;
+}
+.index-sent, .tonight-sent {
+  font-size: 1.12rem;
+  color: var(--cream-3);
+  max-width: 40ch;
+  margin: 0 auto 10px;
+}
+.index-mark {
+  font-size: .82rem;
+  color: var(--smoke-2);
+}
+
+.tonight-band {
+  background: var(--char);
+  color: var(--cream);
+  padding: 48px 0 64px;
+  border-top: 1px solid rgba(244, 157, 55, .18);
+}
+.tonight-total {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  font-weight: 700;
+  color: var(--cream);
+  margin: 0 0 8px;
+}
+.tonight-form {
+  display: grid;
+  gap: 8px;
+  max-width: 420px;
+  margin: 28px 0 36px;
+}
+.tonight-form label { font-weight: 600; font-size: .9rem; color: var(--cream-2); }
+.tonight-form .opt { font-weight: 400; color: var(--smoke-2); }
+.tonight-form input[type=text] {
+  font: inherit;
+  padding: 12px 14px;
+  border-radius: 11px;
+  border: 1.5px solid rgba(244, 157, 55, .28);
+  background: var(--char-2);
+  color: var(--cream);
+  min-height: 48px;
+}
+.tonight-form .btn { justify-self: start; margin-top: 8px; }
+.tonight-form .hp-field {
+  position: absolute;
+  left: -9999px;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+}
+.tonight-mapwrap {
+  background: var(--char-2);
+  border: 1px solid rgba(244, 157, 55, .16);
+  border-radius: 16px;
+  padding: 12px;
+  margin-bottom: 28px;
+}
+.tonight-map { width: 100%; height: auto; display: block; max-width: 720px; margin: 0 auto; }
+.tonight-map .sa-land {
+  fill: #2e2620;
+  stroke: rgba(244, 157, 55, .35);
+  stroke-width: 1.6;
+}
+.tonight-map .sa-pin {
+  fill: #d04912;
+  stroke: #f49d37;
+  stroke-width: 1.2;
+  opacity: .92;
+}
+.tonight-list {
+  list-style: none;
+  max-width: 520px;
+  margin: 0;
+  padding: 0;
+}
+.tonight-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(244, 157, 55, .12);
+  color: var(--cream-3);
+}
+.tonight-list .tn-name { font-weight: 600; color: var(--cream); }
+.tonight-list .tn-n {
+  font-variant-numeric: tabular-nums;
+  color: var(--flame);
+  font-weight: 700;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vuur-band .flame-dot { animation: none; }
+}

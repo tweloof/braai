@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>National Braai Index — this week’s family Saturday fire | braai.co.za</title>
-<meta name="description" content="One number: the rand cost of a family Saturday braai this week. Basket v1 is 1 kg boerewors, 1 kg bone-in pork loin chops and 1 kg chicken. Missing prices stay gaps — we do not guess.">
+<meta name="description" content="This week’s family Saturday braai is R254.98. Basket v1: 1 kg boerewors, 1 kg bone-in pork loin chops and 1 kg chicken braai pack, from confirmed public guest prices in Vryheid.">
 <link rel="canonical" href="https://braai.co.za/braai-index/">
 <link rel="alternate" hreflang="en" href="https://braai.co.za/braai-index/">
 <link rel="alternate" hreflang="x-default" href="https://braai.co.za/braai-index/">
@@ -15,7 +15,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="braai.co.za">
 <meta property="og:title" content="National Braai Index — this week’s family Saturday fire">
-<meta property="og:description" content="One number for the country. Basket v1, confirmed public guest prices only. Gaps stay gaps.">
+<meta property="og:description" content="This week’s family Saturday fire is R254.98. Three confirmed kilos. Not a shop.">
 <meta property="og:url" content="https://braai.co.za/braai-index/">
 <meta property="og:image" content="https://braai.co.za/assets/og/home.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -23,7 +23,7 @@
 <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/style.css">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebPage","name":"National Braai Index","url":"https://braai.co.za/braai-index/","description":"The rand cost of a family Saturday braai this week, published from confirmed public guest prices only.","inLanguage":"en-ZA","isPartOf":{"@type":"WebSite","name":"braai.co.za","url":"https://braai.co.za/"}}
+{"@context":"https://schema.org","@type":"WebPage","name":"National Braai Index","url":"https://braai.co.za/braai-index/","description":"This week’s family Saturday braai is R254.98, published from confirmed public guest prices only.","inLanguage":"en-ZA","isPartOf":{"@type":"WebSite","name":"braai.co.za","url":"https://braai.co.za/"}}
 </script>
 </head>
 <body>
@@ -54,9 +54,9 @@
 <div class="hero idx-hero" id="main">
   <span class="overline">National Braai Index · basket v1</span>
   <p class="idx-kicker" id="idxKicker">This week’s family braai</p>
-  <p class="idx-rand" id="idxRand" aria-live="polite">R—</p>
-  <p class="idx-week" id="idxWeek">Loading this week’s number&hellip;</p>
-  <p class="lead idx-lead" id="idxLead">One number for the country. Confirmed public guest prices only. If a line is missing, the index waits — it does not invent a rand.</p>
+  <p class="idx-rand" id="idxRand" aria-live="polite">R254.98</p>
+  <p class="idx-week" id="idxWeek">24–30 August 2026 · basket v1, complete</p>
+  <p class="lead idx-lead" id="idxLead">This week’s family Saturday fire, as three confirmed kilos of meat. Citations, not a shop.</p>
 </div>
 
 <section>
@@ -134,12 +134,13 @@
         if (it.zar != null && it.store) {
           var when = it.as_of ? ' · ' + esc(it.as_of) : '';
           if (it.url) {
-            cite = '<span class="idx-cite">Citation: <a href="' + esc(it.url) + '">' + esc(it.store) + '</a>' + when + '</span>';
+            cite = '<span class="idx-cite">Citation: <a href="' + esc(it.url) + '" rel="noopener noreferrer">' + esc(it.store) + '</a>' + when + '</span>';
           } else {
             cite = '<span class="idx-cite">Citation: ' + esc(it.store) + when + '</span>';
           }
         }
-        var extra = it.gap ? '<span class="idx-cite">' + esc(it.gap) + '</span>' : '';
+        var extra = it.product ? '<span class="idx-cite">' + esc(it.product) + '</span>' : '';
+        if (it.gap) extra += '<span class="idx-cite">' + esc(it.gap) + '</span>';
         if (it.note) extra += '<span class="idx-cite">' + esc(it.note) + '</span>';
         return '<li><div class="idx-line-top"><span>' + esc(it.name) + '</span>' + price + '</div>' + cite + extra + '</li>';
       }).join('');

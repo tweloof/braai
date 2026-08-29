@@ -1,9 +1,9 @@
-// braai.co.za service worker — v9
+// braai.co.za service worker — v11
 // Pages: network-first with cache fallback (so the braai is always fresh).
 // Assets: cache-first (fonts, CSS, diagrams, icons rarely change).
-// /api/  : never touched — the fire's shared state must always be live.
+// /api/  : never touched — vuur and tonight shared state must always be live.
 
-var VERSION = 'braai-v9a';
+var VERSION = 'braai-v11';
 var PRECACHE = [
   '/offline',
   '/assets/style.css',

@@ -732,6 +732,129 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
 @media (max-width: 640px) { .vuur-band .btn { margin-left: 0; } }
 @media (prefers-reduced-motion: reduce) { .vuur-band .flame-dot { animation: none; } }
 
+.vuur-band .vuur-score {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(1.35rem, 3.6vw, 2.05rem);
+  font-weight: 700;
+  color: var(--cream);
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  line-height: 1.12;
+  margin: 0 0 6px;
+  user-select: all;
+}
+.vuur-band .vuur-score em { font-style: normal; color: var(--flame); }
+.vuur-band.is-out .flame-dot { background: #695d52; box-shadow: none; animation: none; }
+.vuur-band.is-out .vuur-score { color: var(--smoke-2); }
+
+/* ---------- v11: weekend pair (index + tonight) ---------- */
+.viral-pair .wrap {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: 1fr 1fr;
+  padding-top: 28px;
+  padding-bottom: 8px;
+}
+@media (max-width: 700px) { .viral-pair .wrap { grid-template-columns: 1fr; } }
+.viral-card {
+  display: block;
+  background: var(--char);
+  color: var(--cream-3);
+  border-radius: 16px;
+  padding: 26px 24px 22px;
+  text-decoration: none !important;
+  border: 1px solid rgba(244, 157, 55, .18);
+  min-height: 148px;
+}
+.viral-card:hover { border-color: rgba(244, 157, 55, .45); }
+.viral-card .overline { color: var(--flame); margin-bottom: 8px; }
+.viral-card b {
+  display: block;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(1.7rem, 4vw, 2.4rem);
+  font-weight: 700;
+  color: var(--cream);
+  line-height: 1.05;
+  margin: 4px 0 8px;
+}
+.viral-card span.vsub { font-size: .92rem; color: var(--smoke-2); }
+
+/* ---------- v11: National Braai Index ---------- */
+.idx-hero { padding-bottom: 72px; }
+.idx-kicker {
+  font-size: .95rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--cream-3);
+  margin: 10px 0 8px;
+}
+.idx-rand {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(4.2rem, 16vw, 8rem);
+  font-weight: 700;
+  color: var(--flame);
+  line-height: .92;
+  margin: 0 0 12px;
+  user-select: all;
+}
+.idx-week { color: var(--cream); font-weight: 600; margin-bottom: 14px; }
+.idx-lead { margin-bottom: 0; }
+.idx-lines { list-style: none; margin: 0 0 28px; padding: 0; }
+.idx-lines li {
+  background: #fff;
+  border: 1px solid var(--cream-3);
+  border-radius: 14px;
+  padding: 16px 18px;
+  margin-bottom: 10px;
+}
+.idx-line-top { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; font-weight: 600; }
+.idx-line-top b { font-family: 'Fraunces', Georgia, serif; font-size: 1.35rem; color: var(--ember); }
+.idx-per { font-weight: 500; color: var(--smoke); font-size: .9rem; }
+.idx-cite { display: block; font-size: .84rem; color: var(--smoke); margin-top: 6px; }
+.idx-gap-flag {
+  font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--ember); border: 1px solid rgba(208,73,18,.35); border-radius: 999px; padding: 3px 10px;
+}
+.idx-gaps { background: var(--cream-2); border-radius: 14px; padding: 18px 20px; margin: 20px 0; }
+.idx-gaps ul { margin-bottom: 0; }
+.idx-source { font-size: .88rem; color: var(--smoke); }
+.idx-comp { font-size: .92rem; color: var(--smoke); }
+
+/* ---------- v11: Tonight heat ---------- */
+.tn-tap { padding-top: 36px; padding-bottom: 12px; }
+.tn-form { max-width: 560px; display: flex; flex-direction: column; gap: 8px; }
+.tn-form label { font-weight: 600; }
+.tn-form input[type=text], .tn-form input:not([type]), .tn-form #tnTown {
+  font: inherit; padding: 13px 16px; border: 1.5px solid #d9cec1; border-radius: 12px; min-height: 50px;
+}
+.tn-form .btn { align-self: flex-start; margin-top: 8px; }
+.tn-form .hp-field { position: absolute; left: -9999px; height: 1px; width: 1px; overflow: hidden; }
+.tn-board {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(180px, .7fr);
+  gap: 22px;
+  align-items: center;
+  margin-bottom: 28px;
+}
+@media (max-width: 720px) { .tn-board { grid-template-columns: 1fr; } }
+.tn-svg { width: 100%; height: auto; background: var(--char); border-radius: 16px; }
+.tn-svg .tn-prov { fill: #2e2620; stroke: rgba(244,157,55,.22); stroke-width: 1.5; }
+.tn-svg text { fill: #faf4e8; font-size: 13px; font-weight: 700; font-family: Inter, sans-serif; pointer-events: none; }
+.tn-legend { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; font-size: .88rem; }
+.tn-legend li { display: flex; gap: 8px; color: var(--smoke); }
+.tn-legend b { width: 2.4em; color: var(--char); }
+.tn-legend span { margin-left: auto; font-variant-numeric: tabular-nums; font-weight: 700; color: var(--ember); }
+.tn-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.tn-list li {
+  position: relative; display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 14px; border-radius: 12px; overflow: hidden; background: #fff; border: 1px solid var(--cream-3);
+}
+.tn-list li.tn-you { border-color: var(--flame); }
+.tn-bar { position: absolute; inset: 0 auto 0 0; background: rgba(208,73,18,.12); z-index: 0; }
+.tn-name, .tn-n { position: relative; z-index: 1; font-weight: 600; }
+.tn-n { font-variant-numeric: tabular-nums; color: var(--ember); }
+.tn-empty { color: var(--smoke); font-size: .95rem; }
+
 /* ---------- v8: language switcher ---------- */
 .lang-sw { display: flex; gap: 4px; align-items: center; font-size: .74rem; font-weight: 700; letter-spacing: .04em; }
 .lang-sw a, .lang-sw .on { padding: 4px 9px; border-radius: 999px; text-decoration: none !important; color: var(--smoke-2); }

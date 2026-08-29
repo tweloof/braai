@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tonight — who is braaiing in South Africa | braai.co.za</title>
+<meta name="description" content="One tap: pick your South African town and say you’re braaiing tonight. No accounts, no fake people. Midnight SAST the slate wipes itself.">
+<link rel="canonical" href="https://braai.co.za/tonight/">
+<link rel="alternate" hreflang="en" href="https://braai.co.za/tonight/">
+<link rel="alternate" hreflang="x-default" href="https://braai.co.za/tonight/">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#191512">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="braai.co.za">
+<meta property="og:title" content="Tonight — who is braaiing in South Africa">
+<meta property="og:description" content="A Saturday heat map of real towns, wiped at midnight SAST. No accounts. No personas.">
+<meta property="og:url" content="https://braai.co.za/tonight/">
+<meta property="og:image" content="https://braai.co.za/assets/og/vuur.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="/assets/fonts/fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"Tonight — who is braaiing","url":"https://braai.co.za/tonight/","description":"A live count of South African towns where someone has said they are braaiing tonight.","inLanguage":"en-ZA","isPartOf":{"@type":"WebSite","name":"braai.co.za","url":"https://braai.co.za/"}}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="braai.co.za home">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 7c1.5 6.5 5.8 9.4 8.9 13.1 3 3.6 4.6 7.4 4.1 12.1-.6 6.2-5 10.6-10.4 11.6 2.1-2.2 3.2-4.6 3.2-7.4 0-4.9-3.6-7.4-5.5-11.8-1.1 2.6-3.4 4.5-4.9 7-1.3 2.1-1.9 4.1-1.7 6.5.2 2.2 1.1 4.1 2.8 5.8-5.5-.9-10-5.4-10.5-11.7-.4-4.5 1.2-8.3 4-11.8C25.2 16.6 30.6 13.6 32 7z" fill="#f49d37"/><rect x="14" y="48" width="36" height="3" rx="1.5" fill="#c89b3c"/><rect x="18" y="54" width="28" height="3" rx="1.5" fill="#7a6d62"/></svg>
+      <span class="word">braai<em>.co.za</em></span>
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="/">Home</a>
+      <a href="/what-is-a-braai/">What is a braai?</a>
+      <a href="/fire/">Wood &amp; Coals</a>
+      <a href="/cuts/">The Cuts</a>
+      <a href="/recipes/">Recipes</a>
+      <a href="/potjie/">Potjie</a>
+      <a href="/gear/">Gear</a>
+      <a href="/vuur/">The Braai</a>
+      <a href="/braai-day/">Braai Day</a>
+    </nav>
+    <div class="lang-sw" aria-label="Language / Taal / Ulimi"><span class="on">EN</span><a href="/af/" lang="af" hreflang="af">AF</a><a href="/zu/" lang="zu" hreflang="zu">ZU</a></div>
+  </div>
+</header>
+
+<div class="hero hero-small tn-hero" id="main">
+  <span class="overline">Saturday heat · SAST</span>
+  <h1>Who is braaiing <em>tonight</em>?</h1>
+  <p class="lead">One tap. Your town. No account, no persona, no made-up neighbour in Sandton. If you are lighting a fire, say so. Midnight SAST the map goes cold and starts again.</p>
+</div>
+
+<section class="tn-tap">
+  <div class="wrap">
+    <form class="tn-form" id="tnForm" novalidate>
+      <label for="tnTown">Your town</label>
+      <input id="tnTown" name="town" list="tnTowns" maxlength="40" autocomplete="address-level2" placeholder="Pretoria, Stellenbosch, Vryheid…">
+      <datalist id="tnTowns"></datalist>
+      <div class="hp-field" aria-hidden="true"><label for="tnHp">Website</label><input id="tnHp" type="text" tabindex="-1" autocomplete="off"></div>
+      <button class="btn" type="submit" id="tnGo">I’m braaiing tonight</button>
+      <p class="form-note" id="tnNote" aria-live="polite">Pick a town from the list or type one. We count towns, not names.</p>
+    </form>
+  </div>
+</section>
+
+<section class="tint">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="overline">The heat</span>
+      <h2 id="tnHead">Nobody has spoken yet</h2>
+      <p id="tnSub">This is today’s SAST slate. It is empty until a real person taps.</p>
+    </div>
+
+    <div class="tn-board" aria-label="South Africa by province">
+      <svg class="tn-svg" viewBox="0 0 360 300" role="img" aria-labelledby="tnSvgTitle">
+        <title id="tnSvgTitle">South Africa, nine provinces, coloured by how many people said they are braaiing tonight</title>
+        <rect class="tn-prov" data-p="LP" x="168" y="18" width="86" height="52" rx="10"/>
+        <rect class="tn-prov" data-p="NW" x="78" y="62" width="86" height="52" rx="10"/>
+        <rect class="tn-prov" data-p="GP" x="172" y="78" width="52" height="40" rx="10"/>
+        <rect class="tn-prov" data-p="MP" x="232" y="70" width="78" height="50" rx="10"/>
+        <rect class="tn-prov" data-p="FS" x="118" y="122" width="96" height="52" rx="10"/>
+        <rect class="tn-prov" data-p="KZN" x="222" y="128" width="88" height="70" rx="10"/>
+        <rect class="tn-prov" data-p="NC" x="28" y="122" width="82" height="100" rx="10"/>
+        <rect class="tn-prov" data-p="EC" x="118" y="182" width="96" height="64" rx="10"/>
+        <rect class="tn-prov" data-p="WC" x="36" y="230" width="74" height="52" rx="10"/>
+        <text x="211" y="48" text-anchor="middle">LP</text>
+        <text x="121" y="92" text-anchor="middle">NW</text>
+        <text x="198" y="102" text-anchor="middle">GP</text>
+        <text x="271" y="98" text-anchor="middle">MP</text>
+        <text x="166" y="152" text-anchor="middle">FS</text>
+        <text x="266" y="168" text-anchor="middle">KZN</text>
+        <text x="69" y="176" text-anchor="middle">NC</text>
+        <text x="166" y="218" text-anchor="middle">EC</text>
+        <text x="73" y="260" text-anchor="middle">WC</text>
+      </svg>
+      <ol class="tn-legend" id="tnLegend"></ol>
+    </div>
+
+    <ol class="tn-list" id="tnList" aria-live="polite"></ol>
+    <p class="tn-empty" id="tnEmpty">The country is quiet on this page. Be the first town, if the fire is really going.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap prose">
+    <h2>The rules of tonight</h2>
+    <ul>
+      <li>No accounts. We do not store your name.</li>
+      <li>No fake people, no AI neighbours, no “someone in Joburg”. A tap is a person at a browser.</li>
+      <li>One honest tap. The function rate-limits a connection; your phone also remembers the day.</li>
+      <li>Midnight SAST — 00:00 in Johannesburg, Cape Town, Durban — wipes the day. Tomorrow is a new fire.</li>
+    </ul>
+    <p>Afrikaans and isiZulu editions of this page are pending. The live count is the same for every language.</p>
+  </div>
+</section>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div>
+      <strong style="color:var(--cream)">braai.co.za</strong> — Proudly South African.<br>
+      <a href="/what-is-a-braai/">What is a braai?</a> · <a href="/fire/">Wood &amp; Coals</a> · <a href="/cuts/">The Cuts</a> · <a href="/recipes/">Recipes</a> · <a href="/potjie/">Potjie</a> · <a href="/gear/">Gear</a> · <a href="/braaictionary/">Braaictionary</a> · <a href="/vuur/">The Braai</a> · <a href="/braai-day/">Braai Day</a> · <a href="/braai-index/">Braai Index</a> · <a href="/tonight/">Tonight</a> · <a href="/contribute/">Contribute</a>
+    </div>
+    <div class="stamp">Build 29 Aug 2026 · v11</div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  var API = '/api/tonight';
+  var TOWNS = [
+    'Cape Town','Stellenbosch','Paarl','Somerset West','Bellville','Hermanus','George','Knysna','Mossel Bay','Oudtshoorn','Beaufort West','Saldanha',
+    'Gqeberha','Kariega','Jeffreys Bay','Makhanda','East London','Mthatha','Qonce','Komani','Graaff-Reinet',
+    'Durban','Pietermaritzburg','Umhlanga','Ballito','Richards Bay','Newcastle','Ladysmith','Vryheid','Port Shepstone','Howick',
+    'Johannesburg','Soweto','Sandton','Pretoria','Centurion','Midrand','Krugersdorp','Roodepoort','Benoni','Boksburg','Germiston','Vereeniging','Vanderbijlpark',
+    'Bloemfontein','Welkom','Bethlehem','Kroonstad','Harrismith',
+    'Kimberley','Upington','Springbok','Kuruman',
+    'Mahikeng','Rustenburg','Klerksdorp','Potchefstroom','Brits',
+    'Polokwane','Tzaneen','Musina','Thohoyandou',
+    'Mbombela','eMalahleni','Middelburg','Secunda'
+  ];
+  var PROV = {
+    'Cape Town':'WC','Stellenbosch':'WC','Paarl':'WC','Somerset West':'WC','Bellville':'WC','Hermanus':'WC','George':'WC','Knysna':'WC','Mossel Bay':'WC','Oudtshoorn':'WC','Beaufort West':'WC','Saldanha':'WC',
+    'Gqeberha':'EC','Kariega':'EC','Jeffreys Bay':'EC','Makhanda':'EC','East London':'EC','Mthatha':'EC','Qonce':'EC','Komani':'EC','Graaff-Reinet':'EC',
+    'Durban':'KZN','Pietermaritzburg':'KZN','Umhlanga':'KZN','Ballito':'KZN','Richards Bay':'KZN','Newcastle':'KZN','Ladysmith':'KZN','Vryheid':'KZN','Port Shepstone':'KZN','Howick':'KZN',
+    'Johannesburg':'GP','Soweto':'GP','Sandton':'GP','Pretoria':'GP','Centurion':'GP','Midrand':'GP','Krugersdorp':'GP','Roodepoort':'GP','Benoni':'GP','Boksburg':'GP','Germiston':'GP','Vereeniging':'GP','Vanderbijlpark':'GP',
+    'Bloemfontein':'FS','Welkom':'FS','Bethlehem':'FS','Kroonstad':'FS','Harrismith':'FS',
+    'Kimberley':'NC','Upington':'NC','Springbok':'NC','Kuruman':'NC',
+    'Mahikeng':'NW','Rustenburg':'NW','Klerksdorp':'NW','Potchefstroom':'NW','Brits':'NW',
+    'Polokwane':'LP','Tzaneen':'LP','Musina':'LP','Thohoyandou':'LP',
+    'Mbombela':'MP','eMalahleni':'MP','Middelburg':'MP','Secunda':'MP'
+  };
+  var PNAMES = {WC:'Western Cape',EC:'Eastern Cape',NC:'Northern Cape',FS:'Free State',KZN:'KwaZulu-Natal',GP:'Gauteng',MP:'Mpumalanga',LP:'Limpopo',NW:'North West'};
+
+  var dl = document.getElementById('tnTowns');
+  dl.innerHTML = TOWNS.map(function (t) { return '<option value="' + t.replace(/"/g, '&quot;') + '">'; }).join('');
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function sastDay() {
+    return new Date(Date.now() + 2 * 3600 * 1000).toISOString().slice(0, 10);
+  }
+  function storageKey() { return 'tonight-' + sastDay(); }
+  function already() {
+    try { return localStorage.getItem(storageKey()) || ''; } catch (e) { return ''; }
+  }
+  function remember(town) {
+    try { localStorage.setItem(storageKey(), town); } catch (e) {}
+  }
+
+  function paint(d) {
+    if (!d || !d.ok) return;
+    var total = d.total || 0;
+    var towns = d.towns || [];
+    var head = document.getElementById('tnHead');
+    var sub = document.getElementById('tnSub');
+    if (total === 0) {
+      head.textContent = 'Nobody has spoken yet';
+      sub.textContent = 'SAST day ' + d.day + '. The slate is clean.';
+    } else {
+      head.textContent = total + (total === 1 ? ' fire' : ' fires') + ' tonight';
+      sub.textContent = 'SAST day ' + d.day + ' · ' + towns.length + (towns.length === 1 ? ' town' : ' towns') + '. Real taps only.';
+    }
+
+    var byP = {WC:0,EC:0,NC:0,FS:0,KZN:0,GP:0,MP:0,LP:0,NW:0};
+    var maxT = 1;
+    towns.forEach(function (t) {
+      var p = PROV[t.town] || '??';
+      if (byP[p] != null) byP[p] += t.n;
+      if (t.n > maxT) maxT = t.n;
+    });
+    var maxP = 1;
+    Object.keys(byP).forEach(function (k) { if (byP[k] > maxP) maxP = byP[k]; });
+
+    document.querySelectorAll('.tn-prov').forEach(function (el) {
+      var n = byP[el.getAttribute('data-p')] || 0;
+      var t = n / maxP;
+      el.style.fill = n === 0
+        ? '#2e2620'
+        : 'rgb(' + Math.round(80 + t * 128) + ',' + Math.round(40 + t * 30) + ',' + Math.round(20 + t * 10) + ')';
+      el.style.stroke = n === 0 ? 'rgba(244,157,55,.22)' : 'rgba(244,157,55,.55)';
+    });
+
+    var legend = document.getElementById('tnLegend');
+    legend.innerHTML = Object.keys(PNAMES).map(function (k) {
+      return '<li><b>' + k + '</b> ' + esc(PNAMES[k]) + ' <span>' + byP[k] + '</span></li>';
+    }).join('');
+
+    var list = document.getElementById('tnList');
+    var empty = document.getElementById('tnEmpty');
+    if (!towns.length) {
+      list.innerHTML = '';
+      empty.hidden = false;
+      return;
+    }
+    empty.hidden = true;
+    list.innerHTML = towns.map(function (t) {
+      var w = Math.max(8, Math.round((t.n / maxT) * 100));
+      var you = already() && already().toLowerCase() === String(t.town).toLowerCase() ? ' tn-you' : '';
+      return '<li class="' + you + '"><span class="tn-bar" style="width:' + w + '%"></span><span class="tn-name">' + esc(t.town) + '</span><span class="tn-n">' + t.n + '</span></li>';
+    }).join('');
+  }
+
+  function sync() {
+    return fetch(API, { cache: 'no-store' })
+      .then(function (r) { return r.json(); })
+      .then(paint)
+      .catch(function () {
+        document.getElementById('tnSub').textContent = 'The heat is briefly unreachable. The fires, if any, are still lit.';
+      });
+  }
+
+  var form = document.getElementById('tnForm');
+  var note = document.getElementById('tnNote');
+  var go = document.getElementById('tnGo');
+  var townEl = document.getElementById('tnTown');
+
+  function lockIfDone() {
+    var t = already();
+    if (t) {
+      go.disabled = true;
+      go.textContent = 'You’re on the map';
+      townEl.value = t;
+      note.textContent = t + ' is counted for this SAST day. Midnight starts a new slate.';
+    }
+  }
+  lockIfDone();
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (already()) { lockIfDone(); return; }
+    var town = townEl.value.trim();
+    if (town.length < 2) {
+      note.textContent = 'Which town? It matters more than you think.';
+      return;
+    }
+    go.disabled = true;
+    fetch(API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ town: town, hp: document.getElementById('tnHp').value || '' })
+    }).then(function (r) { return r.json(); }).then(function (d) {
+      if (d.ok && d.towns) {
+        remember(d.you || town);
+        paint(d);
+        lockIfDone();
+        note.textContent = 'Lekker. ' + (d.you || town) + ' is on tonight’s slate.';
+      } else if (d.ok) {
+        // Honeypot success: pretend, write nothing.
+        note.textContent = 'Lekker.';
+      } else {
+        note.textContent = d.error || 'That did not land. Try again in a minute.';
+        go.disabled = false;
+      }
+    }).catch(function () {
+      note.textContent = 'Tonight is briefly unreachable. Try again in a minute.';
+      go.disabled = false;
+    });
+  });
+
+  sync();
+  setInterval(sync, 60000);
+})();
+</script>
+
+<script>if('serviceWorker' in navigator){addEventListener('load',function(){navigator.serviceWorker.register('/sw.js')})}</script>
+</body>
+</html>

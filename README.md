@@ -10,10 +10,14 @@ Founding custodians will be named at [The Braai](https://braai.co.za/vuur/) on B
 ## What this is
 
 - `public/` — the static site (EN + Afrikaans `/af/` + isiZulu `/zu/`), a PWA
-  ("Die Braai" installs to your phone), 15 recipes, guides, the Braaictionary.
+  ("Die Braai" installs to your phone), 15 recipes, guides, the Braaictionary,
+  `/vuur/` (sports-score communal fire), `/braai-index/` (National Braai Index),
+  `/tonight/` (who is braaiing tonight).
 - `functions/api/` — Cloudflare Pages Functions: `vuur.js` (The Braai — one communal fire
-  with real shared state, event-sourced from D1), `subscribe.js` (newsletter via Resend),
-  `contribute.js` (community submissions).
+  with real shared state, event-sourced from D1), `tonight.js` (who is braaiing tonight,
+  `braais_tonight` table created IF NOT EXISTS on the same `VUUR_DB`), `subscribe.js`
+  (newsletter via Resend), `contribute.js` (community submissions).
+- `public/data/braai-index.json` — National Braai Index source file (basket v1).
 - `wrangler.toml` — Pages config + D1 binding (`VUUR_DB` → database `braai-vuur`).
 - `public/_redirects` — **17 years of legacy backlinks. Never remove rules.**
 

@@ -1,0 +1,47 @@
+{
+  "id": "braai-index-v1",
+  "label": "National Braai Index",
+  "basket": "v1",
+  "week_start": "2026-08-24",
+  "week_label": "24–30 August 2026",
+  "as_of_range": "27–28 August 2026",
+  "currency": "ZAR",
+  "complete": true,
+  "total_zar": 254.98,
+  "confirmed_zar": 254.98,
+  "items": [
+    {
+      "name": "Boerewors",
+      "product": "Championship Beef & Pork Boerewors",
+      "kg": 1,
+      "zar": 109.99,
+      "store": "Checkers FX Mkabayi Mall Vryheid",
+      "url": "https://www.checkers.co.za/browse-store/69e5fc74fa670d43ca761c47/product/championship-boerewors-2025-beef-and-pork-boerewors-per-kg-10148374KG",
+      "as_of": "2026-08-28",
+      "note": "Confirmed public guest price, per kilogram."
+    },
+    {
+      "name": "Pork loin chops, bone-in",
+      "product": "Pork Loin Chops",
+      "kg": 1,
+      "zar": 84.99,
+      "store": "Shoprite Vryheid",
+      "url": "https://www.shoprite.co.za/browse-store/6a2c0cf571db63b9c330f0bd/product/pork-loin-chops-per-kg-10151957KG",
+      "as_of": "2026-08-27",
+      "note": "Confirmed public guest price, per kilogram."
+    },
+    {
+      "name": "Chicken braai pack",
+      "product": "Farmbest Fresh Chicken Braai Pack 650g",
+      "kg": 1,
+      "zar": 60.00,
+      "store": "Checkers FX Mkabayi Mall Vryheid",
+      "url": "https://www.checkers.co.za/browse-store/69e5fc74fa670d43ca761c47/product/farmbest-fresh-chicken-braai-pack-650g-10874870EA",
+      "as_of": "2026-08-28",
+      "note": "Shelf ticket was 650 g at R39.00. Basket line is that same pack scaled to 1 kg (R60.00/kg). Not a guessed price."
+    }
+  ],
+  "comparables": [],
+  "method": "Basket v1 is the rand cost of a family Saturday fire as three kilos of meat: 1 kg boerewors, 1 kg bone-in pork loin chops, and 1 kg chicken braai pack. Wood and beer wait for a later basket. Each line is a single confirmed public guest price from Vryheid / KZN, never an estimate and never an interpolation between shops. The chicken line is the 1 kg equivalent of a confirmed 650 g braai pack (R39.00 → R60.00/kg). Product URLs are citations, not a shop. total_zar is 109.99 + 84.99 + 60.00 = 254.98.",
+  "gaps": []
+}

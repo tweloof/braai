@@ -1,0 +1,57 @@
+{
+  "id": "braai-index-v1",
+  "label": "National Braai Index",
+  "basket": "v1",
+  "week_start": "2026-08-24",
+  "week_label": "24–30 August 2026",
+  "as_of_range": "27–28 August 2026",
+  "currency": "ZAR",
+  "complete": false,
+  "total_zar": null,
+  "confirmed_zar": 84.99,
+  "items": [
+    {
+      "name": "Boerewors",
+      "kg": 1,
+      "zar": null,
+      "store": null,
+      "url": null,
+      "as_of": null,
+      "gap": "No confirmed public guest price this week."
+    },
+    {
+      "name": "Pork loin chops, bone-in",
+      "kg": 1,
+      "zar": 84.99,
+      "store": "Shoprite Vryheid",
+      "url": null,
+      "as_of": "2026-08-27",
+      "note": "Confirmed public guest price. Comparable, not a rank: Checkers FX Mkabayi R89.99/kg as of 2026-08-28. The basket uses one cited price; it does not average."
+    },
+    {
+      "name": "Chicken braai pack or whole chicken",
+      "kg": 1,
+      "zar": null,
+      "store": null,
+      "url": null,
+      "as_of": null,
+      "gap": "No confirmed public guest price this week."
+    }
+  ],
+  "comparables": [
+    {
+      "name": "Pork loin chops, bone-in",
+      "kg": 1,
+      "zar": 89.99,
+      "store": "Checkers FX Mkabayi",
+      "url": null,
+      "as_of": "2026-08-28",
+      "role": "citation"
+    }
+  ],
+  "method": "Basket v1 is the rand cost of a family Saturday fire as three kilos of meat: 1 kg boerewors, 1 kg bone-in pork loin chops, and 1 kg chicken (braai pack or whole bird). Wood and beer wait for a later basket. Each line is a single confirmed public guest price, never an estimate and never an interpolation. If two stores published a comparable for the same cut, one price enters the basket and the other is listed as a citation — not a ranking. A missing line is a gap. total_zar is the sum of the three lines only when every line is confirmed; otherwise it stays null.",
+  "gaps": [
+    "Boerewors: no confirmed public guest price this week.",
+    "Chicken braai pack or whole chicken: no confirmed public guest price this week."
+  ]
+}

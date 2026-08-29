@@ -68,14 +68,29 @@
   <div>24 September — Heritage Day. <a href="/braai-day/">Start planning your fire</a></div>
 </div>
 
-<section class="vuur-band">
+<section class="vuur-band" id="vuurBand">
   <div class="wrap">
-    <span class="flame-dot" aria-hidden="true"></span>
+    <span class="flame-dot" id="vuurDot" aria-hidden="true"></span>
     <div>
-      <h2>The Braai is <em>burning</em></h2>
-      <p>One communal fire for the whole country, live on this site. It burns down every hour and stays lit only if somebody puts something on it — a word, a braai spot, wood wisdom, a family recipe. If it goes out, the page stays up forever.</p>
+      <p class="vuur-score" id="vuurScore">The Braai is <em>burning</em></p>
+      <p id="vuurSub">One communal fire for the whole country, live on this site. It burns down every hour and stays lit only if somebody puts something on it. Fetching tonight’s score&hellip;</p>
     </div>
     <a class="btn" href="/vuur/">Stand around it</a>
+  </div>
+</section>
+
+<section class="viral-pair">
+  <div class="wrap">
+    <a class="viral-card" href="/braai-index/">
+      <span class="overline">National Braai Index</span>
+      <b id="idxTeaser">R—</b>
+      <span class="vsub">This week’s family Saturday fire. Confirmed prices only — gaps stay gaps.</span>
+    </a>
+    <a class="viral-card" href="/tonight/">
+      <span class="overline">Tonight</span>
+      <b>Who is braaiing?</b>
+      <span class="vsub">One tap. Your town. No accounts. Midnight SAST wipes the slate.</span>
+    </a>
   </div>
 </section>
 
@@ -181,9 +196,9 @@
   <div class="wrap">
     <div>
       <strong style="color:var(--cream)">braai.co.za</strong> — Proudly South African.<br>
-      <a href="/what-is-a-braai/">What is a braai?</a> · <a href="/fire/">Wood &amp; Coals</a> · <a href="/cuts/">The Cuts</a> · <a href="/recipes/">Recipes</a> · <a href="/potjie/">Potjie</a> · <a href="/gear/">Gear</a> · <a href="/braaictionary/">Braaictionary</a> · <a href="/vuur/">The Braai</a> · <a href="/braai-day/">Braai Day</a> · <a href="/contribute/">Contribute</a>
+      <a href="/what-is-a-braai/">What is a braai?</a> · <a href="/fire/">Wood &amp; Coals</a> · <a href="/cuts/">The Cuts</a> · <a href="/recipes/">Recipes</a> · <a href="/potjie/">Potjie</a> · <a href="/gear/">Gear</a> · <a href="/braaictionary/">Braaictionary</a> · <a href="/vuur/">The Braai</a> · <a href="/braai-day/">Braai Day</a> · <a href="/braai-index/">Braai Index</a> · <a href="/tonight/">Tonight</a> · <a href="/contribute/">Contribute</a>
     </div>
-    <div class="stamp">Build 29 Aug 2026 · v10</div>
+    <div class="stamp">Build 29 Aug 2026 · v11</div>
   </div>
 </footer>
 
@@ -200,6 +215,38 @@
   if (days === 0) {
     document.getElementById('countStrip').firstElementChild.innerHTML = '<span class="num">Today</span> is National Braai Day!';
   }
+
+  // Live fire as a sports score (same contract as /vuur/)
+  var BURN_PER_HOUR = 0.42;
+  function compactAge(h) {
+    if (h < 1) return Math.max(1, Math.round(h * 60)) + 'm';
+    if (h < 48) return Math.round(h) + 'h';
+    var d = h / 24;
+    return (d < 10 ? d.toFixed(1).replace(/\.0$/, '') : Math.round(d)) + 'd';
+  }
+  fetch('/api/vuur', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (d) {
+    if (!d.ok) return;
+    var score = document.getElementById('vuurScore');
+    var sub = document.getElementById('vuurSub');
+    var band = document.getElementById('vuurBand');
+    var logs = d.count === 1 ? 'LOG' : 'LOGS';
+    var ageH = d.out && d.fire.outAt ? (d.fire.outAt - d.fire.litAt) / 3600 : (d.now - d.fire.litAt) / 3600;
+    if (d.out || d.fuel <= 0) {
+      band.classList.add('is-out');
+      score.innerHTML = 'THE FIRE IS <em>OUT</em>';
+      sub.textContent = 'FIRE NO. ' + d.fire.no + ' · burned ' + compactAge(ageH) + ' · ' + d.count + ' ' + logs + '. The page stays up.';
+    } else {
+      score.innerHTML = 'LIT <em>' + compactAge(ageH) + '</em> · ' + d.count + ' ' + logs + ' · FIRE NO. ' + d.fire.no;
+      sub.textContent = Math.round(d.fuel) + '% fuel · ~' + compactAge(d.fuel / BURN_PER_HOUR) + ' left. One fire for the whole country.';
+    }
+  }).catch(function () { /* keep the static line */ });
+
+  fetch('/data/braai-index.json', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (d) {
+    var el = document.getElementById('idxTeaser');
+    if (!el) return;
+    if (d.complete && d.total_zar != null) el.textContent = 'R' + Number(d.total_zar).toFixed(2);
+    else el.textContent = 'R—';
+  }).catch(function () {});
 
   // Newsletter signup
   var form = document.getElementById('subForm');

@@ -71,21 +71,27 @@ a{color:var(--flame)}
 #fireCanvas{display:block;width:100%;height:330px}
 .hearth-over{
   position:absolute; inset:0; display:flex; flex-direction:column;
-  align-items:center; justify-content:flex-start; padding-top:22px;
+  align-items:center; justify-content:flex-start; padding-top:28px;
   pointer-events:none; text-align:center;
 }
-.state{
-  font-size:.66rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--flame); margin-bottom:7px;
+.scoreboard{
+  max-width:94%;
+  background:rgba(25,21,18,.74);
+  border:1px solid rgba(244,157,55,.32);
+  border-radius:16px;
+  padding:16px 18px 14px;
+  backdrop-filter:blur(4px);
 }
-.age{font-family:'Fraunces',Georgia,serif;font-size:clamp(1.5rem,6.4vw,2rem);font-weight:700;color:var(--cream)}
-.age em{font-style:normal;color:var(--flame)}
-.tongs{
-  margin-top:9px;font-size:.8rem;color:var(--smoke-2);
-  background:rgba(25,21,18,.62);padding:4px 12px;border-radius:999px;
+.score-line{
+  font-family:'Fraunces',Georgia,serif;
+  font-size:clamp(1.45rem,6.2vw,2.55rem);
+  font-weight:700;line-height:1.12;color:var(--cream);
+  text-transform:uppercase;letter-spacing:.02em;user-select:all;
 }
-.tongs b{color:var(--cream-2);font-weight:600}
-.fireno{margin-top:7px;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--smoke)}
+.score-line em{font-style:normal;color:var(--flame)}
+.scoreboard.is-out .score-line{color:var(--smoke-2)}
+.score-sub{margin-top:8px;font-size:.84rem;color:var(--smoke-2);letter-spacing:.02em}
+.score-sub b{color:var(--cream-2);font-weight:600}
 
 /* fuel gauge */
 .gauge{background:var(--char-2);border-top:1px solid rgba(244,157,55,.14)}
@@ -251,10 +257,10 @@ main{padding:30px 0 70px}
 <div class="hearth" id="main">
   <canvas id="fireCanvas" aria-hidden="true"></canvas>
   <div class="hearth-over">
-    <div class="state" id="fState">&nbsp;</div>
-    <div class="age" id="fAge">Fetching the fire&hellip;</div>
-    <div class="tongs" id="fTongs" style="display:none"></div>
-    <div class="fireno" id="fNo"></div>
+    <div class="scoreboard" id="scoreboard">
+      <p class="score-line" id="scoreLine">Fetching the fire&hellip;</p>
+      <p class="score-sub" id="scoreSub"></p>
+    </div>
   </div>
 </div>
 
@@ -334,9 +340,9 @@ main{padding:30px 0 70px}
   <div class="fwrap">
     <div>
       <strong style="color:var(--cream)">braai.co.za</strong> &mdash; Proudly South African.<br>
-      <a href="/what-is-a-braai/">What is a braai?</a> &middot; <a href="/fire/">Wood &amp; Coals</a> &middot; <a href="/cuts/">The Cuts</a> &middot; <a href="/recipes/">Recipes</a> &middot; <a href="/potjie/">Potjie</a> &middot; <a href="/gear/">Gear</a> &middot; <a href="/braaictionary/">Braaictionary</a> &middot; <a href="/vuur/">The Braai</a> &middot; <a href="/braai-day/">Braai Day</a> &middot; <a href="/contribute/">Contribute</a>
+      <a href="/what-is-a-braai/">What is a braai?</a> &middot; <a href="/fire/">Wood &amp; Coals</a> &middot; <a href="/cuts/">The Cuts</a> &middot; <a href="/recipes/">Recipes</a> &middot; <a href="/potjie/">Potjie</a> &middot; <a href="/gear/">Gear</a> &middot; <a href="/braaictionary/">Braaictionary</a> &middot; <a href="/vuur/">The Braai</a> &middot; <a href="/braai-day/">Braai Day</a> &middot; <a href="/braai-index/">Braai Index</a> &middot; <a href="/tonight/">Tonight</a> &middot; <a href="/contribute/">Contribute</a>
     </div>
-    <div class="stamp">Build 29 Aug 2026 &middot; v10</div>
+    <div class="stamp">Build 29 Aug 2026 &middot; v11</div>
   </div>
 </footer>
 
@@ -574,22 +580,32 @@ function humanAge(h){
   return n+' '+u+(String(n)==='1'?'':'s');
 }
 
+/* Sports-score compact: 47m / 19h / 3d — the WhatsApp line. */
+function compactAge(h){
+  if(h<1)return Math.max(1,Math.round(h*60))+'m';
+  if(h<48)return Math.round(h)+'h';
+  var d=h/24;
+  return (d<10?d.toFixed(1).replace(/\.0$/,''):Math.round(d))+'d';
+}
+function logWord(n){return n===1?'LOG':'LOGS';}
+
 function render(){
   if(!S)return;
-  var st=stateOf();
-  var fs=document.getElementById('fState');
-  fs.textContent=st.label;fs.style.color=st.col;
-
-  var age=document.getElementById('fAge');
-  if(S.out){age.innerHTML='This fire is <em>out</em>';}
-  else{age.innerHTML='Burning for <em>'+humanAge(ageH())+'</em>';}
-
-  document.getElementById('fNo').textContent='Braai No. '+S.fire.no+' · one fire for the whole country';
-
-  var tongs=document.getElementById('fTongs');
-  var last=S.logs.length?S.logs[S.logs.length-1]:null;
-  if(!S.out&&last){tongs.innerHTML='Tongs: <b>'+esc(last.who)+'</b>'+(last.town?', '+esc(last.town):'');tongs.style.display='';}
-  else{tongs.style.display='none';}
+  var f=fuelNow();
+  var out=S.out||f<=0;
+  var board=document.getElementById('scoreboard');
+  var line=document.getElementById('scoreLine');
+  var sub=document.getElementById('scoreSub');
+  board.className='scoreboard'+(out?' is-out':'');
+  if(out){
+    line.innerHTML='THE FIRE IS <em>OUT</em>';
+    sub.textContent='FIRE NO. '+S.fire.no+' · burned '+compactAge(ageH())+' · '+S.count+' '+logWord(S.count);
+  }else{
+    line.innerHTML='LIT <em>'+compactAge(ageH())+'</em> · '+S.count+' '+logWord(S.count)+' · FIRE NO. '+S.fire.no;
+    var last=S.logs.length?S.logs[S.logs.length-1]:null;
+    var tongs=last?(' · tongs: <b>'+esc(last.who)+'</b>'+(last.town?', '+esc(last.town):'')):'';
+    sub.innerHTML=Math.round(f)+'% fuel · ~'+compactAge(f/BURN_PER_HOUR)+' left'+tongs;
+  }
 
   var pct=Math.max(0,Math.min(100,fuelNow()));
   var fill=document.getElementById('gFill');

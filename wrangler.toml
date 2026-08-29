@@ -1,8 +1,11 @@
+# braai.co.za — Cloudflare Pages project config
+# Deploy from this directory: npx wrangler pages deploy
 name = "braai"
-compatibility_date = "2026-08-01"
 pages_build_output_dir = "public"
+compatibility_date = "2026-08-01"
 
+# Die Vuur shared state (functions/api/vuur.js)
 [[d1_databases]]
 binding = "VUUR_DB"
-database_name = "vuur"
+database_name = "braai-vuur"
 database_id = "1f639f7b-2e48-4d1a-b3c6-8db38429fab7"

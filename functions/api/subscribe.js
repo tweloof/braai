@@ -1,70 +1,63 @@
-/**
- * POST /api/subscribe
- * Reconstructed from live API + public/index.html (29 Aug 2026).
- * Not the original source.
- *
- * Only POST is handled. GET falls through to Pages 404 HTML (matches live).
- */
+// braai.co.za — newsletter signup endpoint (Cloudflare Pages Function)
+// Forwards each signup to the site owner via Resend. RESEND_API_KEY is a
+// Pages project secret — never in source.
+
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-const FROM = 'lekker@braai.co.za';
-const EDITOR = 'lekker@braai.co.za';
 
-function json(data, status = 200) {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { 'Content-Type': 'application/json' }
-  });
-}
+export async function onRequestPost(context) {
+  const { request, env } = context;
 
-async function resend(apiKey, payload) {
-  const res = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      Authorization: 'Bearer ' + apiKey,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(payload)
-  });
-  return res.ok;
-}
-
-export async function onRequestPost({ request, env }) {
-  let body = {};
+  let body;
   try {
     body = await request.json();
   } catch {
-    body = {};
+    return json({ ok: false, error: 'Bad request.' }, 400);
   }
 
-  // Honeypot (homepage input id="oond", sent as `hp`) — silent success, no mail.
-  if (body && String(body.hp || '').trim()) {
+  // Honeypot: bots fill every field. Pretend success, do nothing.
+  if (body.hp) {
     return json({ ok: true });
   }
 
-  const email = String((body && body.email) || '').trim();
-  if (!email || email.length > 254 || !EMAIL_RE.test(email)) {
-    return json({ ok: false, error: "That email doesn't look right." }, 400);
+  const email = String(body.email || '').trim().slice(0, 200);
+  if (!EMAIL_RE.test(email)) {
+    return json({ ok: false, error: 'That email doesn\'t look right.' }, 400);
   }
 
-  const key = env.RESEND_API_KEY;
-  if (!key) {
-    return json({ ok: false, error: 'Something went wrong. Please try again in a minute.' }, 500);
+  if (!env.RESEND_API_KEY) {
+    return json({ ok: false, error: 'Signups are briefly offline. Please try again later.' }, 503);
   }
 
-  // Resend audience id is unknown. Notify the editor instead of inventing one.
-  const sent = await resend(key, {
-    from: FROM,
-    to: [EDITOR],
-    reply_to: email,
-    subject: 'Braai Letter signup: ' + email,
-    text:
-      email +
-      ' asked to join the Braai Letter.\n\n' +
-      'Add them to the monthly list. This function does not have a Resend audience id.\n'
+  const resp = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      from: 'Lekker · braai.co.za <lekker@braai.co.za>',
+      to: ['bwkling@gmail.com'],
+      subject: 'New Braai Letter subscriber',
+      html: `<p><strong>${escapeHtml(email)}</strong> signed up for the Braai Letter on braai.co.za.</p><p style="color:#888;font-size:12px">${new Date().toISOString()}</p>`,
+    }),
   });
-  if (!sent) {
-    return json({ ok: false, error: 'Something went wrong. Please try again in a minute.' }, 500);
+
+  if (!resp.ok) {
+    return json({ ok: false, error: 'Something went wrong on our side. Please try again in a minute.' }, 502);
   }
 
   return json({ ok: true });
+}
+
+function json(obj, status = 200) {
+  return new Response(JSON.stringify(obj), {
+    status,
+    headers: { 'Content-Type': 'application/json' },
+  });
+}
+
+function escapeHtml(s) {
+  return s.replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+  }[c]));
 }

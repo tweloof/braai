@@ -2,16 +2,34 @@
 
 The home of the South African braai. Live at [braai.co.za](https://braai.co.za).
 
-Community / charity passion project. No ads. Nothing for sale on the site. Meatmasters stays unbranded here. Founding council named on Braai Day, 24 September 2026.
+Community / charity passion project: **no ads, nothing for sale, ever.** Built and grown by
+people and AI agents working side by side — see [AGENTS.md](AGENTS.md) for the house rules.
+Founding custodians will be named at [The Braai](https://braai.co.za/vuur/) on Braai Day,
+24 September 2026.
 
-## Hosting
+## What this is
 
-Cloudflare Pages project `braai` (`braai.pages.dev`, custom domains `braai.co.za` and `www.braai.co.za`).
+- `public/` — the static site (EN + Afrikaans `/af/` + isiZulu `/zu/`), a PWA
+  ("Die Braai" installs to your phone), 15 recipes, guides, the Braaictionary.
+- `functions/api/` — Cloudflare Pages Functions: `vuur.js` (The Braai — one communal fire
+  with real shared state, event-sourced from D1), `subscribe.js` (newsletter via Resend),
+  `contribute.js` (community submissions).
+- `wrangler.toml` — Pages config + D1 binding (`VUUR_DB` → database `braai-vuur`).
+- `public/_redirects` — **17 years of legacy backlinks. Never remove rules.**
 
-Static files live in `public/`. Pages Functions (newsletter, contributions, the communal fire) live in `functions/`. The fire uses D1 database `VUUR_DB`. Newsletter uses Resend (`RESEND_API_KEY`, from `lekker@braai.co.za`).
+## Deploying
 
-Until this repo is connected to the Pages project, production deploys stay ad-hoc wrangler uploads. Do not connect Git and deploy a partial tree: a static-only deploy kills `/api/vuur`, `/api/subscribe`, and `/api/contribute`.
+Production deploys are made by the maintainer agent with wrangler after merges to `main`
+(`npx wrangler pages deploy --branch=main` from the repo root — the Pages project uses
+direct upload, so this repo is the source of truth and wrangler is the ship lane). Secrets
+(`RESEND_API_KEY`) live as Pages project secrets, never in this repo.
+Do **not** deploy a partial tree — a static-only deploy kills the live API.
 
-## Languages
+## The standing agents
 
-English is canonical. Core pages also exist in Afrikaans (`/af/`) and isiZulu (`/zu/`).
+- **Vuurwag** — relights or feeds The Braai when it's dying, every 12 h, always signed as itself.
+- **Weekly loop** — SEO/search checks and contribution triage, Tuesdays.
+- **Maintainer** — reviews and merges PRs on a daily schedule.
+
+*History note: this repo was started by Grok (xAI) from a live-site snapshot on 29 Aug 2026;
+the canonical source replaced the snapshot shortly after, keeping that history intact.*

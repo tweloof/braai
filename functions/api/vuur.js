@@ -3,10 +3,9 @@
  * Reconstructed from live API + public/vuur/index.html (29 Aug 2026).
  * Not the original source.
  *
- * D1 schema is unknown (D1 API 401). This file CREATE TABLE IF NOT EXISTS
- * a conservative shape on a fresh database, then detects actual table and
- * column names so a production DB with different identifiers still works.
- * Never DROP, never rewrite existing rows.
+ * D1 schema is unknown. CREATE TABLE IF NOT EXISTS a conservative shape on a
+ * fresh database, then detect actual table/column names so a production DB
+ * with different identifiers still works. Never DROP. Never rewrite rows.
  */
 const FUEL_PER_LOG = 14;
 const BURN_PER_HOUR = 0.42;
@@ -18,6 +17,13 @@ const MECHANICS = {
 };
 const KINDS = new Set(['word', 'spot', 'wood', 'recipe', 'fire']);
 const TOKEN_RE = /^[A-Za-z0-9-]{8,64}$/;
+
+const FOUNDING_LIT = 1787608021;
+const FOUNDING_OUT = 1787728021;
+const FOUNDING_TEXT =
+  'The founding fire. Lit on the road to Braai Day, 24 September 2026. ' +
+  'Everything on this fire from here on comes from a real person. Put something on it — ' +
+  'the founding custodians of this site will be found standing around this fire.';
 
 const CREATE_FIRES = `CREATE TABLE IF NOT EXISTS fires (
   no INTEGER PRIMARY KEY,
@@ -49,6 +55,10 @@ function json(data, status = 200) {
   });
 }
 
+function empty405() {
+  return new Response(null, { status: 405 });
+}
+
 function nowSec() {
   return Math.floor(Date.now() / 1000);
 }
@@ -65,6 +75,10 @@ function pick(cols, aliases) {
     if (hit) return hit;
   }
   return null;
+}
+
+function validToken(t) {
+  return typeof t === 'string' && TOKEN_RE.test(t);
 }
 
 async function listTables(db) {
@@ -100,8 +114,8 @@ function mapFireCols(cols) {
   return {
     no: pick(cols, ['no', 'number', 'fire_no', 'fireNo', 'id']),
     litAt: pick(cols, ['lit_at', 'litAt', 'lit', 'started_at', 'startedAt']),
-    outAt: pick(cols, ['out_at', 'outAt', 'ended_at', 'endedAt']),
-    outFlag: pick(cols, ['is_out', 'isOut', 'dead', 'out'])
+    outAt: pick(cols, ['out_at', 'outAt', 'ended_at', 'endedAt', 'out']),
+    outFlag: pick(cols, ['is_out', 'isOut', 'dead'])
   };
 }
 
@@ -115,6 +129,7 @@ function mapLogCols(cols) {
     town: pick(cols, ['town', 'place']),
     text: pick(cols, ['text', 'body', 'message']),
     token: pick(cols, ['token', 'vuur_token', 'vuurToken']),
+    replyJson: pick(cols, ['reply']),
     replyText: pick(cols, ['reply_text', 'replyText']),
     replyWho: pick(cols, ['reply_who', 'replyWho']),
     replyTown: pick(cols, ['reply_town', 'replyTown']),
@@ -124,7 +139,7 @@ function mapLogCols(cols) {
 
 function mapReplyCols(cols) {
   return {
-    logId: pick(cols, ['log_id', 'logId', 'feed_id', 'feedId', 'id']),
+    logId: pick(cols, ['log_id', 'logId', 'feed_id', 'feedId']),
     text: pick(cols, ['text', 'body', 'message']),
     who: pick(cols, ['who', 'name']),
     town: pick(cols, ['town', 'place']),
@@ -136,8 +151,7 @@ function mapReplyCols(cols) {
 async function detect(db, tables) {
   const infos = [];
   for (const name of tables) {
-    const cols = await columnsOf(db, name);
-    infos.push({ name, cols });
+    infos.push({ name, cols: await columnsOf(db, name) });
   }
 
   const preferFire = ['fires', 'fire', 'vuur'];
@@ -145,10 +159,18 @@ async function detect(db, tables) {
   const preferReply = ['replies', 'reply', 'vuur_replies'];
 
   let fireInfo = infos.find((t) => preferFire.includes(t.name.toLowerCase()) && scoreFireTable(t.cols) >= 2);
-  if (!fireInfo) fireInfo = infos.filter((t) => scoreFireTable(t.cols) >= 2).sort((a, b) => scoreFireTable(b.cols) - scoreFireTable(a.cols))[0];
+  if (!fireInfo) {
+    fireInfo = infos
+      .filter((t) => scoreFireTable(t.cols) >= 2)
+      .sort((a, b) => scoreFireTable(b.cols) - scoreFireTable(a.cols))[0];
+  }
 
   let logInfo = infos.find((t) => preferLog.includes(t.name.toLowerCase()) && scoreLogTable(t.cols) >= 3);
-  if (!logInfo) logInfo = infos.filter((t) => scoreLogTable(t.cols) >= 3).sort((a, b) => scoreLogTable(b.cols) - scoreLogTable(a.cols))[0];
+  if (!logInfo) {
+    logInfo = infos
+      .filter((t) => scoreLogTable(t.cols) >= 3)
+      .sort((a, b) => scoreLogTable(b.cols) - scoreLogTable(a.cols))[0];
+  }
 
   let replyInfo = infos.find((t) => preferReply.includes(t.name.toLowerCase()) && pick(t.cols, ['text', 'body']));
   if (!replyInfo) {
@@ -169,15 +191,44 @@ async function detect(db, tables) {
   };
 }
 
+async function seedFounding(db, schema) {
+  const existing = await db.prepare('SELECT 1 FROM ' + q(schema.fireTable) + ' LIMIT 1').first();
+  if (existing) return;
+
+  const fireIns = insertSql(schema.fireTable, schema.fireCols, {
+    no: 1,
+    litAt: FOUNDING_LIT,
+    outAt: FOUNDING_OUT,
+    outFlag: 1
+  });
+  await db.prepare(fireIns.sql).bind(...fireIns.vals).run();
+
+  const logData = {
+    id: 1,
+    fireNo: 1,
+    ts: FOUNDING_LIT,
+    kind: 'fire',
+    who: 'braai.co.za',
+    town: 'Suid-Afrika',
+    text: FOUNDING_TEXT,
+    token: 'founding'
+  };
+  const logIns = insertSql(schema.logTable, schema.logCols, logData);
+  await db.prepare(logIns.sql).bind(...logIns.vals).run();
+}
+
 async function ensureSchema(db) {
   let tables = await listTables(db);
   let schema = await detect(db, tables);
+  let created = false;
 
   if (!schema.fireTable) {
     await db.prepare(CREATE_FIRES).run();
+    created = true;
   }
   if (!schema.logTable) {
     await db.prepare(CREATE_LOGS).run();
+    created = true;
   }
 
   tables = await listTables(db);
@@ -187,6 +238,10 @@ async function ensureSchema(db) {
   }
   if (!schema.logCols.who || !schema.logCols.text) {
     throw new Error('vuur logs schema missing');
+  }
+
+  if (created) {
+    await seedFounding(db, schema);
   }
   return schema;
 }
@@ -200,12 +255,12 @@ function projectFuel(litAt, storedOutAt, logs, now) {
   let t = litAt || (events[0] ? events[0].ts : now);
   for (let i = 0; i < events.length; i++) {
     const log = events[i];
-    const burned = BURN_PER_HOUR * Math.max(0, log.ts - t) / 3600;
+    const burned = (BURN_PER_HOUR * Math.max(0, log.ts - t)) / 3600;
     fuel = Math.max(0, fuel - burned);
     fuel = Math.min(MAX_FUEL, fuel + FUEL_PER_LOG);
     t = log.ts;
   }
-  const burned = BURN_PER_HOUR * Math.max(0, now - t) / 3600;
+  const burned = (BURN_PER_HOUR * Math.max(0, now - t)) / 3600;
   const remaining = fuel - burned;
   if (remaining <= 0) {
     const outAt = t + Math.round((fuel / BURN_PER_HOUR) * 3600);
@@ -214,11 +269,11 @@ function projectFuel(litAt, storedOutAt, logs, now) {
   return { fuel: remaining, out: false, outAt: null };
 }
 
-function emptyState(now, token) {
+function emptyState(now) {
   return {
     ok: true,
     now,
-    fire: { no: 0, litAt: 0, outAt: null },
+    fire: { no: 0, litAt: 0, outAt: 0 },
     out: true,
     fuel: 0,
     count: 0,
@@ -239,6 +294,20 @@ function readFireRow(row, cols) {
   };
 }
 
+function parseReplyJson(raw) {
+  if (!raw) return null;
+  if (typeof raw === 'object' && raw.text) {
+    return { text: String(raw.text), who: String(raw.who || ''), town: String(raw.town || '') };
+  }
+  try {
+    const o = JSON.parse(String(raw));
+    if (o && o.text) return { text: String(o.text), who: String(o.who || ''), town: String(o.town || '') };
+  } catch {
+    /* not json */
+  }
+  return null;
+}
+
 function readLogRow(row, cols, token) {
   const logToken = cols.token ? row[cols.token] : null;
   let reply = null;
@@ -248,6 +317,8 @@ function readLogRow(row, cols, token) {
       who: cols.replyWho ? String(row[cols.replyWho] || '') : '',
       town: cols.replyTown ? String(row[cols.replyTown] || '') : ''
     };
+  } else if (cols.replyJson) {
+    reply = parseReplyJson(row[cols.replyJson]);
   }
   return {
     id: cols.id ? Number(row[cols.id]) : 0,
@@ -263,19 +334,15 @@ function readLogRow(row, cols, token) {
 }
 
 async function loadReplies(db, schema, logs) {
-  if (!schema.replyTable || !schema.replyCols || !schema.replyCols.text) return logs;
+  if (!schema.replyTable || !schema.replyCols || !schema.replyCols.text || !schema.replyCols.logId) {
+    return logs;
+  }
   const ids = logs.map((l) => l.id).filter((id) => id > 0);
   if (!ids.length) return logs;
   const rc = schema.replyCols;
   const placeholders = ids.map(() => '?').join(',');
   const sql =
-    'SELECT * FROM ' +
-    q(schema.replyTable) +
-    ' WHERE ' +
-    q(rc.logId) +
-    ' IN (' +
-    placeholders +
-    ')';
+    'SELECT * FROM ' + q(schema.replyTable) + ' WHERE ' + q(rc.logId) + ' IN (' + placeholders + ')';
   const r = await db.prepare(sql).bind(...ids).all();
   const byLog = new Map();
   for (const row of r.results || []) {
@@ -293,15 +360,18 @@ async function loadReplies(db, schema, logs) {
 
 async function loadCurrentFire(db, schema) {
   const fc = schema.fireCols;
-  const order = q(fc.no) + ' DESC';
-  const row = await db.prepare('SELECT * FROM ' + q(schema.fireTable) + ' ORDER BY ' + order + ' LIMIT 1').first();
+  const row = await db
+    .prepare('SELECT * FROM ' + q(schema.fireTable) + ' ORDER BY ' + q(fc.no) + ' DESC LIMIT 1')
+    .first();
   return readFireRow(row, fc);
 }
 
 async function loadLogs(db, schema, fireNo, token) {
   const lc = schema.logCols;
   if (!lc.fireNo) {
-    const r = await db.prepare('SELECT * FROM ' + q(schema.logTable) + ' ORDER BY ' + q(lc.ts || lc.id) + ' ASC').all();
+    const r = await db
+      .prepare('SELECT * FROM ' + q(schema.logTable) + ' ORDER BY ' + q(lc.ts || lc.id) + ' ASC')
+      .all();
     return (r.results || []).map((row) => readLogRow(row, lc, token));
   }
   const r = await db
@@ -364,7 +434,7 @@ function publicLogs(logs) {
 
 async function buildState(db, schema, token, now) {
   const fire = await loadCurrentFire(db, schema);
-  if (!fire) return emptyState(now, token);
+  if (!fire) return emptyState(now);
 
   let logs = await loadLogs(db, schema, fire.no, token);
   logs = await loadReplies(db, schema, logs);
@@ -415,82 +485,17 @@ async function insertLog(db, schema, data) {
   return r.meta && r.meta.last_row_id != null ? Number(r.meta.last_row_id) : null;
 }
 
-function validToken(t) {
-  return typeof t === 'string' && TOKEN_RE.test(t);
-}
-
-export async function onRequestGet({ request, env }) {
-  if (!env.VUUR_DB) {
-    return json({ ok: false, error: 'The fire is briefly unreachable. Try again in a minute.' }, 500);
-  }
-  const tokenHeader = request.headers.get('X-Vuur-Token') || '';
-  const token = validToken(tokenHeader) ? tokenHeader : '';
-  try {
-    const schema = await ensureSchema(env.VUUR_DB);
-    const state = await buildState(env.VUUR_DB, schema, token, nowSec());
-    return json(state);
-  } catch (err) {
-    return json({ ok: false, error: 'The fire is briefly unreachable. Try again in a minute.' }, 500);
-  }
-}
-
-export async function onRequestPost({ request, env }) {
-  if (!env.VUUR_DB) {
-    return json({ ok: false, error: 'The fire is briefly unreachable. Try again in a minute.' }, 500);
-  }
-
-  let body;
-  try {
-    body = await request.json();
-  } catch {
-    return json({ ok: false, error: 'Bad request.' }, 400);
-  }
-
-  const action = body && body.action;
-  const token = body && body.token;
-  if (action !== 'feed' && action !== 'light' && action !== 'reply') {
-    return json({ ok: false, error: 'Reload the page and try again.' }, 400);
-  }
-  if (!validToken(token)) {
-    return json({ ok: false, error: 'Reload the page and try again.' }, 400);
-  }
-
-  // Honeypot (sheet input id="sWeb") — silent success, no write.
-  // Live returns {ok:true} only, not full fire state.
-  if (body.hp) return json({ ok: true });
-
-  const db = env.VUUR_DB;
-  let schema;
-  try {
-    schema = await ensureSchema(db);
-  } catch {
-    return json({ ok: false, error: 'The fire is briefly unreachable. Try again in a minute.' }, 500);
-  }
-
-  const now = nowSec();
-
-  try {
-    if (action === 'reply') {
-      return await handleReply(db, schema, body, token, now);
-    }
-    return await handleFeedOrLight(db, schema, action, body, token, now);
-  } catch {
-    return json({ ok: false, error: 'The fire is briefly unreachable. Try again in a minute.' }, 500);
-  }
-}
-
 function readFeedFields(body) {
-  const kind = String((body && body.kind) || '').trim();
+  const rawKind = String((body && body.kind) || '').trim();
+  const kind = KINDS.has(rawKind) ? rawKind : 'word';
   const text = String((body && body.text) || '').trim();
   const who = String((body && body.who) || '').trim();
   const town = String((body && body.town) || '').trim();
-  if (text.length < 12) return { error: 'Tell us a bit more — one good sentence is enough.' };
-  if (text.length > 500) return { error: 'Tell us a bit more — one good sentence is enough.' };
-  if (!who) return { error: 'We need a name to put on it.' };
-  if (who.length > 40) return { error: 'We need a name to put on it.' };
-  if (!town) return { error: 'Which town? It matters more than you think.' };
-  if (town.length > 40) return { error: 'Which town? It matters more than you think.' };
-  if (!KINDS.has(kind)) return { error: 'Pick what it is first.' };
+  if (text.length < 12 || text.length > 500) {
+    return { error: 'Tell us a bit more — one good sentence is enough.' };
+  }
+  if (!who || who.length > 40) return { error: 'We need a name to put on it.' };
+  if (!town || town.length > 40) return { error: 'Which town? It matters more than you think.' };
   return { kind, text, who, town };
 }
 
@@ -499,7 +504,7 @@ async function handleFeedOrLight(db, schema, action, body, token, now) {
   if (fields.error) return json({ ok: false, error: fields.error }, 400);
 
   const fire = await loadCurrentFire(db, schema);
-  let logs = fire ? await loadLogs(db, schema, fire.no, token) : [];
+  const logs = fire ? await loadLogs(db, schema, fire.no, token) : [];
   const proj = fire ? projectFuel(fire.litAt, fire.outAt, logs, now) : { out: true, outAt: now, fuel: 0 };
   if (fire && proj.out && !fire.outAt) {
     await persistOut(db, schema, fire, proj.outAt);
@@ -521,7 +526,6 @@ async function handleFeedOrLight(db, schema, action, body, token, now) {
     return json(await buildState(db, schema, token, now));
   }
 
-  // light
   if (fire && !proj.out) {
     return json({ ok: false, error: 'This fire is still burning. Put something on it instead.' }, 400);
   }
@@ -566,10 +570,11 @@ async function handleReply(db, schema, body, token, now) {
 
   if (!who) return json({ ok: false, error: 'We need a name to put on it.' }, 400);
   if (!town) return json({ ok: false, error: 'Which town? It matters more than you think.' }, 400);
-  if (!text) return json({ ok: false, error: 'Tell us a bit more — one good sentence is enough.' }, 400);
-  if (text.length > 300) return json({ ok: false, error: 'Tell us a bit more — one good sentence is enough.' }, 400);
+  if (!text || text.length > 300) {
+    return json({ ok: false, error: 'Tell us a bit more — one good sentence is enough.' }, 400);
+  }
   if (!Number.isFinite(feedId) || feedId <= 0) {
-    return json({ ok: false, error: 'That log is not on this fire.' }, 400);
+    return json({ ok: false, error: 'Reload the page and try again.' }, 400);
   }
 
   const spoken = logs.some((l) => l.token && l.token === token);
@@ -579,7 +584,7 @@ async function handleReply(db, schema, body, token, now) {
 
   const target = logs.find((l) => l.id === feedId);
   if (!target) {
-    return json({ ok: false, error: 'That log is not on this fire.' }, 400);
+    return json({ ok: false, error: 'Reload the page and try again.' }, 400);
   }
   if (target.reply) {
     return json({ ok: false, error: 'Someone has already advised on this one. Never twice.' }, 400);
@@ -602,10 +607,16 @@ async function handleReply(db, schema, body, token, now) {
       binds.push(now);
     }
     binds.push(feedId);
-    const where = lc.id ? q(lc.id) + ' = ?' : q(lc.ts) + ' = ?';
     await db
-      .prepare('UPDATE ' + q(schema.logTable) + ' SET ' + sets.join(', ') + ' WHERE ' + where)
+      .prepare('UPDATE ' + q(schema.logTable) + ' SET ' + sets.join(', ') + ' WHERE ' + q(lc.id || lc.ts) + ' = ?')
       .bind(...binds)
+      .run();
+  } else if (lc.replyJson) {
+    await db
+      .prepare(
+        'UPDATE ' + q(schema.logTable) + ' SET ' + q(lc.replyJson) + ' = ? WHERE ' + q(lc.id || lc.ts) + ' = ?'
+      )
+      .bind(JSON.stringify({ text, who, town }), feedId)
       .run();
   } else if (schema.replyTable && schema.replyCols && schema.replyCols.logId && schema.replyCols.text) {
     const spec = insertSql(schema.replyTable, schema.replyCols, {
@@ -622,4 +633,67 @@ async function handleReply(db, schema, body, token, now) {
   }
 
   return json(await buildState(db, schema, token, now));
+}
+
+export async function onRequestGet({ request, env }) {
+  if (!env.VUUR_DB) {
+    return json({ ok: false, error: 'The fire is briefly unreachable. Try again in a minute.' }, 500);
+  }
+  const tokenHeader = request.headers.get('X-Vuur-Token') || '';
+  const token = validToken(tokenHeader) ? tokenHeader : '';
+  try {
+    const schema = await ensureSchema(env.VUUR_DB);
+    return json(await buildState(env.VUUR_DB, schema, token, nowSec()));
+  } catch {
+    return json({ ok: false, error: 'The fire is briefly unreachable. Try again in a minute.' }, 500);
+  }
+}
+
+export async function onRequestPost({ request, env }) {
+  if (!env.VUUR_DB) {
+    return json({ ok: false, error: 'The fire is briefly unreachable. Try again in a minute.' }, 500);
+  }
+
+  let body = {};
+  try {
+    body = await request.json();
+  } catch {
+    body = {};
+  }
+
+  // Honeypot (sheet input id="sWeb") — silent success, no write.
+  // Live returns {ok:true} only, not full fire state.
+  if (body && String(body.hp || '').trim()) {
+    return json({ ok: true });
+  }
+
+  const action = body && body.action;
+  const token = body && body.token;
+  if (action !== 'feed' && action !== 'light' && action !== 'reply') {
+    return json({ ok: false, error: 'Reload the page and try again.' }, 400);
+  }
+  if (!validToken(token)) {
+    return json({ ok: false, error: 'Reload the page and try again.' }, 400);
+  }
+
+  const db = env.VUUR_DB;
+  let schema;
+  try {
+    schema = await ensureSchema(db);
+  } catch {
+    return json({ ok: false, error: 'The fire is briefly unreachable. Try again in a minute.' }, 500);
+  }
+
+  const now = nowSec();
+  try {
+    if (action === 'reply') return await handleReply(db, schema, body, token, now);
+    return await handleFeedOrLight(db, schema, action, body, token, now);
+  } catch {
+    return json({ ok: false, error: 'The fire is briefly unreachable. Try again in a minute.' }, 500);
+  }
+}
+
+// PUT / DELETE / PATCH etc. — live returns 405 with an empty body.
+export function onRequest() {
+  return empty405();
 }

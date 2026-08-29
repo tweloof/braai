@@ -2,9 +2,11 @@
  * POST /api/subscribe
  * Reconstructed from live API + public/index.html (29 Aug 2026).
  * Not the original source.
+ *
+ * Only POST is handled. GET falls through to Pages 404 HTML (matches live).
  */
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-const FROM = 'Braai Letter <lekker@braai.co.za>';
+const FROM = 'lekker@braai.co.za';
 const EDITOR = 'lekker@braai.co.za';
 
 function json(data, status = 200) {
@@ -27,15 +29,17 @@ async function resend(apiKey, payload) {
 }
 
 export async function onRequestPost({ request, env }) {
-  let body;
+  let body = {};
   try {
     body = await request.json();
   } catch {
-    return json({ ok: false, error: 'Bad request.' }, 400);
+    body = {};
   }
 
-  // Honeypot (homepage input id="oond") — silent success, no mail.
-  if (body && body.hp) return json({ ok: true });
+  // Honeypot (homepage input id="oond", sent as `hp`) — silent success, no mail.
+  if (body && String(body.hp || '').trim()) {
+    return json({ ok: true });
+  }
 
   const email = String((body && body.email) || '').trim();
   if (!email || email.length > 254 || !EMAIL_RE.test(email)) {
@@ -47,32 +51,19 @@ export async function onRequestPost({ request, env }) {
     return json({ ok: false, error: 'Something went wrong. Please try again in a minute.' }, 500);
   }
 
-  // No Resend audience ID is known. Capture the signup in the editor inbox.
-  const notified = await resend(key, {
+  // Resend audience id is unknown. Notify the editor instead of inventing one.
+  const sent = await resend(key, {
     from: FROM,
     to: [EDITOR],
+    reply_to: email,
     subject: 'Braai Letter signup: ' + email,
-    text: email + ' asked to join the Braai Letter.\n'
+    text:
+      email +
+      ' asked to join the Braai Letter.\n\n' +
+      'Add them to the monthly list. This function does not have a Resend audience id.\n'
   });
-  if (!notified) {
+  if (!sent) {
     return json({ ok: false, error: 'Something went wrong. Please try again in a minute.' }, 500);
-  }
-
-  // Best-effort confirmation to the subscriber. Signup already succeeded.
-  try {
-    await resend(key, {
-      from: FROM,
-      to: [email],
-      subject: "Lekker — you're on the Braai Letter",
-      text:
-        "You're on the list. One email a month: recipes, wood wisdom, Braai Day plans. " +
-        'No spam — spam is a tinned meat, and we don\'t braai it.\n\n' +
-        'Unsubscribe any time by writing to ' +
-        EDITOR +
-        '.\n\n— braai.co.za\n'
-    });
-  } catch {
-    /* ignore */
   }
 
   return json({ ok: true });

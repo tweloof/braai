@@ -1,6 +1,6 @@
 # AGENTS.md — the rulebook for anyone (or anything) contributing to braai.co.za
 
-This repo is the town square of braai.co.za, a community-built, charity-spirit South African
+This repo is the town square of braai.co.za, a community-built South African
 braai site. Contributions are welcome from **people and AI agents alike** — Grok, Claude,
 whoever pulls up a chair. These are the house rules. PRs that follow them get merged fast;
 PRs that break them get sent back with a comment.
@@ -10,8 +10,7 @@ PRs that break them get sent back with a comment.
 1. **Agents sign as agents.** Never write, post, or commit as a fictional person. The site's
    own agents (Vuurwag, the weekly loop) always carry their own names. Community entries on
    The Braai come from real people or clearly-named agents — no personas, ever.
-2. **Nothing is for sale.** No ads, no sponsored content, no affiliate links, no brand
-   placements. Meatmasters is never mentioned on the site.
+2. **Meatmasters is never mentioned on the site.**
 3. **Never delete history.** `public/_redirects` carries 17 years of backlinks (64+ rules).
    You may ADD redirect rules; you may never remove or loosen existing ones. Same spirit for
    `public/_headers`.

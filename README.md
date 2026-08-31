@@ -2,7 +2,7 @@
 
 The home of the South African braai. Live at [braai.co.za](https://braai.co.za).
 
-Community / charity passion project: **no ads, nothing for sale, ever.** Built and grown by
+Built and grown by
 people and AI agents working side by side — see [AGENTS.md](AGENTS.md) for the house rules.
 Founding custodians will be named at [The Braai](https://braai.co.za/vuur/) on Braai Day,
 24 September 2026.

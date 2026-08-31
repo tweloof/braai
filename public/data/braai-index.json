@@ -1,47 +1,195 @@
 {
-  "id": "braai-index-v1",
-  "label": "National Braai Index",
-  "basket": "v1",
-  "week_start": "2026-08-24",
-  "week_label": "24–30 August 2026",
-  "as_of_range": "27–28 August 2026",
-  "currency": "ZAR",
-  "complete": true,
-  "total_zar": 254.98,
-  "confirmed_zar": 254.98,
-  "items": [
-    {
-      "name": "Boerewors",
-      "product": "Championship Beef & Pork Boerewors",
-      "kg": 1,
-      "zar": 109.99,
-      "store": "Checkers FX Mkabayi Mall Vryheid",
-      "url": "https://www.checkers.co.za/browse-store/69e5fc74fa670d43ca761c47/product/championship-boerewors-2025-beef-and-pork-boerewors-per-kg-10148374KG",
-      "as_of": "2026-08-28",
-      "note": "Confirmed public guest price, per kilogram."
-    },
-    {
-      "name": "Pork loin chops, bone-in",
-      "product": "Pork Loin Chops",
-      "kg": 1,
-      "zar": 84.99,
-      "store": "Shoprite Vryheid",
-      "url": "https://www.shoprite.co.za/browse-store/6a2c0cf571db63b9c330f0bd/product/pork-loin-chops-per-kg-10151957KG",
-      "as_of": "2026-08-27",
-      "note": "Confirmed public guest price, per kilogram."
-    },
-    {
-      "name": "Chicken braai pack",
-      "product": "Farmbest Fresh Chicken Braai Pack 650g",
-      "kg": 1,
-      "zar": 60.00,
-      "store": "Checkers FX Mkabayi Mall Vryheid",
-      "url": "https://www.checkers.co.za/browse-store/69e5fc74fa670d43ca761c47/product/farmbest-fresh-chicken-braai-pack-650g-10874870EA",
-      "as_of": "2026-08-28",
-      "note": "Shelf ticket was 650 g at R39.00. Basket line is that same pack scaled to 1 kg (R60.00/kg). Not a guessed price."
-    }
-  ],
-  "comparables": [],
-  "method": "Basket v1 is the rand cost of a family Saturday fire as three kilos of meat: 1 kg boerewors, 1 kg bone-in pork loin chops, and 1 kg chicken braai pack. Wood and beer wait for a later basket. Each line is a single confirmed public guest price from Vryheid / KZN, never an estimate and never an interpolation between shops. The chicken line is the 1 kg equivalent of a confirmed 650 g braai pack (R39.00 → R60.00/kg). Product URLs are citations, not a shop. total_zar is 109.99 + 84.99 + 60.00 = 254.98.",
-  "gaps": []
+ "id": "braai-index-v2",
+ "label": "National Braai Index",
+ "basket": "v2",
+ "week_start": "2026-08-31",
+ "week_label": "31 August – 6 September 2026",
+ "as_of_range": "31 August 2026",
+ "currency": "ZAR",
+ "complete": true,
+ "total_zar": 690.87,
+ "confirmed_zar": 690.87,
+ "variants": {
+  "family": {
+   "label": "The family braai",
+   "total_zar": 690.87,
+   "complete": true
+  },
+  "with_beer": {
+   "label": "With a 6-pack of lager",
+   "total_zar": 790.86,
+   "complete": true
+  }
+ },
+ "meat_subtotal_zar": 294.97,
+ "sections": [
+  "Meat",
+  "Fire",
+  "Sides",
+  "Extras",
+  "Drinks"
+ ],
+ "items": [
+  {
+   "section": "Meat",
+   "name": "Boerewors",
+   "product": "Championship Beef & Pork Boerewors",
+   "qty": "1 kg",
+   "zar": 109.99,
+   "store": "Checkers Sixty60 (online)",
+   "url": "https://www.checkers.co.za/product/championship-boerewors-beef-and-pork-boerewors-per-kg-10892270KG",
+   "as_of": "2026-08-31",
+   "note": "Per-kilogram price of the listed (1000g–1200g) pack."
+  },
+  {
+   "section": "Meat",
+   "name": "Pork loin chops, bone-in",
+   "product": "Pork Loin Chops",
+   "qty": "1 kg",
+   "zar": 119.99,
+   "store": "Checkers Sixty60 (online)",
+   "url": "https://www.checkers.co.za/product/pork-loin-chops-per-kg-10151957KG",
+   "as_of": "2026-08-31",
+   "note": "Per-kilogram price of the listed (300g–500g) pack."
+  },
+  {
+   "section": "Meat",
+   "name": "Chicken braai pack",
+   "product": "Farmer's Choice Braaipack Chicken",
+   "qty": "1 kg",
+   "zar": 64.99,
+   "store": "Checkers Sixty60 (online)",
+   "url": "https://www.checkers.co.za/product/farmers-choice-braaipack-chicken-per-kg-10732967KG",
+   "as_of": "2026-08-31",
+   "note": "Per-kilogram price; listed on promotion on the day."
+  },
+  {
+   "section": "Fire",
+   "name": "Charcoal briquettes",
+   "product": "Bush Baby Charcoal Briquettes 4kg",
+   "qty": "4 kg bag",
+   "zar": 64.99,
+   "store": "Checkers Sixty60 (online)",
+   "url": "https://www.checkers.co.za/product/bush-baby-charcoal-briquettes-4kg-10189526EA",
+   "as_of": "2026-08-31"
+  },
+  {
+   "section": "Fire",
+   "name": "Firelighters",
+   "product": "Checkers Housebrand Firelighters 12 Pack",
+   "qty": "12 pack",
+   "zar": 27.99,
+   "store": "Checkers Sixty60 (online)",
+   "url": "https://www.checkers.co.za/product/checkers-housebrand-firelighters-12-pack-10135246EA",
+   "as_of": "2026-08-31"
+  },
+  {
+   "section": "Fire",
+   "name": "Matches",
+   "product": "Lion Safety Matches",
+   "qty": "1 box",
+   "zar": 1.5,
+   "store": "Checkers Sixty60 (online)",
+   "url": "https://www.checkers.co.za/product/lion-safety-matches-10135236EA",
+   "as_of": "2026-08-31"
+  },
+  {
+   "section": "Sides",
+   "name": "Braai rolls",
+   "product": "SASKO Regular White Rolls 6 Pack",
+   "qty": "6 pack",
+   "zar": 24.99,
+   "store": "Checkers Sixty60 (online)",
+   "url": "https://www.checkers.co.za/product/sasko-regular-white-rolls-6-pack-10233241EA",
+   "as_of": "2026-08-31"
+  },
+  {
+   "section": "Sides",
+   "name": "Potato salad",
+   "product": "Simply Great Potato Salad 500g",
+   "qty": "500 g tub",
+   "zar": 59.49,
+   "store": "Checkers Sixty60 (online)",
+   "url": "https://www.checkers.co.za/product/simply-great-potato-salad-500g-10544115EA",
+   "as_of": "2026-08-31",
+   "note": "Promotional price on the day; regular price R69.99 (deal to 6 Sep)."
+  },
+  {
+   "section": "Sides",
+   "name": "Sweetcorn",
+   "product": "Sweetcorn 4s (fresh cobs)",
+   "qty": "4 cobs",
+   "zar": 34.99,
+   "store": "Checkers Sixty60 (online)",
+   "url": "https://www.checkers.co.za/product/sweetcorn-4s-10151615EA",
+   "as_of": "2026-08-31"
+  },
+  {
+   "section": "Sides",
+   "name": "Chakalaka",
+   "product": "KOO Hot & Spicy Chakalaka 410g",
+   "qty": "410 g tin",
+   "zar": 25.99,
+   "store": "Checkers Sixty60 (online)",
+   "url": "https://www.checkers.co.za/product/koo-hot-and-spicy-chakalaka-410g-10133307EA",
+   "as_of": "2026-08-31",
+   "note": "Unit price; a Buy-2-for-R40 deal ran on the day."
+  },
+  {
+   "section": "Extras",
+   "name": "Braai salt",
+   "product": "Marina Sea Salt Braai Salt with Pepper 400g",
+   "qty": "400 g",
+   "zar": 39.99,
+   "store": "Checkers Sixty60 (online)",
+   "url": "https://www.checkers.co.za/product/marina-sea-salt-braai-salt-with-pepper-400g-10132387EA",
+   "as_of": "2026-08-31",
+   "note": "Promotional price on the day; regular price R49.99."
+  },
+  {
+   "section": "Extras",
+   "name": "Tomato sauce",
+   "product": "ALL GOLD Tomato Sauce Bottle 700ml",
+   "qty": "700 ml",
+   "zar": 39.99,
+   "store": "Checkers Sixty60 (online)",
+   "url": "https://www.checkers.co.za/product/all-gold-tomato-sauce-bottle-700ml-10345469EA",
+   "as_of": "2026-08-31"
+  },
+  {
+   "section": "Extras",
+   "name": "Heavy-duty foil",
+   "product": "Checkers Housebrand Heavyweight Aluminium Foil 5m",
+   "qty": "5 m roll",
+   "zar": 46.99,
+   "store": "Checkers Sixty60 (online)",
+   "url": "https://www.checkers.co.za/product/checkers-housebrand-heavyweight-aluminium-foil-5m-10135391EA",
+   "as_of": "2026-08-31"
+  },
+  {
+   "section": "Drinks",
+   "name": "Cooldrink",
+   "product": "Coca-Cola Original Taste Less Sugar 2L",
+   "qty": "2 L",
+   "zar": 28.99,
+   "store": "Checkers Sixty60 (online)",
+   "url": "https://www.checkers.co.za/product/coca-cola-original-taste-less-sugar-soft-drink-2l-10136669EA",
+   "as_of": "2026-08-31"
+  },
+  {
+   "section": "Drinks",
+   "name": "Lager (with-beer number only)",
+   "product": "Castle Lager Beer Cans 6 x 500ml",
+   "qty": "6 × 500 ml",
+   "zar": 99.99,
+   "store": "Checkers Sixty60 (online)",
+   "url": "https://www.checkers.co.za/product/castle-lager-beer-cans-6-x-500ml-10541781PK1",
+   "as_of": "2026-08-31",
+   "variant": "with_beer",
+   "note": "Only in the with-beer number, never in the family number."
+  }
+ ],
+ "comparables": [],
+ "method": "Basket v2 (from 31 August 2026) prices the whole fire, not just the meat: three kilos of meat (1 kg boerewors, 1 kg bone-in pork loin chops, 1 kg chicken braai pack), the fire itself (4 kg charcoal briquettes, firelighters, matches), the table (6 rolls, potato salad, sweetcorn, chakalaka), the extras (braai salt, tomato sauce, foil) and a 2-litre cooldrink. Two numbers are published: the family braai, and the same basket with a 6-pack of lager. Every line is a single confirmed public guest price with its citation — never an estimate, never an average, never a hole filled from last week. From v2, prices are confirmed on Checkers Sixty60's national online shelf; basket v1 was priced at the Vryheid shops, so v1's meat week (R254.98) and v2's meat subtotal (R294.97) are different surfaces, not a price movement. Promotional prices count — if the shelf says R59.49 this week, the braai costs R59.49 this week, and the regular price is noted. A gap stays a gap until someone sends a price we can publish.",
+ "gaps": []
 }

@@ -3,7 +3,7 @@
 // Assets: cache-first (fonts, CSS, diagrams, icons rarely change).
 // /api/  : never touched — vuur and tonight shared state must always be live.
 
-var VERSION = 'braai-v17';
+var VERSION = 'braai-v18';
 var PRECACHE = [
   '/offline',
   '/assets/style.css',

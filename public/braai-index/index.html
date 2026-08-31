@@ -58,6 +58,7 @@
   <p class="idx-rand" id="idxRand" aria-live="polite">R690.87</p>
   <p class="idx-week" id="idxWeek">31 August – 6 September 2026 · basket v2, complete</p>
   <p class="idx-week idx-beer" id="idxBeer">With a 6-pack of lager: R790.86</p>
+  <p class="idx-week" id="idxTiers">Budget braai: R644.87 · High-end braai: R955.87</p>
   <p class="lead idx-lead" id="idxLead">This week’s family Saturday fire — the meat, the fire, the table and the cooldrink. Citations, not a shop.</p>
 </div>
 
@@ -65,6 +66,10 @@
   <div class="wrap prose">
     <div class="callout" id="idxStatus">
       <strong>Basket v2</strong> (from 31 August 2026): 1&nbsp;kg boerewors, 1&nbsp;kg pork loin chops, 1&nbsp;kg chicken braai pack; charcoal, firelighters and matches; rolls, potato salad, sweetcorn and chakalaka; braai salt, tomato sauce and foil; and a 2-litre cooldrink. One number for the family basket, a second with a 6-pack of lager. <span id="idxMeat"></span>
+    </div>
+
+    <div class="callout" id="idxTierBox">
+      <strong>Three braais, one table:</strong> the fire, the sides, the extras and the cooldrink stay the same — only the meat changes. Budget (boerewors, pork braai chops, chicken drumsticks &amp; wings): <b>R644.87</b>. Classic: <b>R690.87</b>. High-end (boerewors, rump steak, lamb loin chops): <b>R955.87</b>. A 6-pack of lager adds R99.99 to any of them.
     </div>
 
     <h2>What is in the basket</h2>
@@ -130,6 +135,21 @@
       if (beerEl) {
         if (beer && beer.total_zar != null) { beerEl.textContent = 'With a 6-pack of lager: ' + rand(beer.total_zar); }
         else { beerEl.hidden = true; }
+      }
+      var tiersEl = document.getElementById('idxTiers');
+      if (tiersEl && d.tiers && d.tiers.budget && d.tiers.high_end) {
+        tiersEl.textContent = 'Budget braai: ' + rand(d.tiers.budget.total_zar) + ' \u00b7 High-end braai: ' + rand(d.tiers.high_end.total_zar);
+      }
+      var tierBox = document.getElementById('idxTierBox');
+      if (tierBox && d.tiers && d.tiers.budget && d.tiers.high_end) {
+        var meats = function (t) { return (t.meat || []).map(function (m) { return m.name.toLowerCase(); }).join(', '); };
+        var addBeer = (beer && beer.total_zar != null && fam.total_zar != null)
+          ? ' A 6-pack of lager adds ' + rand(Math.round((beer.total_zar - fam.total_zar) * 100) / 100) + ' to any of them.'
+          : '';
+        tierBox.innerHTML = '<strong>Three braais, one table:</strong> the fire, the sides, the extras and the cooldrink stay the same \u2014 only the meat changes. ' +
+          'Budget (' + esc(meats(d.tiers.budget)) + '): <b>' + esc(rand(d.tiers.budget.total_zar)) + '</b>. ' +
+          'Classic: <b>' + esc(rand(fam.total_zar)) + '</b>. ' +
+          'High-end (' + esc(meats(d.tiers.high_end)) + '): <b>' + esc(rand(d.tiers.high_end.total_zar)) + '</b>.' + addBeer;
       }
       var meatEl = document.getElementById('idxMeat');
       if (meatEl && d.meat_subtotal_zar != null) {

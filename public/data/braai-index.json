@@ -190,6 +190,87 @@
   }
  ],
  "comparables": [],
- "method": "Basket v2 (from 31 August 2026) prices the whole fire, not just the meat: three kilos of meat (1 kg boerewors, 1 kg bone-in pork loin chops, 1 kg chicken braai pack), the fire itself (4 kg charcoal briquettes, firelighters, matches), the table (6 rolls, potato salad, sweetcorn, chakalaka), the extras (braai salt, tomato sauce, foil) and a 2-litre cooldrink. Two numbers are published: the family braai, and the same basket with a 6-pack of lager. Every line is a single confirmed public guest price with its citation — never an estimate, never an average, never a hole filled from last week. From v2, prices are confirmed on Checkers Sixty60's national online shelf; basket v1 was priced at the Vryheid shops, so v1's meat week (R254.98) and v2's meat subtotal (R294.97) are different surfaces, not a price movement. Promotional prices count — if the shelf says R59.49 this week, the braai costs R59.49 this week, and the regular price is noted. A gap stays a gap until someone sends a price we can publish.",
- "gaps": []
+ "method": "Basket v2 (from 31 August 2026) prices the whole fire, not just the meat: three kilos of meat (1 kg boerewors, 1 kg bone-in pork loin chops, 1 kg chicken braai pack), the fire itself (4 kg charcoal briquettes, firelighters, matches), the table (6 rolls, potato salad, sweetcorn, chakalaka), the extras (braai salt, tomato sauce, foil) and a 2-litre cooldrink. Two numbers are published: the family braai, and the same basket with a 6-pack of lager. Every line is a single confirmed public guest price with its citation — never an estimate, never an average, never a hole filled from last week. From v2, prices are confirmed on Checkers Sixty60's national online shelf; basket v1 was priced at the Vryheid shops, so v1's meat week (R254.98) and v2's meat subtotal (R294.97) are different surfaces, not a price movement. Promotional prices count — if the shelf says R59.49 this week, the braai costs R59.49 this week, and the regular price is noted. A gap stays a gap until someone sends a price we can publish. From 31 August the index also publishes a budget and a high-end braai: the same fire, table and cooldrink, with only the meat block swapped — budget (boerewors, pork braai chops, chicken drumsticks & wings) and high-end (boerewors, rump steak, lamb loin chops). Their citations live in this page's source file alongside every other line.",
+ "gaps": [],
+ "tiers": {
+  "budget": {
+   "label": "The budget braai",
+   "meat_zar": 248.97,
+   "total_zar": 644.87,
+   "with_beer_zar": 744.86,
+   "meat": [
+    {
+     "name": "Boerewors",
+     "product": "Championship Beef & Pork Boerewors",
+     "qty": "1 kg",
+     "zar": 109.99,
+     "store": "Checkers Sixty60 (online)",
+     "url": "https://www.checkers.co.za/product/championship-boerewors-beef-and-pork-boerewors-per-kg-10892270KG",
+     "as_of": "2026-08-31"
+    },
+    {
+     "name": "Pork braai chops",
+     "product": "Pork Braai Chops",
+     "qty": "1 kg",
+     "zar": 58.99,
+     "store": "Checkers Sixty60 (online)",
+     "url": "https://www.checkers.co.za/product/pork-braai-chops-per-kg-10152207KG",
+     "as_of": "2026-08-31",
+     "note": "Per-kilogram price; listed on promotion on the day."
+    },
+    {
+     "name": "Chicken drumsticks & wings",
+     "product": "Farmer's Choice Fresh Chicken Drumsticks & Wings",
+     "qty": "1 kg",
+     "zar": 79.99,
+     "store": "Checkers Sixty60 (online)",
+     "url": "https://www.checkers.co.za/product/farmers-choice-fresh-chicken-drumsticks-and-wings-per-kg-10796287KG",
+     "as_of": "2026-08-31",
+     "note": "Per-kilogram price; listed on promotion on the day."
+    }
+   ]
+  },
+  "classic": {
+   "label": "The classic braai",
+   "meat_zar": 294.97,
+   "total_zar": 690.87,
+   "with_beer_zar": 790.86,
+   "note": "Meat lines are the itemised basket on this page."
+  },
+  "high_end": {
+   "label": "The high-end braai",
+   "meat_zar": 559.97,
+   "total_zar": 955.87,
+   "with_beer_zar": 1055.86,
+   "meat": [
+    {
+     "name": "Boerewors",
+     "product": "Championship Beef & Pork Boerewors",
+     "qty": "1 kg",
+     "zar": 109.99,
+     "store": "Checkers Sixty60 (online)",
+     "url": "https://www.checkers.co.za/product/championship-boerewors-beef-and-pork-boerewors-per-kg-10892270KG",
+     "as_of": "2026-08-31"
+    },
+    {
+     "name": "Rump steak",
+     "product": "Steakhouse Classic Rump Beef Steak",
+     "qty": "1 kg",
+     "zar": 219.99,
+     "store": "Checkers Sixty60 (online)",
+     "url": "https://www.checkers.co.za/product/steakhouse-classic-rump-beef-steak-per-kg-10152361KG",
+     "as_of": "2026-08-31"
+    },
+    {
+     "name": "Lamb loin chops",
+     "product": "Lamb Loin Chops",
+     "qty": "1 kg",
+     "zar": 229.99,
+     "store": "Checkers Sixty60 (online)",
+     "url": "https://www.checkers.co.za/product/lamb-loin-chops-per-kg-10151864KG",
+     "as_of": "2026-08-31"
+    }
+   ]
+  }
+ }
 }

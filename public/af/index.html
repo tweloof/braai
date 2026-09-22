@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>braai.co.za — Die tuiste van die Suid-Afrikaanse braai</title>
-<meta name="description" content="Die definitiewe Suid-Afrikaanse braaigids: watter hout om te brand, hoe om jou kole te lees, watter snitte om te koop en die klassieke resepte wat elke braaier moet ken.">
+<meta name="description" content="Die definitiewe Suid-Afrikaanse braaigids: hout, kole, snitte en klassieke resepte. Nasionale Braaidag is Woensdag 24 September 2026.">
 <link rel="canonical" href="https://braai.co.za/af/">
 <link rel="alternate" hreflang="en" href="https://braai.co.za/">
 <link rel="alternate" hreflang="af" href="https://braai.co.za/af/">
@@ -25,7 +25,7 @@
 <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/style.css">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebSite","name":"braai.co.za","url":"https://braai.co.za/af/","description":"Die definitiewe Suid-Afrikaanse braaigids: hout, vuur, snitte en klassieke resepte.","inLanguage":"af"}
+{"@context":"https://schema.org","@type":"WebSite","name":"braai.co.za","url":"https://braai.co.za/af/","description":"Die definitiewe Suid-Afrikaanse braaigids: hout, vuur, snitte en klassieke resepte. Nasionale Braaidag is Woensdag 24 September 2026.","inLanguage":"af"}
 </script>
 </head>
 <body>
@@ -65,7 +65,7 @@
 
 <div class="count-strip" id="countStrip">
   <div><span class="num" id="cdDays">…</span> dae tot Nasionale Braaidag</div>
-  <div>24 September — Erfenisdag. <a href="/af/braai-day/">Begin jou vuur beplan</a></div>
+  <div>Woensdag 24 September 2026 — Erfenisdag. <a href="/af/braai-day/">Inkopielys, tydlyn en vrae</a></div>
 </div>
 
 <section class="vuur-band">
@@ -192,12 +192,13 @@
 (function () {
   var now = new Date();
   var year = now.getFullYear();
-  var bd = new Date(year, 8, 24);
-  if (now > bd) { bd = new Date(year + 1, 8, 24); }
-  var days = Math.ceil((bd - now) / 86400000);
+  var start = new Date(year, 8, 24);
+  var end = new Date(year, 8, 25);
+  if (now >= end) { start = new Date(year + 1, 8, 24); }
+  var days = Math.ceil((start - now) / 86400000);
   var el = document.getElementById('cdDays');
-  if (el) { el.textContent = days === 0 ? 'Dit is' : days; }
-  if (days === 0) {
+  if (el) { el.textContent = days <= 0 ? 'Vandag' : days; }
+  if (days <= 0) {
     document.getElementById('countStrip').firstElementChild.innerHTML = '<span class="num">Vandag</span> is Nasionale Braaidag!';
   }
 

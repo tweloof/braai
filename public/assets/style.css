@@ -315,6 +315,7 @@ section.dark .sec-head p { color: var(--smoke-2); }
 
 .prose { max-width: 760px; }
 .prose h2 { font-size: 1.9rem; margin: 48px 0 16px; }
+.prose h2[id] { scroll-margin-top: 6rem; }
 .prose h3 { font-size: 1.3rem; margin: 32px 0 10px; }
 .prose p { margin-bottom: 16px; }
 .prose ul, .prose ol { margin: 0 0 16px 22px; }

@@ -1,11 +1,11 @@
-// braai.co.za service worker — app shell v24
+// braai.co.za service worker — app shell v25
 // Pages: network-first with cache fallback (so the braai is always fresh).
 // Reading (recipes, cuts, rules of the fire) and /app/: same, and also
 // stored when the phone app saves them with a plain fetch (not only navigations).
 // Assets: cache-first (fonts, CSS, diagrams, icons rarely change).
 // /api/  : never touched — vuur and tonight shared state must always be live.
 
-var VERSION = 'braai-v24';
+var VERSION = 'braai-v25';
 var CORE = [
   '/offline',
   '/assets/style.css',
@@ -15,6 +15,7 @@ var CORE = [
   '/assets/favicon.svg',
   '/assets/icons/icon-192.png',
   '/assets/icons/icon-512.png',
+  '/assets/icons/icon-512-maskable.png',
   '/assets/icons/apple-touch-icon.png'
 ];
 var SHELL = [

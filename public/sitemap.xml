@@ -1,13 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  <url><loc>https://braai.co.za/</loc><lastmod>2026-09-22</lastmod><priority>1.0</priority></url>
-  <url><loc>https://braai.co.za/what-is-a-braai/</loc><lastmod>2026-09-22</lastmod><priority>0.95</priority></url>
-  <url><loc>https://braai.co.za/fire/</loc><lastmod>2026-09-22</lastmod><priority>0.9</priority></url>
+  <url>
+    <loc>https://braai.co.za/</loc><lastmod>2026-09-22</lastmod><priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://braai.co.za/"/>
+    <xhtml:link rel="alternate" hreflang="af" href="https://braai.co.za/af/"/>
+    <xhtml:link rel="alternate" hreflang="zu" href="https://braai.co.za/zu/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://braai.co.za/"/>
+  </url>
+  <url>
+    <loc>https://braai.co.za/what-is-a-braai/</loc><lastmod>2026-09-22</lastmod><priority>0.95</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://braai.co.za/what-is-a-braai/"/>
+    <xhtml:link rel="alternate" hreflang="af" href="https://braai.co.za/af/what-is-a-braai/"/>
+    <xhtml:link rel="alternate" hreflang="zu" href="https://braai.co.za/zu/what-is-a-braai/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://braai.co.za/what-is-a-braai/"/>
+  </url>
+  <url>
+    <loc>https://braai.co.za/fire/</loc><lastmod>2026-09-22</lastmod><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://braai.co.za/fire/"/>
+    <xhtml:link rel="alternate" hreflang="af" href="https://braai.co.za/af/fire/"/>
+    <xhtml:link rel="alternate" hreflang="zu" href="https://braai.co.za/zu/fire/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://braai.co.za/fire/"/>
+  </url>
   <url><loc>https://braai.co.za/cuts/</loc><lastmod>2026-09-22</lastmod><priority>0.9</priority></url>
   <url><loc>https://braai.co.za/recipes/</loc><lastmod>2026-09-22</lastmod><priority>0.9</priority></url>
   <url><loc>https://braai.co.za/potjie/</loc><lastmod>2026-09-22</lastmod><priority>0.9</priority></url>
   <url><loc>https://braai.co.za/gear/</loc><lastmod>2026-09-22</lastmod><priority>0.85</priority></url>
-  <url><loc>https://braai.co.za/braaictionary/</loc><lastmod>2026-08-25</lastmod><priority>0.85</priority></url>
+  <url><loc>https://braai.co.za/braaictionary/</loc><lastmod>2026-09-22</lastmod><priority>0.85</priority></url>
   <url>
     <loc>https://braai.co.za/braai-day/</loc>
     <lastmod>2026-09-22</lastmod>
@@ -17,7 +35,13 @@
     <xhtml:link rel="alternate" hreflang="zu" href="https://braai.co.za/zu/braai-day/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://braai.co.za/braai-day/"/>
   </url>
-  <url><loc>https://braai.co.za/vuur/</loc><lastmod>2026-09-22</lastmod><priority>0.9</priority></url>
+  <url>
+    <loc>https://braai.co.za/vuur/</loc><lastmod>2026-09-22</lastmod><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://braai.co.za/vuur/"/>
+    <xhtml:link rel="alternate" hreflang="af" href="https://braai.co.za/af/vuur/"/>
+    <xhtml:link rel="alternate" hreflang="zu" href="https://braai.co.za/zu/vuur/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://braai.co.za/vuur/"/>
+  </url>
   <url><loc>https://braai.co.za/braai-index/</loc><lastmod>2026-09-22</lastmod><priority>0.85</priority></url>
   <url><loc>https://braai.co.za/tonight/</loc><lastmod>2026-09-22</lastmod><priority>0.85</priority></url>
   <url><loc>https://braai.co.za/app/</loc><lastmod>2026-09-22</lastmod><priority>0.8</priority></url>
@@ -36,11 +60,41 @@
   <url><loc>https://braai.co.za/recipes/potbrood/</loc><lastmod>2026-09-22</lastmod><priority>0.8</priority></url>
   <url><loc>https://braai.co.za/recipes/mieliemeel-dumplings/</loc><lastmod>2026-09-22</lastmod><priority>0.8</priority></url>
   <url><loc>https://braai.co.za/recipes/chocolate-bananas/</loc><lastmod>2026-09-22</lastmod><priority>0.8</priority></url>
-  <url><loc>https://braai.co.za/contribute/</loc><lastmod>2026-09-22</lastmod><priority>0.6</priority></url>
-  <url><loc>https://braai.co.za/af/</loc><lastmod>2026-09-22</lastmod><priority>0.6</priority></url>
-  <url><loc>https://braai.co.za/af/what-is-a-braai/</loc><lastmod>2026-09-22</lastmod><priority>0.6</priority></url>
-  <url><loc>https://braai.co.za/af/fire/</loc><lastmod>2026-09-22</lastmod><priority>0.6</priority></url>
-  <url><loc>https://braai.co.za/af/vuur/</loc><lastmod>2026-09-22</lastmod><priority>0.6</priority></url>
+  <url>
+    <loc>https://braai.co.za/contribute/</loc><lastmod>2026-09-22</lastmod><priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://braai.co.za/contribute/"/>
+    <xhtml:link rel="alternate" hreflang="af" href="https://braai.co.za/af/contribute/"/>
+    <xhtml:link rel="alternate" hreflang="zu" href="https://braai.co.za/zu/contribute/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://braai.co.za/contribute/"/>
+  </url>
+  <url>
+    <loc>https://braai.co.za/af/</loc><lastmod>2026-09-22</lastmod><priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://braai.co.za/"/>
+    <xhtml:link rel="alternate" hreflang="af" href="https://braai.co.za/af/"/>
+    <xhtml:link rel="alternate" hreflang="zu" href="https://braai.co.za/zu/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://braai.co.za/"/>
+  </url>
+  <url>
+    <loc>https://braai.co.za/af/what-is-a-braai/</loc><lastmod>2026-09-22</lastmod><priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://braai.co.za/what-is-a-braai/"/>
+    <xhtml:link rel="alternate" hreflang="af" href="https://braai.co.za/af/what-is-a-braai/"/>
+    <xhtml:link rel="alternate" hreflang="zu" href="https://braai.co.za/zu/what-is-a-braai/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://braai.co.za/what-is-a-braai/"/>
+  </url>
+  <url>
+    <loc>https://braai.co.za/af/fire/</loc><lastmod>2026-09-22</lastmod><priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://braai.co.za/fire/"/>
+    <xhtml:link rel="alternate" hreflang="af" href="https://braai.co.za/af/fire/"/>
+    <xhtml:link rel="alternate" hreflang="zu" href="https://braai.co.za/zu/fire/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://braai.co.za/fire/"/>
+  </url>
+  <url>
+    <loc>https://braai.co.za/af/vuur/</loc><lastmod>2026-09-22</lastmod><priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://braai.co.za/vuur/"/>
+    <xhtml:link rel="alternate" hreflang="af" href="https://braai.co.za/af/vuur/"/>
+    <xhtml:link rel="alternate" hreflang="zu" href="https://braai.co.za/zu/vuur/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://braai.co.za/vuur/"/>
+  </url>
   <url>
     <loc>https://braai.co.za/af/braai-day/</loc>
     <lastmod>2026-09-22</lastmod>
@@ -50,11 +104,41 @@
     <xhtml:link rel="alternate" hreflang="zu" href="https://braai.co.za/zu/braai-day/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://braai.co.za/braai-day/"/>
   </url>
-  <url><loc>https://braai.co.za/af/contribute/</loc><lastmod>2026-09-22</lastmod><priority>0.6</priority></url>
-  <url><loc>https://braai.co.za/zu/</loc><lastmod>2026-09-22</lastmod><priority>0.6</priority></url>
-  <url><loc>https://braai.co.za/zu/what-is-a-braai/</loc><lastmod>2026-09-22</lastmod><priority>0.6</priority></url>
-  <url><loc>https://braai.co.za/zu/fire/</loc><lastmod>2026-09-22</lastmod><priority>0.6</priority></url>
-  <url><loc>https://braai.co.za/zu/vuur/</loc><lastmod>2026-09-22</lastmod><priority>0.6</priority></url>
+  <url>
+    <loc>https://braai.co.za/af/contribute/</loc><lastmod>2026-09-22</lastmod><priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://braai.co.za/contribute/"/>
+    <xhtml:link rel="alternate" hreflang="af" href="https://braai.co.za/af/contribute/"/>
+    <xhtml:link rel="alternate" hreflang="zu" href="https://braai.co.za/zu/contribute/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://braai.co.za/contribute/"/>
+  </url>
+  <url>
+    <loc>https://braai.co.za/zu/</loc><lastmod>2026-09-22</lastmod><priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://braai.co.za/"/>
+    <xhtml:link rel="alternate" hreflang="af" href="https://braai.co.za/af/"/>
+    <xhtml:link rel="alternate" hreflang="zu" href="https://braai.co.za/zu/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://braai.co.za/"/>
+  </url>
+  <url>
+    <loc>https://braai.co.za/zu/what-is-a-braai/</loc><lastmod>2026-09-22</lastmod><priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://braai.co.za/what-is-a-braai/"/>
+    <xhtml:link rel="alternate" hreflang="af" href="https://braai.co.za/af/what-is-a-braai/"/>
+    <xhtml:link rel="alternate" hreflang="zu" href="https://braai.co.za/zu/what-is-a-braai/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://braai.co.za/what-is-a-braai/"/>
+  </url>
+  <url>
+    <loc>https://braai.co.za/zu/fire/</loc><lastmod>2026-09-22</lastmod><priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://braai.co.za/fire/"/>
+    <xhtml:link rel="alternate" hreflang="af" href="https://braai.co.za/af/fire/"/>
+    <xhtml:link rel="alternate" hreflang="zu" href="https://braai.co.za/zu/fire/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://braai.co.za/fire/"/>
+  </url>
+  <url>
+    <loc>https://braai.co.za/zu/vuur/</loc><lastmod>2026-09-22</lastmod><priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://braai.co.za/vuur/"/>
+    <xhtml:link rel="alternate" hreflang="af" href="https://braai.co.za/af/vuur/"/>
+    <xhtml:link rel="alternate" hreflang="zu" href="https://braai.co.za/zu/vuur/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://braai.co.za/vuur/"/>
+  </url>
   <url>
     <loc>https://braai.co.za/zu/braai-day/</loc>
     <lastmod>2026-09-22</lastmod>
@@ -64,5 +148,11 @@
     <xhtml:link rel="alternate" hreflang="zu" href="https://braai.co.za/zu/braai-day/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://braai.co.za/braai-day/"/>
   </url>
-  <url><loc>https://braai.co.za/zu/contribute/</loc><lastmod>2026-09-22</lastmod><priority>0.6</priority></url>
+  <url>
+    <loc>https://braai.co.za/zu/contribute/</loc><lastmod>2026-09-22</lastmod><priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://braai.co.za/contribute/"/>
+    <xhtml:link rel="alternate" hreflang="af" href="https://braai.co.za/af/contribute/"/>
+    <xhtml:link rel="alternate" hreflang="zu" href="https://braai.co.za/zu/contribute/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://braai.co.za/contribute/"/>
+  </url>
 </urlset>

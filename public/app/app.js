@@ -151,7 +151,7 @@
     var el = document.getElementById('idxRand');
     el.textContent = complete ? rand(fam.total_zar) : 'R\u2014';
     var week = document.getElementById('idxWeek');
-    week.textContent = (d.week_label || 'This week') + ' \u00b7 basket ' + (d.basket || 'v2') + (complete ? ', complete' : ', incomplete');
+    week.textContent = (d.week_label || 'Latest published') + ' \u00b7 basket ' + (d.basket || 'v2') + (complete ? ', complete' : ', incomplete');
     var beerEl = document.getElementById('idxBeer');
     if (beer && beer.total_zar != null) beerEl.textContent = 'With a 6-pack of lager: ' + rand(beer.total_zar);
     else beerEl.textContent = '';

@@ -2,7 +2,7 @@
   "id": "/",
   "name": "Die Braai — braai.co.za",
   "short_name": "Die Braai",
-  "description": "Phone companion for braai.co.za: this week’s published index, who is braaiing tonight, recipes for when the signal dies, and a log for the communal fire. Not a shop.",
+  "description": "Phone companion for braai.co.za: the latest published index, who is braaiing tonight, recipes for when the signal dies, and a log for the communal fire. Not a shop.",
   "start_url": "/app/?src=pwa",
   "scope": "/",
   "display": "standalone",

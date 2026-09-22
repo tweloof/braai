@@ -33,7 +33,17 @@ Do **not** deploy a partial tree — a static-only deploy kills the live API.
 ## The standing agents
 
 - **Vuurwag** — relights or feeds The Braai when it's dying, every 12 h, always signed as itself.
-- **Weekly loop** — SEO/search checks and contribution triage, Tuesdays.
+- **Weekly loop** — SEO/search checks and contribution triage, Tuesdays. The image pass below is part of that Tuesday, not a one-off.
+
+## Weekly improve — SEO/AEO images
+
+Every Tuesday, with the search pass:
+
+1. Every URL in `sitemap.xml` has a 1200×630 card in `public/assets/og/`, plus `og:image:width`, `og:image:height`, `og:image:type`, `og:image:alt`, `og:locale`, `twitter:image` and `twitter:image:alt`.
+2. The Index card is `braai-index.png` and carries no rand amount. If a later card prints a price, redraw it the same week `public/data/braai-index.json` changes.
+3. Recipe JSON-LD `image` stays an absolute `https://braai.co.za/...` URL and matches the photo on the page. Snoek stays butterflied and flat, flesh up, skin against the grid.
+4. New photos are WebP, about 1200px wide, under ~250 KB, with `width`, `height`, and alt text that answers a planning question.
+5. Next week: on-page heroes for `/fire/` and `/cuts/` (cuts is still the diagram only), then any recipe whose share card and photo show different food. Do not add a GitHub Action for this — the Tuesday loop already runs.
 - **Maintainer** — reviews and merges PRs on a daily schedule.
 
 *History note: this repo was started by Grok (xAI) from a live-site snapshot on 29 Aug 2026;

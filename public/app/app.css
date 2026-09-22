@@ -1,0 +1,159 @@
+/* Phone companion at /app/ — uses the site's type and fire colours.
+   Instant scroll so the fixed tab bar does not catch a smooth-scroll click. */
+html { scroll-behavior: auto; }
+
+.app-shell {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 22px 16px 12px;
+}
+
+.app-shell h1 {
+  font-size: clamp(1.8rem, 7vw, 2.4rem);
+  margin: 4px 0 8px;
+}
+.app-shell h1 em { font-style: italic; color: var(--flame); }
+.app-lead { color: var(--smoke); margin: 0 0 16px; }
+
+.app-install {
+  background: var(--char);
+  color: var(--cream-3);
+  border-radius: 16px;
+  padding: 14px 16px 16px;
+  margin-bottom: 16px;
+  border: 1px solid rgba(244, 157, 55, .28);
+}
+.app-install p { margin: 0; font-size: .92rem; }
+.app-install .btn { margin-top: 12px; }
+
+.app-stack .vsub { display: block; margin-top: 6px; }
+.app-stack { margin-bottom: 14px; text-decoration: none; }
+#idxRand { color: var(--flame); user-select: all; }
+.app-stack a { color: var(--flame); }
+
+.app-rand-note { font-size: .84rem; color: var(--smoke-2); display: block; margin-top: 8px; }
+
+.app-form { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
+.app-form label { font-weight: 600; font-size: .92rem; }
+.app-form input,
+.app-form select,
+.app-form textarea {
+  font: inherit;
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid #d9cec1;
+  border-radius: 12px;
+  background: #fff;
+  color: var(--ink);
+  min-height: 48px;
+}
+.app-form textarea { min-height: 110px; resize: vertical; line-height: 1.5; }
+.app-form input:focus,
+.app-form select:focus,
+.app-form textarea:focus { outline: 2px solid var(--flame); outline-offset: 1px; }
+.app-form .btn { width: 100%; text-align: center; margin-top: 6px; }
+.app-form .hp-field { position: absolute; left: -9999px; height: 1px; width: 1px; overflow: hidden; }
+.app-err { color: var(--ember); font-size: .9rem; min-height: 1.2em; }
+
+.app-gauge {
+  height: 8px;
+  background: #3a3029;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 12px;
+}
+.app-gauge span {
+  display: block;
+  height: 100%;
+  width: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #d04912, #f49d37);
+}
+
+.app-links, .app-recipes { list-style: none; margin: 0; padding: 0; }
+.app-links li, .app-recipes li {
+  background: #fff;
+  border: 1px solid var(--cream-3);
+  border-radius: 14px;
+  margin-bottom: 8px;
+}
+.app-links a, .app-recipes a {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  padding: 14px 14px;
+  text-decoration: none;
+  color: var(--char);
+  font-weight: 600;
+}
+.app-link-main small {
+  display: block;
+  color: var(--smoke);
+  font-weight: 500;
+  font-size: .84rem;
+  margin-top: 2px;
+}
+.app-links [data-cache], .app-recipes [data-cache] {
+  font-weight: 500;
+  color: var(--smoke);
+  font-size: .78rem;
+  text-align: right;
+  flex: 0 0 auto;
+}
+.viral-card b.app-score {
+  font-size: 1.25rem;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+.viral-card b.app-score em { font-style: normal; color: var(--flame); }
+
+.app-h { font-size: 1.2rem; margin: 22px 0 8px; }
+.app-log {
+  background: #fff;
+  border: 1px solid var(--cream-3);
+  border-left: 3px solid var(--flame);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-top: 8px;
+}
+.app-log b { font-weight: 600; }
+.app-log .meta { color: var(--smoke); font-size: .82rem; }
+.app-log p { margin: 6px 0 0; }
+
+.app-tabs {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 40;
+  background: #231d18;
+  border-top: 1px solid rgba(244, 157, 55, .28);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 4px 6px calc(6px + env(safe-area-inset-bottom));
+}
+.app-tabs button {
+  background: transparent;
+  color: #a89a8c;
+  border: 0;
+  border-radius: 12px;
+  padding: 8px 4px 7px;
+  font-family: inherit;
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  min-height: 52px;
+  cursor: pointer;
+}
+.app-tabs button[aria-selected="true"] { color: #f49d37; background: rgba(244, 157, 55, .1); }
+.app-tabs button:focus-visible { outline: 2px solid #f49d37; outline-offset: -2px; }
+
+body.app-body { padding-bottom: calc(78px + env(safe-area-inset-bottom)); }
+html { scroll-padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
+#vuurGo, #tnGo, #saveBtn, #installBtn { scroll-margin-bottom: 120px; }
+
+@media (min-width: 900px) {
+  .app-tabs { left: 50%; right: auto; width: 640px; transform: translateX(-50%); border-radius: 16px 16px 0 0; }
+}

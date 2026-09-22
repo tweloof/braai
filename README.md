@@ -12,7 +12,8 @@ Founding custodians will be named at [The Braai](https://braai.co.za/vuur/) on B
 - `public/` — the static site (EN + Afrikaans `/af/` + isiZulu `/zu/`), a PWA
   ("Die Braai" installs to your phone), 15 recipes, guides, the Braaictionary,
   `/vuur/` (sports-score communal fire), `/braai-index/` (National Braai Index),
-  `/tonight/` (who is braaiing tonight).
+  `/tonight/` (who is braaiing tonight), `/app/` (installable phone companion:
+  the same index, tonight map, offline recipes/cuts/fire rules, and a vuur log).
 - `functions/api/` — Cloudflare Pages Functions: `vuur.js` (The Braai — one communal fire
   with real shared state, event-sourced from D1), `tonight.js` (who is braaiing tonight,
   `braais_tonight` table created IF NOT EXISTS on the same `VUUR_DB`), `subscribe.js`

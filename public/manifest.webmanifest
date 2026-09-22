@@ -2,8 +2,8 @@
   "id": "/",
   "name": "Die Braai — braai.co.za",
   "short_name": "Die Braai",
-  "description": "One communal braai for the whole country. It burns down every hour — it stays lit only if somebody feeds it.",
-  "start_url": "/vuur/?src=pwa",
+  "description": "Phone companion for braai.co.za: this week’s published index, who is braaiing tonight, recipes for when the signal dies, and a log for the communal fire. Not a shop.",
+  "start_url": "/app/?src=pwa",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
@@ -18,8 +18,13 @@
   ],
   "shortcuts": [
     {
-      "name": "Feed the braai",
-      "url": "/vuur/?src=shortcut",
+      "name": "Tonight",
+      "url": "/app/?src=shortcut#tonight",
+      "icons": [{ "src": "/assets/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Braai Index",
+      "url": "/app/?src=shortcut#index",
       "icons": [{ "src": "/assets/icons/icon-192.png", "sizes": "192x192" }]
     },
     {
@@ -28,8 +33,8 @@
       "icons": [{ "src": "/assets/icons/icon-192.png", "sizes": "192x192" }]
     },
     {
-      "name": "Braai Day",
-      "url": "/braai-day/?src=shortcut",
+      "name": "Feed the braai",
+      "url": "/app/?src=shortcut#vuur",
       "icons": [{ "src": "/assets/icons/icon-192.png", "sizes": "192x192" }]
     }
   ]

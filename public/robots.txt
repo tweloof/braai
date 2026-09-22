@@ -45,4 +45,5 @@ Allow: /
 
 Sitemap: https://braai.co.za/sitemap.xml
 
+# /heritage-day and /national-braai-day redirect to /braai-day/ (see _redirects). Index the Braai Day URL, not the alias.
 # Structured summary for LLMs: https://braai.co.za/llms.txt

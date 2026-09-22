@@ -63,3 +63,9 @@
 /favicon.ico /assets/favicon.svg 301
 /about-us* / 301
 /blog/* / 301
+
+# National Braai Day aliases, added 22 Sep 2026. Additive only — do not remove older rules above.
+/heritage-day* /braai-day/ 301
+/national-braai-day* /braai-day/ 301
+/erfenisdag* /af/braai-day/ 301
+/braaidag* /af/braai-day/ 301

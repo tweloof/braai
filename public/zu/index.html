@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>braai.co.za — Ikhaya le-braai laseNingizimu Afrika</title>
-<meta name="description" content="Umhlahlandlela ophelele we-braai yaseNingizimu Afrika: yiziphi izinkuni okufanele uzibase, ufunda kanjani amalahle akho, iyiphi inyama okufanele uyithenge, namaresiphi wonke umuntu owosayo okufanele awazi.">
+<meta name="description" content="Umhlahlandlela ophelele we-braai yaseNingizimu Afrika: izinkuni, amalahle, inyama namaresiphi. Usuku Lwe-Braai Lukazwelonke ngoLwesithathu, 24 kuSepthemba 2026.">
 <link rel="canonical" href="https://braai.co.za/zu/">
 <link rel="alternate" hreflang="en" href="https://braai.co.za/">
 <link rel="alternate" hreflang="af" href="https://braai.co.za/af/">
@@ -25,7 +25,7 @@
 <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/style.css">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebSite","name":"braai.co.za","url":"https://braai.co.za/zu/","description":"Umhlahlandlela ophelele we-braai yaseNingizimu Afrika: izinkuni, umlilo, inyama namaresiphi.","inLanguage":"zu"}
+{"@context":"https://schema.org","@type":"WebSite","name":"braai.co.za","url":"https://braai.co.za/zu/","description":"Umhlahlandlela ophelele we-braai yaseNingizimu Afrika: izinkuni, umlilo, inyama namaresiphi. Usuku Lwe-Braai Lukazwelonke ngo-24 kuSepthemba 2026.","inLanguage":"zu"}
 </script>
 </head>
 <body>
@@ -65,7 +65,7 @@
 
 <div class="count-strip" id="countStrip">
   <div><span class="num" id="cdDays">…</span> izinsuku kuze kufike Usuku Lwe-Braai Lukazwelonke</div>
-  <div>24 kuSepthemba — Usuku Lwamagugu. <a href="/zu/braai-day/">Qala ukuhlela umlilo wakho</a></div>
+  <div>NgoLwesithathu, 24 kuSepthemba 2026 — Usuku Lwamagugu. <a href="/zu/braai-day/">Uhlu lokuthenga, uhlelo lwesikhathi nemibuzo</a></div>
 </div>
 
 <section class="vuur-band">
@@ -192,12 +192,13 @@
 (function () {
   var now = new Date();
   var year = now.getFullYear();
-  var bd = new Date(year, 8, 24);
-  if (now > bd) { bd = new Date(year + 1, 8, 24); }
-  var days = Math.ceil((bd - now) / 86400000);
+  var start = new Date(year, 8, 24);
+  var end = new Date(year, 8, 25);
+  if (now >= end) { start = new Date(year + 1, 8, 24); }
+  var days = Math.ceil((start - now) / 86400000);
   var el = document.getElementById('cdDays');
-  if (el) { el.textContent = days === 0 ? 'Yilo' : days; }
-  if (days === 0) {
+  if (el) { el.textContent = days <= 0 ? 'Namuhla' : days; }
+  if (days <= 0) {
     document.getElementById('countStrip').firstElementChild.innerHTML = '<span class="num">Namuhla</span> kuwuSuku Lwe-Braai Lukazwelonke!';
   }
 

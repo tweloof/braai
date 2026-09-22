@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Die Braai — phone companion | braai.co.za</title>
+<meta name="description" content="The braai.co.za phone companion: this week’s National Braai Index, who is braaiing tonight, recipes and the rules of the fire for offline reading, and a log for the communal fire. No account. Not a shop.">
+<link rel="canonical" href="https://braai.co.za/app/">
+<link rel="alternate" hreflang="en" href="https://braai.co.za/app/">
+<link rel="alternate" hreflang="x-default" href="https://braai.co.za/app/">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#191512">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Die Braai">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="braai.co.za">
+<meta property="og:title" content="Die Braai — the braai.co.za phone companion">
+<meta property="og:description" content="Index, tonight’s towns, recipes offline, and a log for the communal fire. No account. Not a shop.">
+<meta property="og:url" content="https://braai.co.za/app/">
+<meta property="og:image" content="https://braai.co.za/assets/og/home.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="/assets/fonts/fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/style.css">
+<link rel="stylesheet" href="/app/app.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Die Braai","url":"https://braai.co.za/app/","applicationCategory":"LifestyleApplication","operatingSystem":"Web","description":"Phone companion for braai.co.za. The published National Braai Index, tonight’s towns, offline recipes, and the communal fire. Not a shop.","inLanguage":"en-ZA","isPartOf":{"@type":"WebSite","name":"braai.co.za","url":"https://braai.co.za/"}}
+</script>
+</head>
+<body class="app-body">
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="braai.co.za home">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 7c1.5 6.5 5.8 9.4 8.9 13.1 3 3.6 4.6 7.4 4.1 12.1-.6 6.2-5 10.6-10.4 11.6 2.1-2.2 3.2-4.6 3.2-7.4 0-4.9-3.6-7.4-5.5-11.8-1.1 2.6-3.4 4.5-4.9 7-1.3 2.1-1.9 4.1-1.7 6.5.2 2.2 1.1 4.1 2.8 5.8-5.5-.9-10-5.4-10.5-11.7-.4-4.5 1.2-8.3 4-11.8C25.2 16.6 30.6 13.6 32 7z" fill="#f49d37"/><rect x="14" y="48" width="36" height="3" rx="1.5" fill="#c89b3c"/><rect x="18" y="54" width="28" height="3" rx="1.5" fill="#7a6d62"/></svg>
+      <span class="word">braai<em>.co.za</em></span>
+    </a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="/">Home</a>
+      <a href="/what-is-a-braai/">What is a braai?</a>
+      <a href="/fire/">Wood &amp; Coals</a>
+      <a href="/cuts/">The Cuts</a>
+      <a href="/recipes/">Recipes</a>
+      <a href="/potjie/">Potjie</a>
+      <a href="/gear/">Gear</a>
+      <a href="/vuur/">The Braai</a>
+      <a href="/braai-day/">Braai Day</a>
+    </nav>
+    <div class="lang-sw" aria-label="Language / Taal / Ulimi"><span class="on">EN</span><a href="/af/" lang="af" hreflang="af">AF</a><a href="/zu/" lang="zu" hreflang="zu">ZU</a></div>
+  </div>
+</header>
+
+<main class="app-shell" id="main">
+  <div class="app-install" id="installBar">
+    <p id="installText">Add Die Braai to your home screen. It opens this page.</p>
+    <button class="btn" type="button" id="installBtn" hidden>Install</button>
+  </div>
+
+  <section id="panel-tonight" data-panel="tonight">
+    <span class="overline">Saturday heat · SAST</span>
+    <h1>Who is braaiing <em>tonight</em>?</h1>
+    <p class="app-lead">One tap. Your town. No account, no persona. Midnight SAST the slate wipes itself. Same map as <a href="/tonight/">Tonight</a> on the site.</p>
+    <form class="tn-form" id="tnForm" novalidate>
+      <label for="tnTown">Your town</label>
+      <input id="tnTown" name="town" list="tnTowns" maxlength="40" autocomplete="address-level2" placeholder="Pretoria, Stellenbosch, Vryheid…">
+      <datalist id="tnTowns"></datalist>
+      <div class="hp-field" aria-hidden="true"><label for="tnHp">Website</label><input id="tnHp" type="text" tabindex="-1" autocomplete="off"></div>
+      <button class="btn" type="submit" id="tnGo">I’m braaiing tonight</button>
+      <p class="form-note" id="tnNote" aria-live="polite">Pick a town from the list or type one. We count towns, not names.</p>
+    </form>
+    <h2 class="app-h" id="tnHead">Nobody has spoken yet</h2>
+    <p class="app-lead" id="tnSub">Fetching today’s SAST slate…</p>
+    <div class="tn-board" aria-label="South Africa by province">
+      <svg class="tn-svg" viewBox="0 0 360 300" role="img" aria-labelledby="tnSvgTitle">
+        <title id="tnSvgTitle">South Africa, nine provinces, coloured by how many people said they are braaiing tonight</title>
+        <rect class="tn-prov" data-p="LP" x="168" y="18" width="86" height="52" rx="10"/>
+        <rect class="tn-prov" data-p="NW" x="78" y="62" width="86" height="52" rx="10"/>
+        <rect class="tn-prov" data-p="GP" x="172" y="78" width="52" height="40" rx="10"/>
+        <rect class="tn-prov" data-p="MP" x="232" y="70" width="78" height="50" rx="10"/>
+        <rect class="tn-prov" data-p="FS" x="118" y="122" width="96" height="52" rx="10"/>
+        <rect class="tn-prov" data-p="KZN" x="222" y="128" width="88" height="70" rx="10"/>
+        <rect class="tn-prov" data-p="NC" x="28" y="122" width="82" height="100" rx="10"/>
+        <rect class="tn-prov" data-p="EC" x="118" y="182" width="96" height="64" rx="10"/>
+        <rect class="tn-prov" data-p="WC" x="36" y="230" width="74" height="52" rx="10"/>
+        <text x="211" y="48" text-anchor="middle">LP</text>
+        <text x="121" y="92" text-anchor="middle">NW</text>
+        <text x="198" y="102" text-anchor="middle">GP</text>
+        <text x="271" y="98" text-anchor="middle">MP</text>
+        <text x="166" y="152" text-anchor="middle">FS</text>
+        <text x="266" y="168" text-anchor="middle">KZN</text>
+        <text x="69" y="176" text-anchor="middle">NC</text>
+        <text x="166" y="218" text-anchor="middle">EC</text>
+        <text x="73" y="260" text-anchor="middle">WC</text>
+      </svg>
+      <ol class="tn-legend" id="tnLegend"></ol>
+    </div>
+    <ol class="tn-list" id="tnList" aria-live="polite"></ol>
+    <p class="tn-empty" id="tnEmpty">The country is quiet on this page. Be the first town, if the fire is really going.</p>
+  </section>
+
+  <section id="panel-index" data-panel="index" hidden>
+    <span class="overline">National Braai Index</span>
+    <h1>This week’s <em>family</em> fire</h1>
+    <p class="app-lead">One number for the basket the site already publishes. Citations live on the full page. This is not a shop.</p>
+    <div class="viral-card app-stack">
+      <span class="overline">Basket</span>
+      <b id="idxRand">…</b>
+      <span class="vsub" id="idxWeek">Fetching the published week…</span>
+      <span class="vsub" id="idxBeer"></span>
+      <span class="vsub" id="idxTiers"></span>
+      <span class="app-rand-note" id="idxLive">Not a shop. The figure is the one the site publishes.</span>
+      <a href="/braai-index/">Citations and the full basket</a>
+    </div>
+  </section>
+
+  <section id="panel-read" data-panel="read" hidden>
+    <span class="overline">For the dead spot</span>
+    <h1>Read it <em>offline</em></h1>
+    <p class="app-lead">Recipes, the cuts, and the rules of the fire stay on the phone after you open them — or tap save while you still have signal. Same pages as the site.</p>
+    <ul class="app-links">
+      <li><a href="/recipes/"><span class="app-link-main">Recipes<small>Fifteen classics, each on its own page</small></span><span data-cache="/recipes/"></span></a></li>
+      <li><a href="/cuts/"><span class="app-link-main">The Cuts<small>What to ask the butcher for</small></span><span data-cache="/cuts/"></span></a></li>
+      <li><a href="/fire/"><span class="app-link-main">Rules of the fire<small>Wood, coals, hand test 4·6·8·10</small></span><span data-cache="/fire/"></span></a></li>
+    </ul>
+    <h2 class="app-h">The recipes</h2>
+    <ul class="app-recipes" id="readRecipes"></ul>
+    <button class="btn" type="button" id="saveBtn">Save for offline</button>
+    <p class="form-note" id="saveNote" aria-live="polite">Opens once with signal, then readable from the home-screen icon.</p>
+  </section>
+
+  <section id="panel-vuur" data-panel="vuur" hidden>
+    <span class="overline">The Braai</span>
+    <h1>Keep it <em>burning</em></h1>
+    <p class="app-lead">One communal fire. A log from this phone is a log on <a href="/vuur/">The Braai</a> — same fuel, same names. No account. Your name is your own.</p>
+    <div class="viral-card app-stack" id="vuurCard">
+      <span class="overline">Live score</span>
+      <b class="app-score" id="vuurScore">The Braai is <em>burning</em></b>
+      <span class="vsub" id="vuurSub">Fetching tonight’s score…</span>
+      <div class="app-gauge" aria-hidden="true"><span id="vuurFill"></span></div>
+    </div>
+    <form class="app-form" id="vuurForm" novalidate>
+      <label for="vuurKind">What is it?</label>
+      <select id="vuurKind">
+        <option value="word">A word your fire uses</option>
+        <option value="spot">A braai spot worth knowing</option>
+        <option value="wood">What wood burns where you are</option>
+        <option value="recipe">A family recipe</option>
+        <option value="fire">A photograph of your fire tonight</option>
+      </select>
+      <label for="vuurText">Say it</label>
+      <textarea id="vuurText" maxlength="500" placeholder="One good sentence. Engels, Afrikaans, or both, the way people actually speak."></textarea>
+      <label for="vuurWho">Your name</label>
+      <input id="vuurWho" type="text" maxlength="40" autocomplete="name">
+      <label for="vuurTown">Your town</label>
+      <input id="vuurTown" type="text" maxlength="40" autocomplete="address-level2">
+      <div class="hp-field" aria-hidden="true"><label for="vuurHp">Website</label><input id="vuurHp" type="text" tabindex="-1" autocomplete="off"></div>
+      <p class="app-err" id="vuurErr" aria-live="polite"></p>
+      <button class="btn" type="submit" id="vuurGo">On the fire</button>
+    </form>
+    <h2 class="app-h" id="vuurLogsH" hidden>On the fire</h2>
+    <div id="vuurLogs"></div>
+  </section>
+
+  <noscript>
+    <p class="app-lead">JavaScript reaches the live index, tonight’s map and the fire. The reading still works as ordinary pages: <a href="/recipes/">recipes</a>, <a href="/cuts/">the cuts</a>, <a href="/fire/">the rules of the fire</a>.</p>
+  </noscript>
+</main>
+
+<p class="trans-note">Afrikaans and isiZulu editions of this phone page are pending. The index, the tonight map and the fire are the same in every language. <a href="/af/">Afrikaans</a> · <a href="/zu/">isiZulu</a></p>
+
+<nav class="app-tabs" id="appTabs" aria-label="Phone app">
+  <button type="button" id="tab-tonight" data-panel="tonight" aria-selected="true">Tonight</button>
+  <button type="button" id="tab-index" data-panel="index" aria-selected="false">Index</button>
+  <button type="button" id="tab-read" data-panel="read" aria-selected="false">Read</button>
+  <button type="button" id="tab-vuur" data-panel="vuur" aria-selected="false">Vuur</button>
+</nav>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div>
+      <strong style="color:var(--cream)">braai.co.za</strong> — Proudly South African.<br>
+      <a href="/what-is-a-braai/">What is a braai?</a> · <a href="/fire/">Wood &amp; Coals</a> · <a href="/cuts/">The Cuts</a> · <a href="/recipes/">Recipes</a> · <a href="/potjie/">Potjie</a> · <a href="/gear/">Gear</a> · <a href="/braaictionary/">Braaictionary</a> · <a href="/vuur/">The Braai</a> · <a href="/braai-day/">Braai Day</a> · <a href="/braai-index/">Braai Index</a> · <a href="/tonight/">Tonight</a> · <a href="/contribute/">Contribute</a>
+    </div>
+    <div class="stamp">Phone app · 22 Sep 2026</div>
+  </div>
+</footer>
+
+<script src="/app/app.js"></script>
+</body>
+</html>

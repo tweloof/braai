@@ -213,25 +213,100 @@
   /* The fixed header sits on top of the scroll. Fade a block out before its
      top edge reaches the header, so a line never slides under the wordmark.
      The lead is short on purpose: a resting title only a little below the
-     pills must stay fully opaque. */
+     pills must stay fully opaque. Geometry is read live — never cached from
+     the viewport the page happened to load in. */
+  var copyNodes = '.plate, .tier, .idx-extra, .idx-miss, #index .more';
+
+  function showCopy() {
+    var nodes = document.querySelectorAll(copyNodes);
+    var i;
+    for (i = 0; i < nodes.length; i++) nodes[i].style.opacity = '';
+  }
+
+  /* The beat whose top is sitting on the snap. Its own copy stays fully
+     visible — a short landscape screen must not fade the headline away. */
+  function snappedBeat() {
+    var y = window.scrollY;
+    var i, best = 0, bestDist = 1e9, d;
+    for (i = 0; i < beats.length; i++) {
+      d = Math.abs(y - beats[i].offsetTop);
+      if (d < bestDist) { bestDist = d; best = i; }
+    }
+    if (bestDist > 16) return null;
+    return beats[best];
+  }
+
   function clearCopy() {
     var head = document.querySelector('.scroll-head');
-    if (!head) return;
+    if (!head) { showCopy(); return; }
     var limit = head.getBoundingClientRect().bottom;
     var lead = 40;
-    var nodes = document.querySelectorAll('.plate, .tier, .idx-extra, .idx-miss, #index .more');
-    var i, r, t;
+    var home = snappedBeat();
+    var nodes = document.querySelectorAll(copyNodes);
+    var i, r, t, node;
     for (i = 0; i < nodes.length; i++) {
-      r = nodes[i].getBoundingClientRect();
+      node = nodes[i];
+      r = node.getBoundingClientRect();
+      if (home && home.contains(node)) {
+        node.style.opacity = '1';
+        continue;
+      }
+      if (r.bottom < 0 || r.top > window.innerHeight) {
+        node.style.opacity = '';
+        continue;
+      }
       if (r.top >= limit + lead) t = 1;
       else if (r.top <= limit) t = 0;
       else t = (r.top - limit) / lead;
-      nodes[i].style.opacity = t.toFixed(3);
+      node.style.opacity = t.toFixed(3);
     }
   }
 
+  function measureHead() {
+    var head = document.querySelector('.scroll-head');
+    if (!head) return;
+    var h = Math.ceil(head.getBoundingClientRect().height);
+    if (!(h > 0)) return;
+    var next = h + 'px';
+    if (document.documentElement.style.getPropertyValue('--head-h') !== next) {
+      document.documentElement.style.setProperty('--head-h', next);
+    }
+  }
+
+  /* Debounced so a device-mode toggle, URL-bar resize, or orientation change
+     is measured after layout, not on the stale viewport. */
+  var onViewport = function () {
+    measureHead();
+    clearCopy();
+  };
+  var layoutTimer = 0;
+  function scheduleLayout() {
+    if (layoutTimer) clearTimeout(layoutTimer);
+    layoutTimer = setTimeout(function () {
+      layoutTimer = 0;
+      requestAnimationFrame(function () { onViewport(); });
+    }, 50);
+  }
+  function bindViewport() {
+    window.addEventListener('resize', scheduleLayout);
+    window.addEventListener('orientationchange', scheduleLayout);
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', scheduleLayout);
+      window.visualViewport.addEventListener('scroll', scheduleLayout);
+    }
+    if (window.ResizeObserver) {
+      var ro = new ResizeObserver(function () { scheduleLayout(); });
+      ro.observe(document.documentElement);
+    }
+    window.addEventListener('pageshow', scheduleLayout);
+    setTimeout(scheduleLayout, 320);
+  }
+
   markDot(rawScene());
+  showCopy();
+  measureHead();
   clearCopy();
+  bindViewport();
   window.addEventListener('scroll', function () {
     markDot(rawScene());
     clearCopy();
@@ -239,6 +314,8 @@
 
   if (reduce) {
     document.documentElement.classList.add('static-photos');
+    showCopy();
+    clearCopy();
     return;
   }
 
@@ -259,6 +336,8 @@
   }
   if (!gl) {
     document.documentElement.classList.add('static-photos');
+    showCopy();
+    clearCopy();
     return;
   }
   var isGL2 = typeof WebGL2RenderingContext !== 'undefined' && gl instanceof WebGL2RenderingContext;
@@ -451,6 +530,8 @@
   if (!prog && !isGL2) prog = link(VS_GL1, FS_GL1_SAFE, ['aPos']);
   if (!prog) {
     document.documentElement.classList.add('static-photos');
+    showCopy();
+    clearCopy();
     return;
   }
   var pprog = isGL2 ? link(PVS_GL2, PFS_GL2, ['aSeed']) : link(PVS_GL1, PFS_GL1, ['aSeed']);
@@ -498,7 +579,8 @@
     ],
     coals: [
       { url: '/assets/scroll/coals-hi.webp', w: 3978, h: 2652 },
-      { url: '/assets/scroll/coals-sm.webp', w: 1920, h: 1280 }
+      { url: '/assets/scroll/coals-sm.webp', w: 1920, h: 1280 },
+      { url: '/assets/scroll/coals-port.webp', w: 2295, h: 3200 }
     ],
     sear: [
       { url: '/assets/scroll/sear.webp', w: 3840, h: 5760 }
@@ -536,13 +618,23 @@
   }
 
   function pickTex(list, bw, bh) {
-    var i, best = null, bestScore = 1e9, fallback = null, fallbackMag = 1e9, m, score;
-    for (i = 0; i < list.length; i++) {
-      m = coverMag(list[i], bw, bh);
-      if (m < fallbackMag) { fallbackMag = m; fallback = list[i]; }
+    var i, best = null, bestScore = 1e9, fallback = null, fallbackMag = 1e9, m, score, pool, tall;
+    /* A portrait buffer uses a portrait file when one exists. Otherwise a
+       wide photo can win on magnification and the phone keeps the desktop crop. */
+    pool = list;
+    if (bh > bw * 1.05) {
+      tall = [];
+      for (i = 0; i < list.length; i++) {
+        if (list[i].h >= list[i].w) tall.push(list[i]);
+      }
+      if (tall.length) pool = tall;
+    }
+    for (i = 0; i < pool.length; i++) {
+      m = coverMag(pool[i], bw, bh);
+      if (m < fallbackMag) { fallbackMag = m; fallback = pool[i]; }
       if (m > 1.21) continue;
       score = Math.abs(Math.log(m));
-      if (score < bestScore) { bestScore = score; best = list[i]; }
+      if (score < bestScore) { bestScore = score; best = pool[i]; }
     }
     return best || fallback;
   }
@@ -602,6 +694,7 @@
 
   var dpr = 1;
   function resize() {
+    if (!gl || (gl.isContextLost && gl.isContextLost())) return;
     var css = cssSize();
     dpr = pickDpr(css.w, css.h);
     var w = Math.max(1, Math.round(css.w * dpr));
@@ -630,10 +723,12 @@
     root.dataset.aniso = anisoMax > 1 ? '1' : '0';
   }
 
+  onViewport = function () {
+    measureHead();
+    resize();
+    clearCopy();
+  };
   resize();
-  window.addEventListener('resize', resize);
-  window.addEventListener('orientationchange', function () { setTimeout(resize, 80); });
-  if (window.visualViewport) window.visualViewport.addEventListener('resize', resize);
 
   var loc = {
     pos: gl.getAttribLocation(prog, 'aPos'),
@@ -668,6 +763,7 @@
     document.documentElement.dataset.t = shown.toFixed(3);
     var t = (now - start) / 1000;
 
+    try {
     gl.disable(gl.BLEND);
     gl.disable(gl.DEPTH_TEST);
     gl.clearColor(0.027, 0.02, 0.016, 1);
@@ -704,6 +800,13 @@
       gl.uniform2f(ploc.res, canvas.width, canvas.height);
       gl.drawArrays(gl.POINTS, 0, SPARKS);
     }
+    } catch (err) {
+      document.documentElement.dataset.glerr = String((err && err.message) || err).slice(0, 180);
+      stop();
+      showCopy();
+      clearCopy();
+      return;
+    }
     raf = requestAnimationFrame(frame);
   }
 
@@ -712,7 +815,19 @@
     if (raf) cancelAnimationFrame(raf);
     document.documentElement.classList.remove('gl-on');
     document.documentElement.classList.add('static-photos');
+    showCopy();
+    clearCopy();
   }
+
+  canvas.addEventListener('webglcontextlost', function (ev) {
+    ev.preventDefault();
+    onViewport = function () {
+      measureHead();
+      clearCopy();
+    };
+    stop();
+    clearCopy();
+  });
 
   document.addEventListener('visibilitychange', function () {
     if (document.hidden) {

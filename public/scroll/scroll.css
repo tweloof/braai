@@ -22,9 +22,11 @@ html.gl-on { scroll-behavior: auto; }
   left: 0;
   right: 0;
   z-index: 40;
-  /* Solid behind the wordmark and language pills, then a short fade into the photo. */
-  background: linear-gradient(to bottom, #050302 0%, rgba(5, 3, 2, .96) 68%, rgba(5, 3, 2, 0) 100%);
+  /* Solid. A fade to transparent let the cream page colour and the grey
+     photo show through as a light band over the footer. */
+  background: #070504;
   border-bottom: 0;
+  padding-top: env(safe-area-inset-top, 0px);
 }
 
 .scroll-head .wrap {
@@ -85,9 +87,10 @@ html:not(.gl-on) #gl { display: none; }
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 14vh 9vw 12vh;
+  padding: max(14vh, calc(var(--head-h, 96px) + 3.25rem)) 9vw 12vh;
   position: relative;
   scroll-snap-align: start;
+  scroll-margin-top: calc(var(--head-h, 96px) + env(safe-area-inset-top, 0px));
 }
 
 .copy { max-width: 40rem; }
@@ -103,11 +106,13 @@ html:not(.gl-on) #gl { display: none; }
   content: "";
   position: absolute;
   z-index: -1;
-  inset: -0.45rem -0.85rem -0.55rem;
+  inset: -0.55rem -0.9rem -0.7rem;
   border-radius: 1.05rem;
-  background: rgba(6, 4, 3, .58);
+  background: rgba(5, 3, 2, .92);
   pointer-events: none;
 }
+
+#index .plate::before { background: rgba(5, 3, 2, .94); }
 
 .beat-end { align-items: flex-end; text-align: right; }
 .beat-end .copy { margin-left: auto; }
@@ -246,7 +251,17 @@ html:not(.gl-on) #gl { display: none; }
 
 .scroll-foot {
   position: relative;
-  z-index: 1;
+  z-index: 2;
+  background: #070504;
+  scroll-margin-top: calc(var(--head-h, 96px) + env(safe-area-inset-top, 0px));
+  padding-top: calc(var(--head-h, 96px) + env(safe-area-inset-top, 0px) + 1.25rem);
+}
+
+.trans-note {
+  position: relative;
+  z-index: 2;
+  background: #070504;
+  scroll-margin-top: calc(var(--head-h, 96px) + env(safe-area-inset-top, 0px));
 }
 
 .credits {
@@ -283,9 +298,24 @@ html.static-photos .beat[data-scene="3"] {
   html.static-photos .beat[data-scene="0"] {
     background-image: url("/assets/scroll/fire-port.webp");
   }
+  html.static-photos .beat[data-scene="1"] {
+    background-image: url("/assets/scroll/coals-port.webp");
+  }
 }
 
 html.gl-on .beat { background: none; }
+
+/* The finale ends on charcoal, not on the grey of the coal photograph. */
+html.static-photos #index.beat {
+  background-image:
+    linear-gradient(to bottom, rgba(7, 5, 4, 0) 0%, rgba(7, 5, 4, 0) 34%, #070504 70%),
+    url("/assets/scroll/coals-sm.webp");
+  background-size: auto, cover;
+  background-position: center;
+}
+html.gl-on #index.beat {
+  background: linear-gradient(to bottom, rgba(7, 5, 4, 0) 0%, rgba(7, 5, 4, 0) 34%, #070504 70%);
+}
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto !important; }
@@ -302,10 +332,13 @@ html.gl-on .beat { background: none; }
 #index.beat {
   justify-content: flex-start;
   padding-top: calc(14vh + 1.75rem);
+  scroll-margin-top: calc(var(--head-h, 96px) + env(safe-area-inset-top, 0px));
 }
 
 @media (max-width: 760px) {
-  .beat { padding: 18vh 22px 14vh 22px; }
+  .beat {
+    padding: max(18vh, calc(var(--head-h, 96px) + 3.25rem)) 22px 14vh 22px;
+  }
   #index.beat { padding-top: calc(18vh + 2.45rem); }
   .beat-end { align-items: flex-start; text-align: left; }
   .beat-end .copy,

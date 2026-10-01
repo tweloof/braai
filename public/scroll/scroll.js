@@ -210,8 +210,32 @@
     document.documentElement.dataset.scene = String(n);
   }
 
+  /* The fixed header sits on top of the scroll. Fade a block out before its
+     top edge reaches the header, so a line never slides under the wordmark.
+     The lead is short on purpose: a resting title only a little below the
+     pills must stay fully opaque. */
+  function clearCopy() {
+    var head = document.querySelector('.scroll-head');
+    if (!head) return;
+    var limit = head.getBoundingClientRect().bottom;
+    var lead = 40;
+    var nodes = document.querySelectorAll('.plate, .tier, .idx-extra, .idx-miss, #index .more');
+    var i, r, t;
+    for (i = 0; i < nodes.length; i++) {
+      r = nodes[i].getBoundingClientRect();
+      if (r.top >= limit + lead) t = 1;
+      else if (r.top <= limit) t = 0;
+      else t = (r.top - limit) / lead;
+      nodes[i].style.opacity = t.toFixed(3);
+    }
+  }
+
   markDot(rawScene());
-  window.addEventListener('scroll', function () { markDot(rawScene()); }, { passive: true });
+  clearCopy();
+  window.addEventListener('scroll', function () {
+    markDot(rawScene());
+    clearCopy();
+  }, { passive: true });
 
   if (reduce) {
     document.documentElement.classList.add('static-photos');
@@ -255,26 +279,22 @@
   var FS_BODY = [
     'uniform sampler2D uFire;',
     'uniform sampler2D uCoals;',
+    'uniform sampler2D uSear;',
     'uniform vec2 uRes;',
     'uniform vec2 uFireSize;',
     'uniform vec2 uCoalsSize;',
+    'uniform vec2 uSearSize;',
     'uniform float uScene;',
     'vec3 toLin(vec3 c){ return pow(max(c, vec3(0.0)), vec3(2.2)); }',
     'vec3 toSrgb(vec3 c){ return pow(clamp(c, 0.0, 1.0), vec3(1.0/2.2)); }',
     'float wgt(float x, float c){ return 1.0 - smoothstep(0.0, 0.55, abs(x - c)); }',
-    'vec2 photoUv(vec2 frag, vec2 res, vec2 tex, vec2 pan, float pinBottom){',
-    '  float cover = min(tex.x / res.x, tex.y / res.y);',
-    '  float tpp = max(cover, 1.0);',
-    '  vec2 halfWin = res * (tpp * 0.5);',
-    '  vec2 center = tex * 0.5 + pan;',
-    '  vec2 lo = halfWin;',
-    '  vec2 hi = tex - halfWin;',
-    '  if (hi.x >= lo.x) center.x = clamp(center.x, lo.x, hi.x);',
-    '  else center.x = tex.x * 0.5;',
-    '  if (hi.y >= lo.y) center.y = clamp(center.y, lo.y, hi.y);',
-    '  else if (pinBottom > 0.5) center.y = halfWin.y;',
-    '  else center.y = tex.y * 0.5;',
-    '  return ((frag - res * 0.5) * tpp + center) / tex;',
+    /* object-fit: cover. Scale by the larger ratio, crop the rest. UVs stay inside the photo. */
+    'vec2 coverUv(vec2 frag, vec2 res, vec2 tex){',
+    '  float s = max(res.x / max(tex.x, 1.0), res.y / max(tex.y, 1.0));',
+    '  vec2 texel = tex * 0.5 + (frag - res * 0.5) / max(s, 0.0001);',
+    '  vec2 uv = texel / tex;',
+    '  vec2 inset = vec2(0.5) / tex;',
+    '  return clamp(uv, inset, vec2(1.0) - inset);',
     '}',
     'void main(){',
     '  vec2 frag = gl_FragCoord.xy;',
@@ -282,9 +302,9 @@
     '  float s1 = wgt(uScene, 1.0);',
     '  float s2 = wgt(uScene, 2.0);',
     '  float s3 = wgt(uScene, 3.0);',
-    '  vec3 fire = TEX(uFire, photoUv(frag, uRes, uFireSize, vec2(0.0), 1.0)).rgb;',
-    '  vec3 sear = TEX(uFire, photoUv(frag, uRes, uFireSize, vec2(0.0, uFireSize.y * 0.18), 1.0)).rgb;',
-    '  vec3 coals = TEX(uCoals, photoUv(frag, uRes, uCoalsSize, vec2(0.0), 0.0)).rgb;',
+    '  vec3 fire = TEX(uFire, coverUv(frag, uRes, uFireSize)).rgb;',
+    '  vec3 sear = TEX(uSear, coverUv(frag, uRes, uSearSize)).rgb;',
+    '  vec3 coals = TEX(uCoals, coverUv(frag, uRes, uCoalsSize)).rgb;',
     '  float w = max(s0 + s1 + s2 + s3, 0.0001);',
     '  vec3 albedo = (fire * s0 + coals * s1 + sear * s2 + coals * s3) / w;',
     '  float luma = dot(albedo, vec3(0.2126, 0.7152, 0.0722));',
@@ -464,14 +484,28 @@
 
   var texFire = makeTex();
   var texCoals = makeTex();
+  var texSear = makeTex();
+  var texOf = { fire: texFire, coals: texCoals, sear: texSear };
   var anisoExt = gl.getExtension('EXT_texture_filter_anisotropic') || gl.getExtension('WEBKIT_EXT_texture_filter_anisotropic');
   var anisoMax = anisoExt ? gl.getParameter(anisoExt.MAX_TEXTURE_MAX_ANISOTROPY_EXT) : 0;
-  var urls = {
-    fire: { hi: '/assets/scroll/fire-hi.webp', sm: '/assets/scroll/fire-sm.webp' },
-    coals: { hi: '/assets/scroll/coals-hi.webp', sm: '/assets/scroll/coals-sm.webp' }
+  /* Pick the file whose cover scale is closest to 1:1 and never above ~1.21.
+     Portrait buffers take the tall campfire; wide buffers keep the Julia frame. */
+  var catalog = {
+    fire: [
+      { url: '/assets/scroll/fire-hi.webp', w: 3840, h: 2560 },
+      { url: '/assets/scroll/fire-sm.webp', w: 1920, h: 1280 },
+      { url: '/assets/scroll/fire-port.webp', w: 2400, h: 3992 }
+    ],
+    coals: [
+      { url: '/assets/scroll/coals-hi.webp', w: 3978, h: 2652 },
+      { url: '/assets/scroll/coals-sm.webp', w: 1920, h: 1280 }
+    ],
+    sear: [
+      { url: '/assets/scroll/sear.webp', w: 3840, h: 5760 }
+    ]
   };
-  var sizes = { fire: [1, 1], coals: [1, 1] };
-  var variant = '';
+  var sizes = { fire: [1, 1], coals: [1, 1], sear: [1, 1] };
+  var chosen = { fire: '', coals: '', sear: '' };
   var loadGen = 0;
 
   function upload(tex, img) {
@@ -484,8 +518,8 @@
       gl.generateMipmap(gl.TEXTURE_2D);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.MIRRORED_REPEAT);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.MIRRORED_REPEAT);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
       if (anisoExt && anisoMax > 1) {
         gl.texParameterf(gl.TEXTURE_2D, anisoExt.TEXTURE_MAX_ANISOTROPY_EXT, Math.min(8, anisoMax));
       }
@@ -497,22 +531,40 @@
     }
   }
 
-  function loadPair() {
+  function coverMag(item, bw, bh) {
+    return Math.max(bw / item.w, bh / item.h);
+  }
+
+  function pickTex(list, bw, bh) {
+    var i, best = null, bestScore = 1e9, fallback = null, fallbackMag = 1e9, m, score;
+    for (i = 0; i < list.length; i++) {
+      m = coverMag(list[i], bw, bh);
+      if (m < fallbackMag) { fallbackMag = m; fallback = list[i]; }
+      if (m > 1.21) continue;
+      score = Math.abs(Math.log(m));
+      if (score < bestScore) { bestScore = score; best = list[i]; }
+    }
+    return best || fallback;
+  }
+
+  function loadSet() {
     var gen = ++loadGen;
-    var pending = 2;
-    function one(which, tex) {
+    var keys = ['fire', 'coals', 'sear'];
+    var pending = keys.length;
+    function one(which) {
+      var item = pickTex(catalog[which], canvas.width, canvas.height);
+      chosen[which] = item.url;
       var img = new Image();
       img.decoding = 'async';
       img.onload = function () {
         if (gen !== loadGen) return;
-        upload(tex, img);
+        upload(texOf[which], img);
         sizes[which][0] = img.naturalWidth || img.width;
         sizes[which][1] = img.naturalHeight || img.height;
         pending--;
         if (pending === 0) {
           document.documentElement.classList.add('gl-on');
-          document.documentElement.dataset.tex = sizes.fire[0] + 'x' + sizes.fire[1];
-          resize();
+          document.documentElement.dataset.tex = sizes.fire[0] + 'x' + sizes.fire[1] + '+' + sizes.sear[0] + 'x' + sizes.sear[1];
         }
       };
       img.onerror = function () {
@@ -522,10 +574,10 @@
           document.documentElement.classList.add('static-photos');
         }
       };
-      img.src = urls[which][variant];
+      img.src = item.url;
     }
-    one('fire', texFire);
-    one('coals', texCoals);
+    var k;
+    for (k = 0; k < keys.length; k++) one(keys[k]);
   }
 
   function cssSize() {
@@ -559,16 +611,20 @@
       canvas.height = h;
     }
     gl.viewport(0, 0, canvas.width, canvas.height);
-    var longEdge = Math.max(canvas.width, canvas.height);
-    var next = longEdge > 2000 ? 'hi' : 'sm';
-    if (next !== variant) {
-      variant = next;
-      loadPair();
+    var need = false;
+    var key, item;
+    for (key in catalog) {
+      if (!Object.prototype.hasOwnProperty.call(catalog, key)) continue;
+      item = pickTex(catalog[key], canvas.width, canvas.height);
+      if (item.url !== chosen[key]) need = true;
     }
+    if (need) loadSet();
     var root = document.documentElement;
     root.dataset.dpr = String(Math.round(dpr * 100) / 100);
     root.dataset.buf = canvas.width + 'x' + canvas.height;
-    root.dataset.variant = variant;
+    root.dataset.variant = (chosen.fire.split('/').pop() || '') + ' ' + (chosen.coals.split('/').pop() || '') + ' ' + (chosen.sear.split('/').pop() || '');
+    var firePick = pickTex(catalog.fire, canvas.width, canvas.height);
+    root.dataset.mag = coverMag(firePick, canvas.width, canvas.height).toFixed(3);
     root.dataset.aa = gl.getContextAttributes().antialias ? '1' : '0';
     root.dataset.gl = isGL2 ? '2' : '1';
     root.dataset.aniso = anisoMax > 1 ? '1' : '0';
@@ -583,9 +639,11 @@
     pos: gl.getAttribLocation(prog, 'aPos'),
     fire: gl.getUniformLocation(prog, 'uFire'),
     coals: gl.getUniformLocation(prog, 'uCoals'),
+    sear: gl.getUniformLocation(prog, 'uSear'),
     res: gl.getUniformLocation(prog, 'uRes'),
     fireSize: gl.getUniformLocation(prog, 'uFireSize'),
     coalsSize: gl.getUniformLocation(prog, 'uCoalsSize'),
+    searSize: gl.getUniformLocation(prog, 'uSearSize'),
     scene: gl.getUniformLocation(prog, 'uScene')
   };
   var ploc = pprog ? {
@@ -606,6 +664,7 @@
     shown += (target - shown) * 0.12;
     if (Math.abs(target - shown) < 0.0008) shown = target;
     markDot(shown);
+    clearCopy();
     document.documentElement.dataset.t = shown.toFixed(3);
     var t = (now - start) / 1000;
 
@@ -621,12 +680,16 @@
     gl.uniform2f(loc.res, canvas.width, canvas.height);
     gl.uniform2f(loc.fireSize, sizes.fire[0], sizes.fire[1]);
     gl.uniform2f(loc.coalsSize, sizes.coals[0], sizes.coals[1]);
+    gl.uniform2f(loc.searSize, sizes.sear[0], sizes.sear[1]);
     gl.activeTexture(gl.TEXTURE0);
     gl.bindTexture(gl.TEXTURE_2D, texFire);
     gl.uniform1i(loc.fire, 0);
     gl.activeTexture(gl.TEXTURE1);
     gl.bindTexture(gl.TEXTURE_2D, texCoals);
     gl.uniform1i(loc.coals, 1);
+    gl.activeTexture(gl.TEXTURE2);
+    gl.bindTexture(gl.TEXTURE_2D, texSear);
+    gl.uniform1i(loc.sear, 2);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
 
     if (ploc && document.documentElement.classList.contains('gl-on')) {

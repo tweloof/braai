@@ -22,7 +22,8 @@ html.gl-on { scroll-behavior: auto; }
   left: 0;
   right: 0;
   z-index: 40;
-  background: linear-gradient(to bottom, rgba(5, 3, 2, .5), rgba(5, 3, 2, 0));
+  /* Solid behind the wordmark and language pills, then a short fade into the photo. */
+  background: linear-gradient(to bottom, #050302 0%, rgba(5, 3, 2, .96) 68%, rgba(5, 3, 2, 0) 100%);
   border-bottom: 0;
 }
 
@@ -257,24 +258,30 @@ html:not(.gl-on) #gl { display: none; }
 .draft-stamp { font-size: .75rem; color: var(--smoke-2); }
 
 /* Static photos only when WebGL is off. No full-frame scrim — the copy block carries the contrast. */
-html.static-photos .beat[data-scene="0"],
-html.static-photos .beat[data-scene="2"] {
+html.static-photos .beat[data-scene="0"] {
   background: #070504 url("/assets/scroll/fire-sm.webp") center / cover no-repeat;
 }
-html.static-photos .beat[data-scene="2"] { background-position: 50% 40%; }
+html.static-photos .beat[data-scene="2"] {
+  background: #070504 url("/assets/scroll/sear.webp") center / cover no-repeat;
+}
 html.static-photos .beat[data-scene="1"],
 html.static-photos .beat[data-scene="3"] {
   background: #070504 url("/assets/scroll/coals-sm.webp") center / cover no-repeat;
 }
 
 @media (min-width: 1200px), (min-resolution: 2dppx) {
-  html.static-photos .beat[data-scene="0"],
-  html.static-photos .beat[data-scene="2"] {
+  html.static-photos .beat[data-scene="0"] {
     background-image: url("/assets/scroll/fire-hi.webp");
   }
   html.static-photos .beat[data-scene="1"],
   html.static-photos .beat[data-scene="3"] {
     background-image: url("/assets/scroll/coals-hi.webp");
+  }
+}
+
+@media (orientation: portrait) and (max-width: 900px) {
+  html.static-photos .beat[data-scene="0"] {
+    background-image: url("/assets/scroll/fire-port.webp");
   }
 }
 
@@ -289,8 +296,17 @@ html.gl-on .beat { background: none; }
   html { scroll-snap-type: y proximity; }
 }
 
+/* The index copy is taller than the screen, so it starts at the padding
+   rather than sitting in the vertical centre. Keep the title below the
+   header's fade so it stays fully opaque at the snap. */
+#index.beat {
+  justify-content: flex-start;
+  padding-top: calc(14vh + 1.75rem);
+}
+
 @media (max-width: 760px) {
   .beat { padding: 18vh 22px 14vh 22px; }
+  #index.beat { padding-top: calc(18vh + 2.45rem); }
   .beat-end { align-items: flex-start; text-align: left; }
   .beat-end .copy,
   .beat-end h2 { margin-left: 0; }

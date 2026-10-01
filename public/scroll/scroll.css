@@ -12,7 +12,8 @@
   color: #f7f1e6;
 }
 
-html { scroll-padding-top: 0; }
+html { scroll-padding-top: 0; scrollbar-width: none; }
+html::-webkit-scrollbar { display: none; width: 0; height: 0; }
 html.gl-on { scroll-behavior: auto; }
 
 .scroll-head {
@@ -21,7 +22,7 @@ html.gl-on { scroll-behavior: auto; }
   left: 0;
   right: 0;
   z-index: 40;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, .62), rgba(0, 0, 0, 0));
+  background: linear-gradient(to bottom, rgba(5, 3, 2, .5), rgba(5, 3, 2, 0));
   border-bottom: 0;
 }
 
@@ -66,6 +67,8 @@ html.gl-on { scroll-behavior: auto; }
   z-index: 0;
   pointer-events: none;
   display: block;
+  /* The bitmap is already device pixels. Don't hint a second scale. */
+  image-rendering: auto;
 }
 
 html:not(.gl-on) #gl { display: none; }
@@ -88,6 +91,23 @@ html:not(.gl-on) #gl { display: none; }
 
 .copy { max-width: 40rem; }
 
+.plate {
+  position: relative;
+  isolation: isolate;
+  padding: .15rem 0;
+}
+
+/* Legibility sits on the words, not on a full-frame veil. */
+.plate::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -0.45rem -0.85rem -0.55rem;
+  border-radius: 1.05rem;
+  background: rgba(6, 4, 3, .58);
+  pointer-events: none;
+}
+
 .beat-end { align-items: flex-end; text-align: right; }
 .beat-end .copy { margin-left: auto; }
 
@@ -108,7 +128,7 @@ html:not(.gl-on) #gl { display: none; }
   line-height: 1.02;
   letter-spacing: -.03em;
   max-width: 12em;
-  text-shadow: 0 2px 28px rgba(0, 0, 0, .55);
+  text-shadow: 0 1px 0 rgba(0, 0, 0, .9);
 }
 
 .beat-end h2 { margin-left: auto; }
@@ -125,7 +145,7 @@ html:not(.gl-on) #gl { display: none; }
   line-height: 1.55;
   color: #e4dcd2;
   max-width: 38rem;
-  text-shadow: 0 1px 16px rgba(0, 0, 0, .65);
+  text-shadow: 0 1px 0 rgba(0, 0, 0, .85);
 }
 
 .more {
@@ -143,7 +163,7 @@ html:not(.gl-on) #gl { display: none; }
 .idx-extra {
   margin-top: .7rem;
   color: #e4dcd2;
-  text-shadow: 0 1px 12px rgba(0, 0, 0, .6);
+  text-shadow: 0 1px 0 rgba(0, 0, 0, .85);
 }
 
 .idx-meta { font-size: .92rem; letter-spacing: .04em; }
@@ -236,26 +256,26 @@ html:not(.gl-on) #gl { display: none; }
 
 .draft-stamp { font-size: .75rem; color: var(--smoke-2); }
 
-/* Static scenes: visible until WebGL takes over, and always when motion is reduced or WebGL fails. */
-.beat[data-scene="0"] {
-  background:
-    linear-gradient(100deg, rgba(5, 3, 2, .78) 0%, rgba(5, 3, 2, .42) 46%, rgba(5, 3, 2, .8) 100%),
-    url("/assets/scroll/wood.webp") center/cover no-repeat;
+/* Static photos only when WebGL is off. No full-frame scrim — the copy block carries the contrast. */
+html.static-photos .beat[data-scene="0"],
+html.static-photos .beat[data-scene="2"] {
+  background: #070504 url("/assets/scroll/fire-sm.webp") center / cover no-repeat;
 }
-.beat[data-scene="1"] {
-  background:
-    linear-gradient(95deg, rgba(70, 28, 8, .2) 0%, rgba(40, 14, 4, .25) 52%, rgba(10, 5, 3, .88) 80%),
-    url("/assets/scroll/coals.webp") center/cover no-repeat;
+html.static-photos .beat[data-scene="2"] { background-position: 50% 40%; }
+html.static-photos .beat[data-scene="1"],
+html.static-photos .beat[data-scene="3"] {
+  background: #070504 url("/assets/scroll/coals-sm.webp") center / cover no-repeat;
 }
-.beat[data-scene="2"] {
-  background:
-    radial-gradient(ellipse at 50% 110%, rgba(220, 90, 20, .45), transparent 58%),
-    linear-gradient(180deg, #241006 0%, #7a320e 100%);
-}
-.beat[data-scene="3"] {
-  background:
-    linear-gradient(180deg, rgba(8, 6, 5, .88), rgba(8, 6, 5, .94)),
-    url("/assets/scroll/coals.webp") center/cover no-repeat;
+
+@media (min-width: 1200px), (min-resolution: 2dppx) {
+  html.static-photos .beat[data-scene="0"],
+  html.static-photos .beat[data-scene="2"] {
+    background-image: url("/assets/scroll/fire-hi.webp");
+  }
+  html.static-photos .beat[data-scene="1"],
+  html.static-photos .beat[data-scene="3"] {
+    background-image: url("/assets/scroll/coals-hi.webp");
+  }
 }
 
 html.gl-on .beat { background: none; }

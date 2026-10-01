@@ -1,8 +1,8 @@
 /* braai.co.za draft scroll story.
-   Self-contained WebGL1. No three.js, GSAP or Lenis: one displaced plane,
-   three self-hosted textures, and a short ember field. Native scroll stays
-   in charge so the page stays keyboard-accessible. The story HTML reads
-   without this file. */
+   Self-contained WebGL. No three.js, GSAP or Lenis. Photos are sampled in
+   sRGB, lit in linear, and written back as sRGB — no full-frame veil.
+   The canvas backing store is device pixels. Native scroll stays in charge
+   so the page stays keyboard-accessible. The story HTML reads without this file. */
 (function () {
   'use strict';
 
@@ -178,17 +178,26 @@
   var beats = document.querySelectorAll('.beat');
   var dots = document.querySelectorAll('.dots a');
 
+  /* Integer at each scroll-snap stop (the section's top). The index block
+     is taller than the screen, so a midpoint blend would still be mixing
+     the sear in when the basket is what you're reading. */
   function rawScene() {
-    var focus = window.scrollY + window.innerHeight * 0.5;
-    var firstMid = beats[0].offsetTop + beats[0].offsetHeight * 0.5;
-    var last = beats[beats.length - 1];
-    var lastMid = last.offsetTop + last.offsetHeight * 0.5;
-    var span = lastMid - firstMid;
-    if (span <= 0) return 0;
-    var t = (focus - firstMid) / span;
-    if (t < 0) t = 0;
-    if (t > 1) t = 1;
-    return t * (beats.length - 1);
+    var y = window.scrollY;
+    var i, best, nextTop, band, dist, scene;
+    best = 0;
+    for (i = 0; i < beats.length; i++) {
+      if (y + 1 >= beats[i].offsetTop) best = i;
+    }
+    scene = best;
+    if (best < beats.length - 1) {
+      nextTop = beats[best + 1].offsetTop;
+      band = Math.min(window.innerHeight * 0.42, (nextTop - beats[best].offsetTop) * 0.42);
+      dist = nextTop - y;
+      if (band > 1 && dist < band) scene = best + (1 - dist / band);
+    }
+    if (scene < 0) scene = 0;
+    if (scene > beats.length - 1) scene = beats.length - 1;
+    return scene;
   }
 
   function markDot(scene) {
@@ -198,131 +207,192 @@
       if (i === n) dots[i].setAttribute('aria-current', 'true');
       else dots[i].removeAttribute('aria-current');
     }
+    document.documentElement.dataset.scene = String(n);
   }
 
   markDot(rawScene());
   window.addEventListener('scroll', function () { markDot(rawScene()); }, { passive: true });
 
-  if (reduce) return;
+  if (reduce) {
+    document.documentElement.classList.add('static-photos');
+    return;
+  }
 
   var canvas = document.getElementById('gl');
-  var gl = canvas.getContext('webgl', {
+  var ctxAttribs = {
     alpha: false,
-    antialias: false,
-    depth: true,
+    antialias: true,
+    depth: false,
     stencil: false,
+    premultipliedAlpha: false,
     powerPreference: 'high-performance',
     failIfMajorPerformanceCaveat: false
-  });
-  if (!gl) return;
+  };
+  var gl = canvas.getContext('webgl2', ctxAttribs) || canvas.getContext('webgl', ctxAttribs);
+  if (!gl) {
+    ctxAttribs.antialias = false;
+    gl = canvas.getContext('webgl2', ctxAttribs) || canvas.getContext('webgl', ctxAttribs);
+  }
+  if (!gl) {
+    document.documentElement.classList.add('static-photos');
+    return;
+  }
+  var isGL2 = typeof WebGL2RenderingContext !== 'undefined' && gl instanceof WebGL2RenderingContext;
 
-  gl.getExtension('OES_standard_derivatives');
-  gl.getExtension('OES_element_index_uint');
+  if ('drawingBufferColorSpace' in gl) {
+    try { gl.drawingBufferColorSpace = 'srgb'; } catch (e) {}
+  }
+  if ('unpackColorSpace' in gl) {
+    try { gl.unpackColorSpace = 'srgb'; } catch (e) {}
+  }
+  gl.pixelStorei(gl.UNPACK_COLORSPACE_CONVERSION_WEBGL, gl.NONE);
+  gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false);
+  gl.disable(gl.DITHER);
 
-  var VS = [
-    'precision mediump float;',
-    'attribute vec3 aPos;',
-    'attribute vec2 aUv;',
-    'uniform mat4 uMvp;',
-    'uniform sampler2D uWood;',
-    'uniform float uDisp;',
-    'uniform float uTime;',
-    'varying vec2 vUv;',
-    'void main() {',
-    '  vUv = aUv;',
-    '  float h = texture2D(uWood, aUv).r;',
-    '  vec3 p = aPos;',
-    '  p.z += (h - 0.32) * uDisp;',
-    '  p.z += sin(aUv.x * 9.0 + uTime * 0.35) * 0.012 * uDisp;',
-    '  gl_Position = uMvp * vec4(p, 1.0);',
-    '}'
-  ].join('\n');
-
-  var FS = [
-    '#extension GL_OES_standard_derivatives : enable',
-    'precision mediump float;',
-    'varying vec2 vUv;',
-    'uniform sampler2D uWood;',
+  /* Photos stay true-colour. Sampled bytes are sRGB. Lighting is a multiply
+     around 1 in linear light, then encoded back. No vignette, no grain, no
+     pow() that lifts the blacks. */
+  var FS_BODY = [
     'uniform sampler2D uFire;',
     'uniform sampler2D uCoals;',
+    'uniform vec2 uRes;',
+    'uniform vec2 uFireSize;',
+    'uniform vec2 uCoalsSize;',
     'uniform float uScene;',
-    'uniform float uTime;',
-    'float tri(float x, float c) {',
-    '  return smoothstep(c - 1.0, c, x) * (1.0 - smoothstep(c, c + 1.0, x));',
+    'vec3 toLin(vec3 c){ return pow(max(c, vec3(0.0)), vec3(2.2)); }',
+    'vec3 toSrgb(vec3 c){ return pow(clamp(c, 0.0, 1.0), vec3(1.0/2.2)); }',
+    'float wgt(float x, float c){ return 1.0 - smoothstep(0.0, 0.55, abs(x - c)); }',
+    'vec2 photoUv(vec2 frag, vec2 res, vec2 tex, vec2 pan, float pinBottom){',
+    '  float cover = min(tex.x / res.x, tex.y / res.y);',
+    '  float tpp = max(cover, 1.0);',
+    '  vec2 halfWin = res * (tpp * 0.5);',
+    '  vec2 center = tex * 0.5 + pan;',
+    '  vec2 lo = halfWin;',
+    '  vec2 hi = tex - halfWin;',
+    '  if (hi.x >= lo.x) center.x = clamp(center.x, lo.x, hi.x);',
+    '  else center.x = tex.x * 0.5;',
+    '  if (hi.y >= lo.y) center.y = clamp(center.y, lo.y, hi.y);',
+    '  else if (pinBottom > 0.5) center.y = halfWin.y;',
+    '  else center.y = tex.y * 0.5;',
+    '  return ((frag - res * 0.5) * tpp + center) / tex;',
     '}',
-    'void main() {',
-    '  vec2 uv = vUv;',
-    '  vec2 woodUv = vec2(uv.x * 0.92 + uv.y * 0.38, uv.y * 1.15 - uv.x * 0.22);',
-    '  woodUv += vec2(uTime * 0.004, uScene * 0.015);',
-    '  vec3 wood = texture2D(uWood, woodUv).rgb;',
-    '  vec3 fire = texture2D(uFire, uv * 1.05 + vec2(0.0, uTime * 0.01)).rgb;',
-    '  vec3 coals = texture2D(uCoals, uv).rgb;',
-    '  vec3 woodL = pow(max(wood, vec3(0.0)), vec3(0.55));',
-    '  float h = dot(woodL, vec3(0.3, 0.55, 0.15));',
-    '  float edge = 0.0;',
-    '  edge = length(vec2(dFdx(h), dFdy(h)));',
-    '  float s0 = tri(uScene, 0.0);',
-    '  float s1 = tri(uScene, 1.0);',
-    '  float s2 = tri(uScene, 2.0);',
-    '  float s3 = tri(uScene, 3.0);',
-    '  vec3 dark = woodL * vec3(0.16, 0.09, 0.05);',
-    '  dark += vec3(0.85, 0.32, 0.08) * smoothstep(0.25, 0.7, h) * 0.55;',
-    '  dark += vec3(1.0, 0.42, 0.08) * smoothstep(0.02, 0.14, edge) * 0.45;',
-    '  float strike = smoothstep(0.08, 0.42, uScene) * (1.0 - smoothstep(0.42, 0.95, uScene));',
-    '  vec3 lit = max(fire, vec3(0.02)) * vec3(1.25, 0.7, 0.35);',
-    '  lit = mix(dark, lit, strike);',
-    '  vec3 glow = woodL * vec3(1.35, 0.62, 0.22) * (1.15 + h);',
-    '  glow += vec3(1.0, 0.48, 0.1) * smoothstep(0.008, 0.11, edge) * 2.4;',
-    '  vec3 coalsL = pow(max(coals, vec3(0.0)), vec3(0.72)) * 1.35;',
-    '  float ash = smoothstep(0.35, 0.85, dot(coalsL, vec3(0.3, 0.5, 0.2)));',
-    '  glow = mix(glow, coalsL * vec3(1.15, 0.95, 0.8), 0.5 + ash * 0.28);',
-    '  float wedge = smoothstep(0.46, 0.92, uv.x * 0.78 + uv.y * 0.28);',
-    '  glow = mix(glow, glow * vec3(0.22, 0.1, 0.05), wedge);',
-    '  vec3 heat = mix(vec3(0.95, 0.4, 0.09), vec3(0.15, 0.05, 0.02), pow(clamp(uv.y, 0.0, 1.0), 0.55));',
-    '  heat += vec3(1.0, 0.45, 0.1) * smoothstep(0.02, 0.2, edge) * 0.15;',
-    '  heat = mix(heat, fire * vec3(1.1, 0.45, 0.15), 0.18);',
-    '  vec3 night = mix(vec3(0.035, 0.02, 0.015), coalsL * 0.12, 0.4);',
-    '  vec3 col = lit * s0 + glow * s1 + heat * s2 + night * s3;',
-    '  float vig = smoothstep(1.2, 0.2, length(uv - vec2(0.5)));',
-    '  col *= mix(0.82, 1.0, vig);',
-    '  float grain = fract(sin(dot(gl_FragCoord.xy + uTime, vec2(12.9898, 78.233))) * 43758.5453);',
-    '  col += (grain - 0.5) * 0.045;',
-    '  gl_FragColor = vec4(col, 1.0);',
+    'void main(){',
+    '  vec2 frag = gl_FragCoord.xy;',
+    '  float s0 = wgt(uScene, 0.0);',
+    '  float s1 = wgt(uScene, 1.0);',
+    '  float s2 = wgt(uScene, 2.0);',
+    '  float s3 = wgt(uScene, 3.0);',
+    '  vec3 fire = TEX(uFire, photoUv(frag, uRes, uFireSize, vec2(0.0), 1.0)).rgb;',
+    '  vec3 sear = TEX(uFire, photoUv(frag, uRes, uFireSize, vec2(0.0, uFireSize.y * 0.18), 1.0)).rgb;',
+    '  vec3 coals = TEX(uCoals, photoUv(frag, uRes, uCoalsSize, vec2(0.0), 0.0)).rgb;',
+    '  float w = max(s0 + s1 + s2 + s3, 0.0001);',
+    '  vec3 albedo = (fire * s0 + coals * s1 + sear * s2 + coals * s3) / w;',
+    '  float luma = dot(albedo, vec3(0.2126, 0.7152, 0.0722));',
+    '  float shade = clamp(1.0 + (dFdx(luma) - dFdy(luma)) * 1.15, 0.95, 1.05);',
+    '  OUT = vec4(toSrgb(toLin(albedo) * shade), 1.0);',
     '}'
   ].join('\n');
 
-  var PVS = [
-    'precision mediump float;',
-    'attribute vec2 aSeed;',
+  var VS_GL2 = [
+    '#version 300 es',
+    'precision highp float;',
+    'layout(location = 0) in vec2 aPos;',
+    'void main(){ gl_Position = vec4(aPos, 0.0, 1.0); }'
+  ].join('\n');
+
+  var FS_GL2 = [
+    '#version 300 es',
+    'precision highp float;',
+    'out vec4 outColor;',
+    FS_BODY.replace(/TEX/g, 'texture').replace('OUT', 'outColor')
+  ].join('\n');
+
+  var VS_GL1 = [
+    'precision highp float;',
+    'attribute vec2 aPos;',
+    'void main(){ gl_Position = vec4(aPos, 0.0, 1.0); }'
+  ].join('\n');
+
+  var FS_GL1 = [
+    '#extension GL_OES_standard_derivatives : enable',
+    'precision highp float;',
+    FS_BODY.replace(/TEX/g, 'texture2D').replace('OUT', 'gl_FragColor')
+  ].join('\n');
+
+  var FS_GL1_SAFE = [
+    'precision highp float;',
+    FS_BODY.replace(/TEX/g, 'texture2D').replace('OUT', 'gl_FragColor').replace(
+      'float shade = clamp(1.0 + (dFdx(luma) - dFdy(luma)) * 1.15, 0.95, 1.05);',
+      'float shade = 1.0;'
+    )
+  ].join('\n');
+
+  var PVS_GL2 = [
+    '#version 300 es',
+    'precision highp float;',
+    'layout(location = 0) in vec2 aSeed;',
     'uniform float uTime;',
     'uniform float uScene;',
     'uniform vec2 uRes;',
-    'varying float vA;',
-    'float tri(float x, float c) {',
-    '  return clamp(1.0 - abs(x - c), 0.0, 1.0);',
-    '}',
-    'void main() {',
+    'out float vA;',
+    'float tri(float x, float c){ return clamp(1.0 - abs(x - c), 0.0, 1.0); }',
+    'void main(){',
     '  float speed = 0.045 + aSeed.y * 0.07;',
     '  float life = fract(aSeed.x + uTime * speed);',
     '  float x = fract(aSeed.x * 3.7 + aSeed.y) * 2.0 - 1.0;',
     '  x += sin(uTime * 0.6 + aSeed.y * 6.28) * 0.04;',
     '  float y = mix(-1.05, 1.15, life);',
     '  gl_Position = vec4(x, y, 0.0, 1.0);',
-    '  gl_PointSize = (1.4 + aSeed.y * 3.2) * (uRes.y / 900.0);',
-    '  float spark = tri(uScene, 2.0) * 0.85 + tri(uScene, 0.0) * 0.22 + tri(uScene, 3.0) * 0.12;',
+    '  gl_PointSize = (1.8 + aSeed.y * 2.8) * (uRes.y / 900.0);',
+    '  float spark = tri(uScene, 2.0) * 0.9 + tri(uScene, 0.0) * 0.28 + tri(uScene, 1.0) * 0.04 + tri(uScene, 3.0) * 0.08;',
     '  vA = spark * smoothstep(0.0, 0.08, life) * (1.0 - smoothstep(0.8, 1.0, life));',
     '}'
   ].join('\n');
 
-  var PFS = [
-    'precision mediump float;',
-    'varying float vA;',
-    'void main() {',
+  var PFS_GL2 = [
+    '#version 300 es',
+    'precision highp float;',
+    'in float vA;',
+    'out vec4 outColor;',
+    'void main(){',
     '  vec2 p = gl_PointCoord * 2.0 - 1.0;',
     '  float d = dot(p, p);',
     '  if (d > 1.0) discard;',
     '  float a = (1.0 - d) * vA;',
-    '  gl_FragColor = vec4(1.0, 0.48, 0.12, a);',
+    '  outColor = vec4(1.0, 0.42, 0.08, a);',
+    '}'
+  ].join('\n');
+
+  var PVS_GL1 = [
+    'precision highp float;',
+    'attribute vec2 aSeed;',
+    'uniform float uTime;',
+    'uniform float uScene;',
+    'uniform vec2 uRes;',
+    'varying float vA;',
+    'float tri(float x, float c){ return clamp(1.0 - abs(x - c), 0.0, 1.0); }',
+    'void main(){',
+    '  float speed = 0.045 + aSeed.y * 0.07;',
+    '  float life = fract(aSeed.x + uTime * speed);',
+    '  float x = fract(aSeed.x * 3.7 + aSeed.y) * 2.0 - 1.0;',
+    '  x += sin(uTime * 0.6 + aSeed.y * 6.28) * 0.04;',
+    '  float y = mix(-1.05, 1.15, life);',
+    '  gl_Position = vec4(x, y, 0.0, 1.0);',
+    '  gl_PointSize = (1.8 + aSeed.y * 2.8) * (uRes.y / 900.0);',
+    '  float spark = tri(uScene, 2.0) * 0.9 + tri(uScene, 0.0) * 0.28 + tri(uScene, 1.0) * 0.04 + tri(uScene, 3.0) * 0.08;',
+    '  vA = spark * smoothstep(0.0, 0.08, life) * (1.0 - smoothstep(0.8, 1.0, life));',
+    '}'
+  ].join('\n');
+
+  var PFS_GL1 = [
+    'precision highp float;',
+    'varying float vA;',
+    'void main(){',
+    '  vec2 p = gl_PointCoord * 2.0 - 1.0;',
+    '  float d = dot(p, p);',
+    '  if (d > 1.0) discard;',
+    '  float a = (1.0 - d) * vA;',
+    '  gl_FragColor = vec4(1.0, 0.42, 0.08, a);',
     '}'
   ].join('\n');
 
@@ -331,77 +401,60 @@
     gl.shaderSource(sh, src);
     gl.compileShader(sh);
     if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) {
+      document.documentElement.dataset.glerr = (gl.getShaderInfoLog(sh) || 'shader').slice(0, 240);
       gl.deleteShader(sh);
       return null;
     }
     return sh;
   }
 
-  function link(vsSrc, fsSrc) {
+  function link(vsSrc, fsSrc, attribs) {
     var vs = compile(gl.VERTEX_SHADER, vsSrc);
     var fs = compile(gl.FRAGMENT_SHADER, fsSrc);
     if (!vs || !fs) return null;
     var p = gl.createProgram();
     gl.attachShader(p, vs);
     gl.attachShader(p, fs);
+    if (attribs) {
+      var i;
+      for (i = 0; i < attribs.length; i++) gl.bindAttribLocation(p, i, attribs[i]);
+    }
     gl.linkProgram(p);
-    if (!gl.getProgramParameter(p, gl.LINK_STATUS)) return null;
+    if (!gl.getProgramParameter(p, gl.LINK_STATUS)) {
+      document.documentElement.dataset.glerr = (gl.getProgramInfoLog(p) || 'link').slice(0, 240);
+      return null;
+    }
     return p;
   }
 
-  var prog = link(VS, FS);
+  var prog = isGL2 ? link(VS_GL2, FS_GL2, ['aPos']) : link(VS_GL1, FS_GL1, ['aPos']);
+  if (!prog && !isGL2) prog = link(VS_GL1, FS_GL1_SAFE, ['aPos']);
   if (!prog) {
-    FS = FS.replace('#extension GL_OES_standard_derivatives : enable\n', '').replace('edge = length(vec2(dFdx(h), dFdy(h)));', 'edge = 0.0;');
-    prog = link(VS, FS);
+    document.documentElement.classList.add('static-photos');
+    return;
   }
-  var pprog = link(PVS, PFS);
-  if (!prog) return;
+  var pprog = isGL2 ? link(PVS_GL2, PFS_GL2, ['aSeed']) : link(PVS_GL1, PFS_GL1, ['aSeed']);
 
-  var cols = 40;
-  var rows = 24;
-  var positions = [];
-  var uvs = [];
-  var indices = [];
-  var y, x, u, v;
-  for (y = 0; y <= rows; y++) {
-    for (x = 0; x <= cols; x++) {
-      u = x / cols;
-      v = y / rows;
-      positions.push((u - 0.5) * 4.4, (v - 0.5) * 2.8, 0);
-      uvs.push(u, v);
-    }
-  }
-  for (y = 0; y < rows; y++) {
-    for (x = 0; x < cols; x++) {
-      var i = y * (cols + 1) + x;
-      indices.push(i, i + 1, i + cols + 1, i + 1, i + cols + 2, i + cols + 1);
-    }
-  }
-
-  function buffer(target, arr, usage) {
-    var b = gl.createBuffer();
-    gl.bindBuffer(target, b);
-    gl.bufferData(target, arr, usage || gl.STATIC_DRAW);
-    return b;
-  }
-
-  var posBuf = buffer(gl.ARRAY_BUFFER, new Float32Array(positions));
-  var uvBuf = buffer(gl.ARRAY_BUFFER, new Float32Array(uvs));
-  var idxBuf = buffer(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices));
-  var indexCount = indices.length;
+  var tri = new Float32Array([-1, -1, 3, -1, -1, 3]);
+  var triBuf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, triBuf);
+  gl.bufferData(gl.ARRAY_BUFFER, tri, gl.STATIC_DRAW);
 
   var SPARKS = 140;
   var seeds = new Float32Array(SPARKS * 2);
-  for (x = 0; x < SPARKS; x++) {
-    seeds[x * 2] = Math.random();
-    seeds[x * 2 + 1] = Math.random();
+  var si;
+  for (si = 0; si < SPARKS; si++) {
+    seeds[si * 2] = Math.random();
+    seeds[si * 2 + 1] = Math.random();
   }
-  var seedBuf = buffer(gl.ARRAY_BUFFER, seeds);
+  var seedBuf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, seedBuf);
+  gl.bufferData(gl.ARRAY_BUFFER, seeds, gl.STATIC_DRAW);
 
   function makeTex() {
     var tex = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, tex);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([12, 8, 6, 255]));
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([7, 5, 4, 255]));
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
@@ -409,78 +462,131 @@
     return tex;
   }
 
-  var texWood = makeTex();
   var texFire = makeTex();
   var texCoals = makeTex();
-  var loaded = 0;
+  var anisoExt = gl.getExtension('EXT_texture_filter_anisotropic') || gl.getExtension('WEBKIT_EXT_texture_filter_anisotropic');
+  var anisoMax = anisoExt ? gl.getParameter(anisoExt.MAX_TEXTURE_MAX_ANISOTROPY_EXT) : 0;
+  var urls = {
+    fire: { hi: '/assets/scroll/fire-hi.webp', sm: '/assets/scroll/fire-sm.webp' },
+    coals: { hi: '/assets/scroll/coals-hi.webp', sm: '/assets/scroll/coals-sm.webp' }
+  };
+  var sizes = { fire: [1, 1], coals: [1, 1] };
+  var variant = '';
+  var loadGen = 0;
 
-  function loadTex(tex, url) {
-    var img = new Image();
-    img.decoding = 'async';
-    img.onload = function () {
-      gl.bindTexture(gl.TEXTURE_2D, tex);
-      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1);
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
-      loaded++;
-      if (loaded === 1) document.documentElement.classList.add('gl-on');
-    };
-    img.src = url;
-  }
-
-  loadTex(texWood, '/assets/scroll/wood.webp');
-  loadTex(texFire, '/assets/scroll/fire.webp');
-  loadTex(texCoals, '/assets/scroll/coals.webp');
-
-  function dot(a, b) { return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]; }
-  function norm(v) {
-    var l = Math.sqrt(dot(v, v)) || 1;
-    return [v[0] / l, v[1] / l, v[2] / l];
-  }
-  function cross(a, b) {
-    return [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
-  }
-  function lookAt(eye, center, up) {
-    var f = norm([center[0] - eye[0], center[1] - eye[1], center[2] - eye[2]]);
-    var s = norm(cross(f, up));
-    var u = cross(s, f);
-    return new Float32Array([
-      s[0], u[0], -f[0], 0,
-      s[1], u[1], -f[1], 0,
-      s[2], u[2], -f[2], 0,
-      -dot(s, eye), -dot(u, eye), dot(f, eye), 1
-    ]);
-  }
-  function perspective(fovy, aspect, near, far) {
-    var f = 1 / Math.tan(fovy / 2);
-    var nf = 1 / (near - far);
-    return new Float32Array([
-      f / aspect, 0, 0, 0,
-      0, f, 0, 0,
-      0, 0, (far + near) * nf, -1,
-      0, 0, 2 * far * near * nf, 0
-    ]);
-  }
-  function multiply(a, b) {
-    var o = new Float32Array(16);
-    var c, r;
-    for (c = 0; c < 4; c++) {
-      for (r = 0; r < 4; r++) {
-        o[c * 4 + r] = a[r] * b[c * 4] + a[4 + r] * b[c * 4 + 1] + a[8 + r] * b[c * 4 + 2] + a[12 + r] * b[c * 4 + 3];
+  function upload(tex, img) {
+    gl.bindTexture(gl.TEXTURE_2D, tex);
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+    gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false);
+    gl.pixelStorei(gl.UNPACK_COLORSPACE_CONVERSION_WEBGL, gl.NONE);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+    if (isGL2) {
+      gl.generateMipmap(gl.TEXTURE_2D);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.MIRRORED_REPEAT);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.MIRRORED_REPEAT);
+      if (anisoExt && anisoMax > 1) {
+        gl.texParameterf(gl.TEXTURE_2D, anisoExt.TEXTURE_MAX_ANISOTROPY_EXT, Math.min(8, anisoMax));
       }
+    } else {
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
     }
-    return o;
   }
+
+  function loadPair() {
+    var gen = ++loadGen;
+    var pending = 2;
+    function one(which, tex) {
+      var img = new Image();
+      img.decoding = 'async';
+      img.onload = function () {
+        if (gen !== loadGen) return;
+        upload(tex, img);
+        sizes[which][0] = img.naturalWidth || img.width;
+        sizes[which][1] = img.naturalHeight || img.height;
+        pending--;
+        if (pending === 0) {
+          document.documentElement.classList.add('gl-on');
+          document.documentElement.dataset.tex = sizes.fire[0] + 'x' + sizes.fire[1];
+          resize();
+        }
+      };
+      img.onerror = function () {
+        if (gen !== loadGen) return;
+        pending--;
+        if (pending === 0 && !document.documentElement.classList.contains('gl-on')) {
+          document.documentElement.classList.add('static-photos');
+        }
+      };
+      img.src = urls[which][variant];
+    }
+    one('fire', texFire);
+    one('coals', texCoals);
+  }
+
+  function cssSize() {
+    var r = canvas.getBoundingClientRect();
+    var w = Math.round(r.width);
+    var h = Math.round(r.height);
+    if (w < 2 || h < 2) {
+      w = Math.round(window.innerWidth);
+      h = Math.round(window.innerHeight);
+    }
+    return { w: Math.max(1, w), h: Math.max(1, h) };
+  }
+
+  /* Full device pixel ratio. Cap at 3 only when the buffer would exceed 9 megapixels
+     and the ratio is already above 3. Never force 1. */
+  function pickDpr(cssW, cssH) {
+    var d = window.devicePixelRatio || 1;
+    if (!(d > 0)) d = 1;
+    if (d > 3 && cssW * cssH * d * d > 9000000) d = 3;
+    return d;
+  }
+
+  var dpr = 1;
+  function resize() {
+    var css = cssSize();
+    dpr = pickDpr(css.w, css.h);
+    var w = Math.max(1, Math.round(css.w * dpr));
+    var h = Math.max(1, Math.round(css.h * dpr));
+    if (canvas.width !== w || canvas.height !== h) {
+      canvas.width = w;
+      canvas.height = h;
+    }
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    var longEdge = Math.max(canvas.width, canvas.height);
+    var next = longEdge > 2000 ? 'hi' : 'sm';
+    if (next !== variant) {
+      variant = next;
+      loadPair();
+    }
+    var root = document.documentElement;
+    root.dataset.dpr = String(Math.round(dpr * 100) / 100);
+    root.dataset.buf = canvas.width + 'x' + canvas.height;
+    root.dataset.variant = variant;
+    root.dataset.aa = gl.getContextAttributes().antialias ? '1' : '0';
+    root.dataset.gl = isGL2 ? '2' : '1';
+    root.dataset.aniso = anisoMax > 1 ? '1' : '0';
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+  window.addEventListener('orientationchange', function () { setTimeout(resize, 80); });
+  if (window.visualViewport) window.visualViewport.addEventListener('resize', resize);
 
   var loc = {
     pos: gl.getAttribLocation(prog, 'aPos'),
-    uv: gl.getAttribLocation(prog, 'aUv'),
-    mvp: gl.getUniformLocation(prog, 'uMvp'),
-    wood: gl.getUniformLocation(prog, 'uWood'),
     fire: gl.getUniformLocation(prog, 'uFire'),
     coals: gl.getUniformLocation(prog, 'uCoals'),
-    scene: gl.getUniformLocation(prog, 'uScene'),
-    time: gl.getUniformLocation(prog, 'uTime'),
-    disp: gl.getUniformLocation(prog, 'uDisp')
+    res: gl.getUniformLocation(prog, 'uRes'),
+    fireSize: gl.getUniformLocation(prog, 'uFireSize'),
+    coalsSize: gl.getUniformLocation(prog, 'uCoalsSize'),
+    scene: gl.getUniformLocation(prog, 'uScene')
   };
   var ploc = pprog ? {
     seed: gl.getAttribLocation(pprog, 'aSeed'),
@@ -489,84 +595,43 @@
     res: gl.getUniformLocation(pprog, 'uRes')
   } : null;
 
-  var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-  if (window.innerWidth < 800) dpr = Math.min(dpr, 1.25);
-  if (navigator.deviceMemory && navigator.deviceMemory <= 3) dpr = 1;
-  if (navigator.connection && navigator.connection.saveData) dpr = 1;
-
-  function resize() {
-    var w = Math.max(1, Math.floor(window.innerWidth * dpr));
-    var h = Math.max(1, Math.floor(window.innerHeight * dpr));
-    if (canvas.width !== w || canvas.height !== h) {
-      canvas.width = w;
-      canvas.height = h;
-    }
-    gl.viewport(0, 0, canvas.width, canvas.height);
-  }
-  resize();
-  window.addEventListener('resize', resize);
-
   var shown = rawScene();
   var start = performance.now();
   var raf = 0;
   var running = true;
-  var slow = 0;
-  var last = performance.now();
-  var dropped = false;
 
   function frame(now) {
     if (!running) return;
-    var dt = now - last;
-    last = now;
-    if (!dropped && dt > 34) slow++;
-    else slow = Math.max(0, slow - 1);
-    if (!dropped && slow > 18 && dpr > 1) {
-      dpr = 1;
-      dropped = true;
-      resize();
-    }
     var target = rawScene();
-    shown += (target - shown) * 0.09;
+    shown += (target - shown) * 0.12;
     if (Math.abs(target - shown) < 0.0008) shown = target;
     markDot(shown);
+    document.documentElement.dataset.t = shown.toFixed(3);
     var t = (now - start) / 1000;
-    var aspect = canvas.width / Math.max(1, canvas.height);
-    var eye = [Math.sin(shown * 0.55) * 0.16, 0.06 + Math.sin(shown) * 0.03, 1.72];
-    var mvp = multiply(perspective(0.82, aspect, 0.1, 20), lookAt(eye, [0, 0, 0], [0, 1, 0]));
-    var disp = 0.22 * (1.0 - Math.min(1, Math.max(0, (shown - 1.2) / 1.4)));
 
     gl.disable(gl.BLEND);
-    gl.enable(gl.DEPTH_TEST);
-    gl.depthMask(true);
-    gl.clearColor(0.03, 0.02, 0.015, 1);
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    gl.disable(gl.DEPTH_TEST);
+    gl.clearColor(0.027, 0.02, 0.016, 1);
+    gl.clear(gl.COLOR_BUFFER_BIT);
     gl.useProgram(prog);
-    gl.bindBuffer(gl.ARRAY_BUFFER, posBuf);
+    gl.bindBuffer(gl.ARRAY_BUFFER, triBuf);
     gl.enableVertexAttribArray(loc.pos);
-    gl.vertexAttribPointer(loc.pos, 3, gl.FLOAT, false, 0, 0);
-    gl.bindBuffer(gl.ARRAY_BUFFER, uvBuf);
-    gl.enableVertexAttribArray(loc.uv);
-    gl.vertexAttribPointer(loc.uv, 2, gl.FLOAT, false, 0, 0);
-    gl.uniformMatrix4fv(loc.mvp, false, mvp);
+    gl.vertexAttribPointer(loc.pos, 2, gl.FLOAT, false, 0, 0);
     gl.uniform1f(loc.scene, shown);
-    gl.uniform1f(loc.time, t);
-    gl.uniform1f(loc.disp, disp);
+    gl.uniform2f(loc.res, canvas.width, canvas.height);
+    gl.uniform2f(loc.fireSize, sizes.fire[0], sizes.fire[1]);
+    gl.uniform2f(loc.coalsSize, sizes.coals[0], sizes.coals[1]);
     gl.activeTexture(gl.TEXTURE0);
-    gl.bindTexture(gl.TEXTURE_2D, texWood);
-    gl.uniform1i(loc.wood, 0);
-    gl.activeTexture(gl.TEXTURE1);
     gl.bindTexture(gl.TEXTURE_2D, texFire);
-    gl.uniform1i(loc.fire, 1);
-    gl.activeTexture(gl.TEXTURE2);
+    gl.uniform1i(loc.fire, 0);
+    gl.activeTexture(gl.TEXTURE1);
     gl.bindTexture(gl.TEXTURE_2D, texCoals);
-    gl.uniform1i(loc.coals, 2);
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, idxBuf);
-    gl.drawElements(gl.TRIANGLES, indexCount, gl.UNSIGNED_SHORT, 0);
+    gl.uniform1i(loc.coals, 1);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
 
-    if (ploc) {
+    if (ploc && document.documentElement.classList.contains('gl-on')) {
       gl.enable(gl.BLEND);
       gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
-      gl.disable(gl.DEPTH_TEST);
       gl.useProgram(pprog);
       gl.bindBuffer(gl.ARRAY_BUFFER, seedBuf);
       gl.enableVertexAttribArray(ploc.seed);
@@ -583,6 +648,7 @@
     running = false;
     if (raf) cancelAnimationFrame(raf);
     document.documentElement.classList.remove('gl-on');
+    document.documentElement.classList.add('static-photos');
   }
 
   document.addEventListener('visibilitychange', function () {
@@ -591,7 +657,6 @@
       if (raf) cancelAnimationFrame(raf);
     } else if (!reduce) {
       running = true;
-      last = performance.now();
       raf = requestAnimationFrame(frame);
     }
   });

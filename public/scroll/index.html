@@ -20,7 +20,6 @@
 <link rel="preload" href="/assets/fonts/fraunces-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/fraunces-italic-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/scroll/wood.webp" as="image" type="image/webp">
 <link rel="stylesheet" href="/assets/style.css">
 <link rel="stylesheet" href="/scroll/scroll.css">
 <script type="application/ld+json">
@@ -58,38 +57,46 @@
 <main class="scroll-main" id="main">
   <section class="beat" id="ignition" data-scene="0">
     <div class="copy">
-      <p class="kicker">01 · The ignition</p>
-      <h1>Every braai starts<br>with <em>fire.</em></h1>
-      <p class="lede">Kameeldoring from a permitted supplier, sekelbos, or a good bag of charcoal. Scroll to strike the match.</p>
-      <a class="more" href="/fire/">Wood &amp; coals</a>
+      <div class="plate">
+        <p class="kicker">01 · The ignition</p>
+        <h1>Every braai starts<br>with <em>fire.</em></h1>
+        <p class="lede">Kameeldoring from a permitted supplier, sekelbos, or a good bag of charcoal. Scroll to strike the match.</p>
+        <a class="more" href="/fire/">Wood &amp; coals</a>
+      </div>
     </div>
   </section>
 
   <section class="beat beat-end" id="coals" data-scene="1">
     <div class="copy">
-      <p class="kicker">02 · The perfect coal</p>
-      <h2>Wait for the <em>white.</em></h2>
-      <p class="lede">Flames are for show. Coals are for cooking. When the ash coats them grey-white and the heat stings your palm at a hand’s height, the fire is ready.</p>
-      <a class="more" href="/vuur/">Stand around the fire</a>
+      <div class="plate">
+        <p class="kicker">02 · The perfect coal</p>
+        <h2>Wait for the <em>white.</em></h2>
+        <p class="lede">Flames are for show. Coals are for cooking. When the ash coats them grey-white and the heat stings your palm at a hand’s height, the fire is ready.</p>
+        <a class="more" href="/vuur/">Stand around the fire</a>
+      </div>
     </div>
   </section>
 
   <section class="beat" id="sear" data-scene="2">
     <div class="copy">
-      <p class="kicker">03 · The sear</p>
-      <h2>Then the meat <em>meets</em><br>the heat.</h2>
-      <p class="lede">A thick, well-marbled cut. Hot grid. Turn it once, maybe twice — and never, ever tell the braaier how to do it.</p>
-      <a class="more" href="/recipes/">The recipes</a>
+      <div class="plate">
+        <p class="kicker">03 · The sear</p>
+        <h2>Then the meat <em>meets</em><br>the heat.</h2>
+        <p class="lede">A thick, well-marbled cut. Hot grid. Turn it once, maybe twice — and never, ever tell the braaier how to do it.</p>
+        <a class="more" href="/recipes/">The recipes</a>
+      </div>
     </div>
   </section>
 
   <section class="beat" id="index" data-scene="3">
     <div class="copy">
-      <p class="kicker">04 · The index</p>
-      <h2>The National<br>Braai <em>Index.</em></h2>
-      <p class="lede" id="idxLead">The latest published family basket — meat, fire, sides and drinks. The week is the one written on the file. Not a shop.</p>
-      <p class="idx-week" id="idxWeek">Fetching the latest published basket…</p>
-      <p class="idx-meta" id="idxMeta"></p>
+      <div class="plate">
+        <p class="kicker">04 · The index</p>
+        <h2>The National<br>Braai <em>Index.</em></h2>
+        <p class="lede" id="idxLead">The latest published family basket — meat, fire, sides and drinks. The week is the one written on the file. Not a shop.</p>
+        <p class="idx-week" id="idxWeek">Fetching the latest published basket…</p>
+        <p class="idx-meta" id="idxMeta"></p>
+      </div>
       <div class="tiers" id="idxTiers" aria-live="polite"></div>
       <p class="idx-extra" id="idxExtra"></p>
       <p class="idx-miss" id="idxMiss" hidden>The published basket isn’t available right now. <a href="/braai-index/">See the full index</a>.</p>
@@ -110,13 +117,19 @@
     <div>
       <strong style="color:var(--cream)">braai.co.za</strong> — Proudly South African. Draft scroll preview. The home page is unchanged.<br>
       <a href="/what-is-a-braai/">What is a braai?</a> · <a href="/fire/">Wood &amp; Coals</a> · <a href="/cuts/">The Cuts</a> · <a href="/recipes/">Recipes</a> · <a href="/potjie/">Potjie</a> · <a href="/gear/">Gear</a> · <a href="/braaictionary/">Braaictionary</a> · <a href="/vuur/">The Braai</a> · <a href="/braai-day/">Braai Day</a> · <a href="/braai-index/">Braai Index</a> · <a href="/tonight/">Tonight</a> · <a href="/contribute/">Contribute</a>
-      <p class="credits">Placeholder photographs, <a href="https://unsplash.com/license">Unsplash License</a>. Campfire: <a href="https://unsplash.com/photos/a-close-up-of-a-pile-of-wood-and-fire-A1oEyeLb2oE">Julia Zyablova</a>. Charcoal with white ash: <a href="https://unsplash.com/photos/burned-charcoals-utriGopnQe4">felirbe</a>. Dark ridged surface: <a href="https://unsplash.com/photos/close-up-of-dark-wood-grain-texture-KKKHaEA4coc">The Cleveland Museum of Art</a>, an open-access photograph of a leaf from Chen Hongshou, <em>Paintings after Ancient Masters</em> (Ming dynasty), used only as texture — not a photo of braai wood.</p>
+      <p class="credits">Photographs, <a href="https://unsplash.com/license">Unsplash License</a>. Campfire: <a href="https://unsplash.com/photos/a-close-up-of-a-pile-of-wood-and-fire-A1oEyeLb2oE">Julia Zyablova</a>. Charcoal with white ash: <a href="https://unsplash.com/photos/burned-charcoals-utriGopnQe4">felirbe</a>.</p>
     </div>
     <div class="draft-stamp">Draft · noindex · English only</div>
   </div>
 </footer>
 <p class="trans-note">This draft is English only. Afrikaans and isiZulu editions are pending. The language links above go home in those languages. If a line is wrong, write to <a href="mailto:lekker@braai.co.za">lekker@braai.co.za</a>.</p>
 
+<noscript>
+<style>
+  .beat[data-scene="0"], .beat[data-scene="2"] { background: #070504 url("/assets/scroll/fire-sm.webp") center / cover no-repeat; }
+  .beat[data-scene="1"], .beat[data-scene="3"] { background: #070504 url("/assets/scroll/coals-sm.webp") center / cover no-repeat; }
+</style>
+</noscript>
 <script src="/scroll/scroll.js"></script>
 </body>
 </html>

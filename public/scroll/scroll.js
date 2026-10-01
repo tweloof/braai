@@ -575,15 +575,16 @@
     fire: [
       { url: '/assets/scroll/fire-hi.webp', w: 3840, h: 2560 },
       { url: '/assets/scroll/fire-sm.webp', w: 1920, h: 1280 },
-      { url: '/assets/scroll/fire-port.webp', w: 2400, h: 3992 }
+      { url: '/assets/scroll/fire-port.webp', w: 1440, h: 3200, phone: 1 }
     ],
     coals: [
       { url: '/assets/scroll/coals-hi.webp', w: 3978, h: 2652 },
       { url: '/assets/scroll/coals-sm.webp', w: 1920, h: 1280 },
-      { url: '/assets/scroll/coals-port.webp', w: 2295, h: 3200 }
+      { url: '/assets/scroll/coals-port.webp', w: 1600, h: 3200, phone: 1 }
     ],
     sear: [
-      { url: '/assets/scroll/sear.webp', w: 3840, h: 5760 }
+      { url: '/assets/scroll/sear.webp', w: 3840, h: 5760 },
+      { url: '/assets/scroll/sear-port.webp', w: 1714, h: 3200, phone: 1 }
     ]
   };
   var sizes = { fire: [1, 1], coals: [1, 1], sear: [1, 1] };
@@ -618,14 +619,21 @@
   }
 
   function pickTex(list, bw, bh) {
-    var i, best = null, bestScore = 1e9, fallback = null, fallbackMag = 1e9, m, score, pool, tall;
-    /* A portrait buffer uses a portrait file when one exists. Otherwise a
-       wide photo can win on magnification and the phone keeps the desktop crop. */
-    pool = list;
-    if (bh > bw * 1.05) {
+    var i, best = null, bestScore = 1e9, fallback = null, fallbackMag = 1e9, m, score, pool, tall, portrait;
+    /* Phone files are a tighter frame. A landscape buffer never sees them,
+       so the desktop crop stays the one it already had. A portrait buffer
+       uses a portrait file when one exists. */
+    portrait = bh > bw * 1.05;
+    pool = [];
+    for (i = 0; i < list.length; i++) {
+      if (!portrait && list[i].phone) continue;
+      pool.push(list[i]);
+    }
+    if (!pool.length) pool = list;
+    if (portrait) {
       tall = [];
-      for (i = 0; i < list.length; i++) {
-        if (list[i].h >= list[i].w) tall.push(list[i]);
+      for (i = 0; i < pool.length; i++) {
+        if (pool[i].h >= pool[i].w) tall.push(pool[i]);
       }
       if (tall.length) pool = tall;
     }

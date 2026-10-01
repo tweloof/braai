@@ -117,7 +117,7 @@
     <div>
       <strong style="color:var(--cream)">braai.co.za</strong> — Proudly South African. Draft scroll preview. The home page is unchanged.<br>
       <a href="/what-is-a-braai/">What is a braai?</a> · <a href="/fire/">Wood &amp; Coals</a> · <a href="/cuts/">The Cuts</a> · <a href="/recipes/">Recipes</a> · <a href="/potjie/">Potjie</a> · <a href="/gear/">Gear</a> · <a href="/braaictionary/">Braaictionary</a> · <a href="/vuur/">The Braai</a> · <a href="/braai-day/">Braai Day</a> · <a href="/braai-index/">Braai Index</a> · <a href="/tonight/">Tonight</a> · <a href="/contribute/">Contribute</a>
-      <p class="credits">Photographs, <a href="https://unsplash.com/license">Unsplash License</a>. Campfire: <a href="https://unsplash.com/photos/a-close-up-of-a-pile-of-wood-and-fire-A1oEyeLb2oE">Julia Zyablova</a>, and on a tall screen <a href="https://unsplash.com/photos/a-bbq-grill-with-a-lot-of-flames-on-it-QB4MxSbIUos">Archie</a>. Charcoal with white ash: <a href="https://unsplash.com/photos/burned-charcoals-utriGopnQe4">felirbe</a> (tall screens use the ash-covered side of that frame). Steaks on the grid: <a href="https://unsplash.com/photos/steaks-cooking-on-a-hot-grill-with-flames-below-o1kxA_4Uryk">Paras Kapoor</a>.</p>
+      <p class="credits">Photographs, <a href="https://unsplash.com/license">Unsplash License</a>. Campfire: <a href="https://unsplash.com/photos/a-close-up-of-a-pile-of-wood-and-fire-A1oEyeLb2oE">Julia Zyablova</a>, and on a tall screen <a href="https://unsplash.com/photos/a-bbq-grill-with-a-lot-of-flames-on-it-QB4MxSbIUos">Archie</a> (a tighter frame of the flames). Charcoal with white ash: <a href="https://unsplash.com/photos/burned-charcoals-utriGopnQe4">felirbe</a> (tall screens frame the ash bed of that photograph). Steaks on the grid: <a href="https://unsplash.com/photos/steaks-cooking-on-a-hot-grill-with-flames-below-o1kxA_4Uryk">Paras Kapoor</a> (tall screens use a closer frame of the same photograph).</p>
     </div>
     <div class="draft-stamp">Draft · noindex · English only</div>
   </div>
@@ -129,6 +129,11 @@
   .beat[data-scene="0"] { background: #070504 url("/assets/scroll/fire-sm.webp") center / cover no-repeat; }
   .beat[data-scene="2"] { background: #070504 url("/assets/scroll/sear.webp") center / cover no-repeat; }
   .beat[data-scene="1"], .beat[data-scene="3"] { background: #070504 url("/assets/scroll/coals-sm.webp") center / cover no-repeat; }
+  @media (orientation: portrait) and (max-width: 900px) {
+    .beat[data-scene="0"] { background-image: url("/assets/scroll/fire-port.webp"); }
+    .beat[data-scene="1"] { background-image: url("/assets/scroll/coals-port.webp"); }
+    .beat[data-scene="2"] { background-image: url("/assets/scroll/sear-port.webp"); }
+  }
 </style>
 </noscript>
 <script src="/scroll/scroll.js"></script>

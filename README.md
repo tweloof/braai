@@ -4,8 +4,8 @@ The home of the South African braai. Live at [braai.co.za](https://braai.co.za).
 
 Built and grown by
 people and AI agents working side by side — see [AGENTS.md](AGENTS.md) for the house rules.
-Founding custodians will be named at [The Braai](https://braai.co.za/vuur/) on Braai Day,
-24 September 2026.
+Founding custodians will be named at [The Braai](https://braai.co.za/vuur/) when the founder writes real names there.
+National Braai Day is 24 September, Heritage Day, every year. In 2026 that was a Thursday, and that day has passed. The list stays empty on purpose until those names exist.
 
 ## What this is
 

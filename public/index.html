@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>braai.co.za — The home of the South African braai</title>
-<meta name="description" content="The definitive South African guide to the braai: wood, coals, cuts and classic recipes. National Braai Day is Thursday 24 September 2026.">
+<meta name="description" content="The definitive South African guide to the braai: wood, coals, cuts and classic recipes. National Braai Day is 24 September, Heritage Day, every year.">
 <link rel="canonical" href="https://braai.co.za/">
 <link rel="alternate" hreflang="en" href="https://braai.co.za/">
 <link rel="alternate" hreflang="af" href="https://braai.co.za/af/">
@@ -36,7 +36,7 @@
 <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/style.css">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebSite","name":"braai.co.za","url":"https://braai.co.za/","description":"The definitive South African guide to the braai: wood, fire, cuts and classic recipes. National Braai Day is Thursday 24 September 2026.","image":"https://braai.co.za/assets/og/home.png","inLanguage":"en-ZA"}
+{"@context":"https://schema.org","@type":"WebSite","name":"braai.co.za","url":"https://braai.co.za/","description":"The definitive South African guide to the braai: wood, fire, cuts and classic recipes. National Braai Day is 24 September, Heritage Day, every year.","image":"https://braai.co.za/assets/og/home.png","inLanguage":"en-ZA"}
 </script>
 </head>
 <body>
@@ -77,7 +77,7 @@
 
 <div class="count-strip" id="countStrip">
   <div><span class="num" id="cdDays">…</span> days to National Braai Day</div>
-  <div>Thursday 24 September 2026 — Heritage Day. <a href="/braai-day/">Shopping list, timeline and FAQ</a></div>
+  <div id="cdWhen">National Braai Day is 24 September, Heritage Day, every year. <a href="/braai-day/">Shopping list, timeline and FAQ</a></div>
 </div>
 
 <section class="vuur-band" id="vuurBand">
@@ -216,17 +216,25 @@
 
 <script>
 (function () {
-  // Countdown to National Braai Day. The whole of 24 September still counts; the year rolls on the 25th.
+  // Countdown to the next National Braai Day. The whole of 24 September still counts; the year rolls on the 25th.
+  // The year is written out beside the number, so a past 24 September never sits next to a live count.
+  var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   var now = new Date();
-  var year = now.getFullYear();
-  var start = new Date(year, 8, 24);
-  var end = new Date(year, 8, 25);
-  if (now >= end) { start = new Date(year + 1, 8, 24); }
+  var start = new Date(now.getFullYear(), 8, 24, 0, 0, 0);
+  var end = new Date(now.getFullYear(), 8, 25, 0, 0, 0);
+  if (now >= end) { start = new Date(now.getFullYear() + 1, 8, 24, 0, 0, 0); }
   var days = Math.ceil((start - now) / 86400000);
   var el = document.getElementById('cdDays');
-  if (el) { el.textContent = days <= 0 ? 'Today' : days; }
-  if (days <= 0) {
+  var when = document.getElementById('cdWhen');
+  var dated = weekdays[start.getDay()] + ' 24 September ' + start.getFullYear() + ' — Heritage Day. <a href="/braai-day/">Shopping list, timeline and FAQ</a>';
+  if (!(days >= 0)) {
+    if (el) { el.textContent = '—'; }
+  } else if (days === 0) {
     document.getElementById('countStrip').firstElementChild.innerHTML = '<span class="num">Today</span> is National Braai Day!';
+    if (when) { when.innerHTML = dated; }
+  } else {
+    if (el) { el.textContent = String(days); }
+    if (when) { when.innerHTML = dated; }
   }
 
   // Live fire as a sports score (same contract as /vuur/)

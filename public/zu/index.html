@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>braai.co.za — Ikhaya le-braai laseNingizimu Afrika</title>
-<meta name="description" content="Umhlahlandlela ophelele we-braai yaseNingizimu Afrika: izinkuni, amalahle, inyama namaresiphi. Usuku Lwe-Braai Lukazwelonke ngoLwesine, 24 kuSepthemba 2026.">
+<meta name="description" content="Umhlahlandlela ophelele we-braai yaseNingizimu Afrika: izinkuni, amalahle, inyama namaresiphi. Usuku Lwe-Braai Lukazwelonke ngo-24 kuSepthemba, Usuku Lwamagugu, minyaka yonke.">
 <link rel="canonical" href="https://braai.co.za/zu/">
 <link rel="alternate" hreflang="en" href="https://braai.co.za/">
 <link rel="alternate" hreflang="af" href="https://braai.co.za/af/">
@@ -36,7 +36,7 @@
 <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/style.css">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebSite","name":"braai.co.za","url":"https://braai.co.za/zu/","description":"Umhlahlandlela ophelele we-braai yaseNingizimu Afrika: izinkuni, umlilo, inyama namaresiphi. Usuku Lwe-Braai Lukazwelonke ngo-24 kuSepthemba 2026.","image":"https://braai.co.za/assets/og/home.png","inLanguage":"zu"}
+{"@context":"https://schema.org","@type":"WebSite","name":"braai.co.za","url":"https://braai.co.za/zu/","description":"Umhlahlandlela ophelele we-braai yaseNingizimu Afrika: izinkuni, umlilo, inyama namaresiphi. Usuku Lwe-Braai Lukazwelonke ngo-24 kuSepthemba, Usuku Lwamagugu, minyaka yonke.","image":"https://braai.co.za/assets/og/home.png","inLanguage":"zu"}
 </script>
 </head>
 <body>
@@ -77,7 +77,7 @@
 
 <div class="count-strip" id="countStrip">
   <div><span class="num" id="cdDays">…</span> izinsuku kuze kufike Usuku Lwe-Braai Lukazwelonke</div>
-  <div>NgoLwesine, 24 kuSepthemba 2026 — Usuku Lwamagugu. <a href="/zu/braai-day/">Uhlu lokuthenga, uhlelo lwesikhathi nemibuzo</a></div>
+  <div id="cdWhen">Usuku Lwe-Braai Lukazwelonke ngo-24 kuSepthemba, Usuku Lwamagugu, minyaka yonke. <a href="/zu/braai-day/">Uhlu lokuthenga, uhlelo lwesikhathi nemibuzo</a></div>
 </div>
 
 <section class="vuur-band">
@@ -202,16 +202,25 @@
 
 <script>
 (function () {
+  // Ukubala kuze kufike uSuku Lwe-Braai olulandelayo. U-24 kuSepthemba wonke usabala; unyaka uguquka ngomhla ka-25.
+  // Unyaka ubhalwa ngokugcwele, ukuze usuku oludlule lungahlali eduze kwenombolo ephilayo.
+  var weekdays = ['iSonto', 'uMsombuluko', 'uLwesibili', 'uLwesithathu', 'uLwesine', 'uLwesihlanu', 'uMgqibelo'];
   var now = new Date();
-  var year = now.getFullYear();
-  var start = new Date(year, 8, 24);
-  var end = new Date(year, 8, 25);
-  if (now >= end) { start = new Date(year + 1, 8, 24); }
+  var start = new Date(now.getFullYear(), 8, 24, 0, 0, 0);
+  var end = new Date(now.getFullYear(), 8, 25, 0, 0, 0);
+  if (now >= end) { start = new Date(now.getFullYear() + 1, 8, 24, 0, 0, 0); }
   var days = Math.ceil((start - now) / 86400000);
   var el = document.getElementById('cdDays');
-  if (el) { el.textContent = days <= 0 ? 'Namuhla' : days; }
-  if (days <= 0) {
+  var when = document.getElementById('cdWhen');
+  var dated = weekdays[start.getDay()] + ', 24 kuSepthemba ' + start.getFullYear() + ' — Usuku Lwamagugu. <a href="/zu/braai-day/">Uhlu lokuthenga, uhlelo lwesikhathi nemibuzo</a>';
+  if (!(days >= 0)) {
+    if (el) { el.textContent = '—'; }
+  } else if (days === 0) {
     document.getElementById('countStrip').firstElementChild.innerHTML = '<span class="num">Namuhla</span> kuwuSuku Lwe-Braai Lukazwelonke!';
+    if (when) { when.innerHTML = dated; }
+  } else {
+    if (el) { el.textContent = String(days); }
+    if (when) { when.innerHTML = dated; }
   }
 
   var form = document.getElementById('subForm');

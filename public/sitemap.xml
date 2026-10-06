@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://braai.co.za/</loc><lastmod>2026-09-22</lastmod><priority>1.0</priority>
+    <loc>https://braai.co.za/</loc><lastmod>2026-10-06</lastmod><priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://braai.co.za/"/>
     <xhtml:link rel="alternate" hreflang="af" href="https://braai.co.za/af/"/>
     <xhtml:link rel="alternate" hreflang="zu" href="https://braai.co.za/zu/"/>
@@ -58,7 +58,7 @@
   </url>
   <url>
     <loc>https://braai.co.za/braai-day/</loc>
-    <lastmod>2026-09-22</lastmod>
+    <lastmod>2026-10-06</lastmod>
     <priority>0.95</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://braai.co.za/braai-day/"/>
     <xhtml:link rel="alternate" hreflang="af" href="https://braai.co.za/af/braai-day/"/>
@@ -73,7 +73,7 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://braai.co.za/vuur/"/>
   </url>
     <url>
-    <loc>https://braai.co.za/braai-index/</loc><lastmod>2026-09-22</lastmod><priority>0.85</priority>
+    <loc>https://braai.co.za/braai-index/</loc><lastmod>2026-10-06</lastmod><priority>0.85</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://braai.co.za/braai-index/"/>
     <xhtml:link rel="alternate" hreflang="af" href="https://braai.co.za/af/braai-index/"/>
     <xhtml:link rel="alternate" hreflang="zu" href="https://braai.co.za/zu/braai-index/"/>
@@ -139,7 +139,7 @@
   </url>
   <url>
     <loc>https://braai.co.za/af/braai-day/</loc>
-    <lastmod>2026-09-22</lastmod>
+    <lastmod>2026-10-06</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://braai.co.za/braai-day/"/>
     <xhtml:link rel="alternate" hreflang="af" href="https://braai.co.za/af/braai-day/"/>
@@ -183,7 +183,7 @@
   </url>
   <url>
     <loc>https://braai.co.za/zu/braai-day/</loc>
-    <lastmod>2026-09-22</lastmod>
+    <lastmod>2026-10-06</lastmod>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://braai.co.za/braai-day/"/>
     <xhtml:link rel="alternate" hreflang="af" href="https://braai.co.za/af/braai-day/"/>
@@ -268,14 +268,14 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://braai.co.za/braaictionary/"/>
   </url>
   <url>
-    <loc>https://braai.co.za/af/braai-index/</loc><lastmod>2026-09-22</lastmod><priority>0.7</priority>
+    <loc>https://braai.co.za/af/braai-index/</loc><lastmod>2026-10-06</lastmod><priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://braai.co.za/braai-index/"/>
     <xhtml:link rel="alternate" hreflang="af" href="https://braai.co.za/af/braai-index/"/>
     <xhtml:link rel="alternate" hreflang="zu" href="https://braai.co.za/zu/braai-index/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://braai.co.za/braai-index/"/>
   </url>
   <url>
-    <loc>https://braai.co.za/zu/braai-index/</loc><lastmod>2026-09-22</lastmod><priority>0.7</priority>
+    <loc>https://braai.co.za/zu/braai-index/</loc><lastmod>2026-10-06</lastmod><priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://braai.co.za/braai-index/"/>
     <xhtml:link rel="alternate" hreflang="af" href="https://braai.co.za/af/braai-index/"/>
     <xhtml:link rel="alternate" hreflang="zu" href="https://braai.co.za/zu/braai-index/"/>

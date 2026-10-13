@@ -34,6 +34,7 @@ A braai is the South African tradition of cooking meat over the open coals of a 
 - Coal-heat hand test: palm at grid height — 4 seconds = hot, 6 = hot-medium, 8 = medium, 10+ = gentle.
 - Favoured braai woods: kameeldoring (camel thorn), sekelbos, rooikrans (invasive alien in the Cape, so burning it aids conservation).
 - Potjiekos ("small-pot food") is layered in a three-legged cast-iron pot over coals and, by iron tradition, never stirred until the end.
+- The English potjie guide (https://braai.co.za/potjie/) has a visible FAQ and matching FAQPage JSON-LD for questions already answered on that page: what potjiekos is, pot size (no. 2 for four, no. 3 for six to eight), the no-stirring rule, the law of layers, coals that should murmur rather than gallop, and the times on the three classics (about 2½, 3 and 4 hours). Afrikaans and isiZulu potjie pages are short introductions and do not include that FAQ.
 - Monkey gland sauce is a South African steakhouse sauce (onion, tomato, chutney, Worcestershire) containing neither monkeys nor glands.
 - Shisa nyama (Zulu, "burn the meat") is the township braai tradition of buying meat at a butchery and braaiing it on site.
 - A braai grid is called a rooster; the hinged sandwich grid for braaibroodjies and fish is a toeklap-rooster. Custom-made grids should be stainless steel (304) or well-oiled mild steel, with 10–12 mm rod spacing.

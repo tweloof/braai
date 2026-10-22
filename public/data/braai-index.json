@@ -2,26 +2,26 @@
  "id": "braai-index-v2",
  "label": "National Braai Index",
  "basket": "v2",
- "week_start": "2026-10-12",
- "week_label": "12 – 18 October 2026",
- "as_of_range": "15 October 2026",
+ "week_start": "2026-10-19",
+ "week_label": "19 – 25 October 2026",
+ "as_of_range": "22 October 2026",
  "currency": "ZAR",
  "complete": true,
- "total_zar": 693.86,
- "confirmed_zar": 693.86,
+ "total_zar": 680.86,
+ "confirmed_zar": 680.86,
  "variants": {
   "family": {
    "label": "The family braai",
-   "total_zar": 693.86,
+   "total_zar": 680.86,
    "complete": true
   },
   "with_beer": {
    "label": "With a 6-pack of lager",
-   "total_zar": 798.85,
+   "total_zar": 785.85,
    "complete": true
   }
  },
- "meat_subtotal_zar": 279.97,
+ "meat_subtotal_zar": 274.97,
  "sections": [
   "Meat",
   "Fire",
@@ -35,11 +35,10 @@
    "name": "Boerewors",
    "product": "Championship Boerewors Value Pack Beef & Pork Boerewors (1000g-1200g)",
    "qty": "1 kg",
-   "zar": 109.99,
+   "zar": 99.99,
    "store": "Checkers Sixty60 (online)",
-   "url": "https://www.checkers.co.za/product/championship-boerewors-value-pack-beef-and-pork-boerewors-per-kg-10892270KG",
-   "as_of": "2026-10-15",
-   "note": "Per-kilogram price of the listed Value Pack (1000g–1200g). Checkers renamed the listing; same product code."
+   "as_of": "2026-10-22",
+   "note": "Per-kilogram price of the listed Value Pack (1000g–1200g). A SAVE badge was shown with no explanation; the listed per-kilogram price is the one used."
   },
   {
    "section": "Meat",
@@ -48,8 +47,7 @@
    "qty": "1 kg",
    "zar": 109.99,
    "store": "Checkers Sixty60 (online)",
-   "url": "https://www.checkers.co.za/product/pork-loin-chops-per-kg-10151957KG",
-   "as_of": "2026-10-15",
+   "as_of": "2026-10-22",
    "note": "Per-kilogram price of the listed (300g–500g) pack."
   },
   {
@@ -57,11 +55,10 @@
    "name": "Chicken braai pack",
    "product": "Farmer's Choice Chicken 8 Piece Braai Pack (1000g-2000g)",
    "qty": "1 kg",
-   "zar": 59.99,
+   "zar": 64.99,
    "store": "Checkers Sixty60 (online)",
-   "url": "https://www.checkers.co.za/product/farmers-choice-chicken-8-piece-braai-pack-per-kg-10732967KG",
-   "as_of": "2026-10-15",
-   "note": "Per-kilogram price of the listed 8-piece braai pack (1000g–2000g). A SAVE badge was shown with no explanation; the listed per-kilogram price is the one used. Checkers renamed the listing; same product code."
+   "as_of": "2026-10-22",
+   "note": "Per-kilogram price of the listed 8-piece braai pack (1000g–2000g). A SAVE badge was shown with no explanation; the listed per-kilogram price is the one used."
   },
   {
    "section": "Fire",
@@ -70,18 +67,17 @@
    "qty": "4 kg bag",
    "zar": 64.99,
    "store": "Checkers Sixty60 (online)",
-   "url": "https://www.checkers.co.za/product/bush-baby-charcoal-briquettes-4kg-10189526EA",
-   "as_of": "2026-10-15"
+   "as_of": "2026-10-22"
   },
   {
    "section": "Fire",
    "name": "Firelighters",
    "product": "Checkers Housebrand Firelighters 12 Pack",
    "qty": "12 pack",
-   "zar": 27.99,
+   "zar": 21.99,
    "store": "Checkers Sixty60 (online)",
-   "url": "https://www.checkers.co.za/product/checkers-housebrand-firelighters-12-pack-10135246EA",
-   "as_of": "2026-10-15"
+   "as_of": "2026-10-22",
+   "note": "A SAVE badge was shown with no explanation; the listed price is the one used."
   },
   {
    "section": "Fire",
@@ -90,8 +86,7 @@
    "qty": "1 box",
    "zar": 1.99,
    "store": "Checkers Sixty60 (online)",
-   "url": "https://www.checkers.co.za/product/lion-safety-matches-10135236EA",
-   "as_of": "2026-10-15"
+   "as_of": "2026-10-22"
   },
   {
    "section": "Sides",
@@ -100,8 +95,7 @@
    "qty": "6 pack",
    "zar": 24.99,
    "store": "Checkers Sixty60 (online)",
-   "url": "https://www.checkers.co.za/product/sasko-regular-white-rolls-6-pack-10233241EA",
-   "as_of": "2026-10-15"
+   "as_of": "2026-10-22"
   },
   {
    "section": "Sides",
@@ -110,8 +104,8 @@
    "qty": "500 g tub",
    "zar": 69.99,
    "store": "Checkers Sixty60 (online)",
-   "url": "https://www.checkers.co.za/product/simply-great-potato-salad-500g-10544115EA",
-   "as_of": "2026-10-15"
+   "as_of": "2026-10-22",
+   "note": "The product page showed an OUT OF STOCK label alongside an Add to Basket button. The shelf price R69.99 is the one used. Buy any 2 selected Simply Great salads, save 20%, was listed (ends 8 November 2026); the basket buys one, so that deal is not applied."
   },
   {
    "section": "Sides",
@@ -120,8 +114,7 @@
    "qty": "4 cobs",
    "zar": 34.99,
    "store": "Checkers Sixty60 (online)",
-   "url": "https://www.checkers.co.za/product/sweetcorn-4s-10151615EA",
-   "as_of": "2026-10-15"
+   "as_of": "2026-10-22"
   },
   {
    "section": "Sides",
@@ -130,8 +123,8 @@
    "qty": "410 g tin",
    "zar": 25.99,
    "store": "Checkers Sixty60 (online)",
-   "url": "https://www.checkers.co.za/product/koo-hot-and-spicy-chakalaka-410g-10133307EA",
-   "as_of": "2026-10-15"
+   "as_of": "2026-10-22",
+   "note": "Single-tin shelf price. Buy 2 for R40 was listed (ends 8 November 2026); the basket buys one, so that deal is not applied."
   },
   {
    "section": "Extras",
@@ -140,8 +133,7 @@
    "qty": "400 g",
    "zar": 49.99,
    "store": "Checkers Sixty60 (online)",
-   "url": "https://www.checkers.co.za/product/marina-sea-salt-braai-salt-with-pepper-400g-10132387EA",
-   "as_of": "2026-10-15",
+   "as_of": "2026-10-22",
    "note": "Single-unit shelf price. Buy any 2 Marina Braai Salt 400g for R85 was listed (ends 10 January 2027); the basket buys one, so that deal is not applied."
   },
   {
@@ -149,10 +141,10 @@
    "name": "Tomato sauce",
    "product": "ALL GOLD Tomato Sauce Bottle 700ml",
    "qty": "700 ml",
-   "zar": 41.99,
+   "zar": 34.99,
    "store": "Checkers Sixty60 (online)",
-   "url": "https://www.checkers.co.za/product/all-gold-tomato-sauce-bottle-700ml-10345469EA",
-   "as_of": "2026-10-15"
+   "as_of": "2026-10-22",
+   "note": "Live promotional shelf price. Was R41.99; the SAVE R7 deal ends 8 November 2026. The live price is the one used."
   },
   {
    "section": "Extras",
@@ -161,19 +153,17 @@
    "qty": "5 m roll",
    "zar": 46.99,
    "store": "Checkers Sixty60 (online)",
-   "url": "https://www.checkers.co.za/product/checkers-housebrand-heavyweight-aluminium-foil-5m-10135391EA",
-   "as_of": "2026-10-15"
+   "as_of": "2026-10-22"
   },
   {
    "section": "Drinks",
    "name": "Cooldrink",
    "product": "Coca-Cola Original Taste Less Sugar Soft Drink 2L",
    "qty": "2 L",
-   "zar": 23.99,
+   "zar": 28.99,
    "store": "Checkers Sixty60 (online)",
-   "url": "https://www.checkers.co.za/product/coca-cola-original-taste-less-sugar-soft-drink-2l-10136669EA",
-   "as_of": "2026-10-15",
-   "note": "Live promotional shelf price. Was R28.99; the SAVE R5 deal ends 18 October 2026. The live price is the one used."
+   "as_of": "2026-10-22",
+   "note": "Single-bottle shelf price. Buy 2 for R47 was listed (ends 8 November 2026); the basket buys one, so that deal is not applied."
   },
   {
    "section": "Drinks",
@@ -182,30 +172,29 @@
    "qty": "6 × 500 ml",
    "zar": 104.99,
    "store": "Checkers Sixty60 (online)",
-   "url": "https://www.checkers.co.za/product/castle-lager-beer-cans-6-x-500ml-10541781PK1",
-   "as_of": "2026-10-15",
+   "as_of": "2026-10-22",
    "variant": "with_beer",
-   "note": "Only in the with-beer number, never in the family number. Buy 3 for R225 was listed (ends 8 November 2026); the basket buys one, so that deal is not applied."
+   "note": "Only in the with-beer number, never in the family number."
   }
  ],
  "comparables": [],
- "method": "Basket v2 (from 31 August 2026) prices the whole fire, not just the meat: three kilos of meat (1 kg boerewors, 1 kg bone-in pork loin chops, 1 kg chicken braai pack), the fire itself (4 kg charcoal briquettes, firelighters, matches), the table (6 rolls, potato salad, sweetcorn, chakalaka), the extras (braai salt, tomato sauce, foil) and a 2-litre cooldrink. Two numbers are published: the family braai, and the same basket with a 6-pack of lager. Every line is a single confirmed public guest price with its citation — never an estimate, never an average, never a hole filled from last week. From v2, prices are confirmed on Checkers Sixty60's online shelf as shown to a guest with no store selected (prices at the citation links can differ once a store is chosen); basket v1 was priced at the Vryheid shops, so v1's meat week (R254.98) and v2's meat subtotal (R294.97) are different surfaces, not a price movement. Promotional prices count — if the shelf says R59.49 this week, the braai costs R59.49 this week, and the regular price is noted. A gap stays a gap until someone sends a price we can publish. From 31 August the index also publishes a budget and a high-end braai: the same fire, table and cooldrink, with only the meat block swapped — budget (boerewors, pork braai chops, chicken drumsticks & wings) and high-end (boerewors, rump steak, lamb loin chops). Their citations live in this page's source file alongside every other line.",
+ "method": "Basket v2 (from 31 August 2026) prices the whole fire, not just the meat: three kilos of meat (1 kg boerewors, 1 kg bone-in pork loin chops, 1 kg chicken braai pack), the fire itself (4 kg charcoal briquettes, firelighters, matches), the table (6 rolls, potato salad, sweetcorn, chakalaka), the extras (braai salt, tomato sauce, foil) and a 2-litre cooldrink. Two numbers are published: the family braai, and the same basket with a 6-pack of lager. Every line is a single confirmed public guest price with its citation — never an estimate, never an average, never a hole filled from last week. From v2, prices are confirmed on Checkers Sixty60's online shelf as shown to a guest with no store selected (that guest shelf can differ once a store is chosen); basket v1 was priced at the Vryheid shops, so v1's meat week (R254.98) and v2's meat subtotal (R294.97) are different surfaces, not a price movement. Promotional prices count — if the shelf says R59.49 this week, the braai costs R59.49 this week, and the regular price is noted. A gap stays a gap until someone sends a price we can publish. From 31 August the index also publishes a budget and a high-end braai: the same fire, table and cooldrink, with only the meat block swapped — budget (boerewors, pork braai chops, chicken drumsticks & wings) and high-end (boerewors, rump steak, lamb loin chops). Their citations live in this page's source file alongside every other line.",
  "gaps": [],
  "tiers": {
   "budget": {
    "label": "The budget braai",
-   "meat_zar": 269.97,
-   "total_zar": 683.86,
-   "with_beer_zar": 788.85,
+   "meat_zar": 259.97,
+   "total_zar": 665.86,
+   "with_beer_zar": 770.85,
    "meat": [
     {
      "name": "Boerewors",
      "product": "Championship Boerewors Value Pack Beef & Pork Boerewors (1000g-1200g)",
      "qty": "1 kg",
-     "zar": 109.99,
+     "zar": 99.99,
      "store": "Checkers Sixty60 (online)",
-     "url": "https://www.checkers.co.za/product/championship-boerewors-value-pack-beef-and-pork-boerewors-per-kg-10892270KG",
-     "as_of": "2026-10-15"
+     "as_of": "2026-10-22",
+     "note": "Per-kilogram price of the listed Value Pack (1000g–1200g). A SAVE badge was shown with no explanation; the listed per-kilogram price is the one used."
     },
     {
      "name": "Pork braai chops",
@@ -213,8 +202,7 @@
      "qty": "1 kg",
      "zar": 79.99,
      "store": "Checkers Sixty60 (online)",
-     "url": "https://www.checkers.co.za/product/pork-braai-chops-per-kg-10152207KG",
-     "as_of": "2026-10-15",
+     "as_of": "2026-10-22",
      "note": "Per-kilogram price of the listed (700g–900g) pack."
     },
     {
@@ -223,33 +211,32 @@
      "qty": "1 kg",
      "zar": 79.99,
      "store": "Checkers Sixty60 (online)",
-     "url": "https://www.checkers.co.za/product/farmers-choice-fresh-chicken-16-piece-drumsticks-and-wings-per-kg-10796287KG",
-     "as_of": "2026-10-15",
-     "note": "Per-kilogram price of the listed 16-piece pack (1100g–1300g). A SAVE badge was shown with no explanation; the listed per-kilogram price is the one used. Checkers renamed the listing; same product code."
+     "as_of": "2026-10-22",
+     "note": "Per-kilogram price of the listed 16-piece pack (1100g–1300g). A SAVE badge was shown with no explanation; the listed per-kilogram price is the one used."
     }
    ]
   },
   "classic": {
    "label": "The classic braai",
-   "meat_zar": 279.97,
-   "total_zar": 693.86,
-   "with_beer_zar": 798.85,
+   "meat_zar": 274.97,
+   "total_zar": 680.86,
+   "with_beer_zar": 785.85,
    "note": "Meat lines are the itemised basket on this page."
   },
   "high_end": {
    "label": "The high-end braai",
    "meat_zar": 559.97,
-   "total_zar": 973.86,
-   "with_beer_zar": 1078.85,
+   "total_zar": 965.86,
+   "with_beer_zar": 1070.85,
    "meat": [
     {
      "name": "Boerewors",
      "product": "Championship Boerewors Value Pack Beef & Pork Boerewors (1000g-1200g)",
      "qty": "1 kg",
-     "zar": 109.99,
+     "zar": 99.99,
      "store": "Checkers Sixty60 (online)",
-     "url": "https://www.checkers.co.za/product/championship-boerewors-value-pack-beef-and-pork-boerewors-per-kg-10892270KG",
-     "as_of": "2026-10-15"
+     "as_of": "2026-10-22",
+     "note": "Per-kilogram price of the listed Value Pack (1000g–1200g). A SAVE badge was shown with no explanation; the listed per-kilogram price is the one used."
     },
     {
      "name": "Rump steak",
@@ -257,18 +244,16 @@
      "qty": "1 kg",
      "zar": 219.99,
      "store": "Checkers Sixty60 (online)",
-     "url": "https://www.checkers.co.za/product/steakhouse-classic-rump-beef-steak-per-kg-10152361KG",
-     "as_of": "2026-10-15",
+     "as_of": "2026-10-22",
      "note": "Per-kilogram price of the listed (500g–700g) pack."
     },
     {
      "name": "Lamb loin chops",
      "product": "Lamb Loin Chops (350g-550g)",
      "qty": "1 kg",
-     "zar": 229.99,
+     "zar": 239.99,
      "store": "Checkers Sixty60 (online)",
-     "url": "https://www.checkers.co.za/product/lamb-loin-chops-per-kg-10151864KG",
-     "as_of": "2026-10-15",
+     "as_of": "2026-10-22",
      "note": "Per-kilogram price of the listed (350g–550g) pack."
     }
    ]

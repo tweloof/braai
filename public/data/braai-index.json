@@ -2,26 +2,26 @@
  "id": "braai-index-v2",
  "label": "National Braai Index",
  "basket": "v2",
- "week_start": "2026-10-19",
- "week_label": "19 – 25 October 2026",
- "as_of_range": "22 October 2026",
+ "week_start": "2026-10-26",
+ "week_label": "26 October – 1 November 2026",
+ "as_of_range": "29 October 2026",
  "currency": "ZAR",
  "complete": true,
- "total_zar": 680.86,
- "confirmed_zar": 680.86,
+ "total_zar": 678.86,
+ "confirmed_zar": 678.86,
  "variants": {
   "family": {
    "label": "The family braai",
-   "total_zar": 680.86,
+   "total_zar": 678.86,
    "complete": true
   },
   "with_beer": {
    "label": "With a 6-pack of lager",
-   "total_zar": 785.85,
+   "total_zar": 783.85,
    "complete": true
   }
  },
- "meat_subtotal_zar": 274.97,
+ "meat_subtotal_zar": 269.97,
  "sections": [
   "Meat",
   "Fire",
@@ -37,7 +37,7 @@
    "qty": "1 kg",
    "zar": 99.99,
    "store": "Checkers Sixty60 (online)",
-   "as_of": "2026-10-22",
+   "as_of": "2026-10-29",
    "note": "Per-kilogram price of the listed Value Pack (1000g–1200g). A SAVE badge was shown with no explanation; the listed per-kilogram price is the one used."
   },
   {
@@ -47,7 +47,7 @@
    "qty": "1 kg",
    "zar": 109.99,
    "store": "Checkers Sixty60 (online)",
-   "as_of": "2026-10-22",
+   "as_of": "2026-10-29",
    "note": "Per-kilogram price of the listed (300g–500g) pack."
   },
   {
@@ -55,9 +55,9 @@
    "name": "Chicken braai pack",
    "product": "Farmer's Choice Chicken 8 Piece Braai Pack (1000g-2000g)",
    "qty": "1 kg",
-   "zar": 64.99,
+   "zar": 59.99,
    "store": "Checkers Sixty60 (online)",
-   "as_of": "2026-10-22",
+   "as_of": "2026-10-29",
    "note": "Per-kilogram price of the listed 8-piece braai pack (1000g–2000g). A SAVE badge was shown with no explanation; the listed per-kilogram price is the one used."
   },
   {
@@ -67,7 +67,7 @@
    "qty": "4 kg bag",
    "zar": 64.99,
    "store": "Checkers Sixty60 (online)",
-   "as_of": "2026-10-22"
+   "as_of": "2026-10-29"
   },
   {
    "section": "Fire",
@@ -76,7 +76,7 @@
    "qty": "12 pack",
    "zar": 21.99,
    "store": "Checkers Sixty60 (online)",
-   "as_of": "2026-10-22",
+   "as_of": "2026-10-29",
    "note": "A SAVE badge was shown with no explanation; the listed price is the one used."
   },
   {
@@ -86,7 +86,7 @@
    "qty": "1 box",
    "zar": 1.99,
    "store": "Checkers Sixty60 (online)",
-   "as_of": "2026-10-22"
+   "as_of": "2026-10-29"
   },
   {
    "section": "Sides",
@@ -95,7 +95,7 @@
    "qty": "6 pack",
    "zar": 24.99,
    "store": "Checkers Sixty60 (online)",
-   "as_of": "2026-10-22"
+   "as_of": "2026-10-29"
   },
   {
    "section": "Sides",
@@ -104,8 +104,8 @@
    "qty": "500 g tub",
    "zar": 69.99,
    "store": "Checkers Sixty60 (online)",
-   "as_of": "2026-10-22",
-   "note": "The product page showed an OUT OF STOCK label alongside an Add to Basket button. The shelf price R69.99 is the one used. Buy any 2 selected Simply Great salads, save 20%, was listed (ends 8 November 2026); the basket buys one, so that deal is not applied."
+   "as_of": "2026-10-29",
+   "note": "Buy any 2 selected Simply Great salads, save 20%, was listed (ends 8 November 2026); the basket buys one, so that deal is not applied."
   },
   {
    "section": "Sides",
@@ -114,7 +114,7 @@
    "qty": "4 cobs",
    "zar": 34.99,
    "store": "Checkers Sixty60 (online)",
-   "as_of": "2026-10-22"
+   "as_of": "2026-10-29"
   },
   {
    "section": "Sides",
@@ -123,7 +123,7 @@
    "qty": "410 g tin",
    "zar": 25.99,
    "store": "Checkers Sixty60 (online)",
-   "as_of": "2026-10-22",
+   "as_of": "2026-10-29",
    "note": "Single-tin shelf price. Buy 2 for R40 was listed (ends 8 November 2026); the basket buys one, so that deal is not applied."
   },
   {
@@ -133,7 +133,7 @@
    "qty": "400 g",
    "zar": 49.99,
    "store": "Checkers Sixty60 (online)",
-   "as_of": "2026-10-22",
+   "as_of": "2026-10-29",
    "note": "Single-unit shelf price. Buy any 2 Marina Braai Salt 400g for R85 was listed (ends 10 January 2027); the basket buys one, so that deal is not applied."
   },
   {
@@ -143,7 +143,7 @@
    "qty": "700 ml",
    "zar": 34.99,
    "store": "Checkers Sixty60 (online)",
-   "as_of": "2026-10-22",
+   "as_of": "2026-10-29",
    "note": "Live promotional shelf price. Was R41.99; the SAVE R7 deal ends 8 November 2026. The live price is the one used."
   },
   {
@@ -151,9 +151,9 @@
    "name": "Heavy-duty foil",
    "product": "Checkers Housebrand Heavyweight Aluminium Foil 5m",
    "qty": "5 m roll",
-   "zar": 46.99,
+   "zar": 49.99,
    "store": "Checkers Sixty60 (online)",
-   "as_of": "2026-10-22"
+   "as_of": "2026-10-29"
   },
   {
    "section": "Drinks",
@@ -162,7 +162,7 @@
    "qty": "2 L",
    "zar": 28.99,
    "store": "Checkers Sixty60 (online)",
-   "as_of": "2026-10-22",
+   "as_of": "2026-10-29",
    "note": "Single-bottle shelf price. Buy 2 for R47 was listed (ends 8 November 2026); the basket buys one, so that deal is not applied."
   },
   {
@@ -172,9 +172,9 @@
    "qty": "6 × 500 ml",
    "zar": 104.99,
    "store": "Checkers Sixty60 (online)",
-   "as_of": "2026-10-22",
+   "as_of": "2026-10-29",
    "variant": "with_beer",
-   "note": "Only in the with-beer number, never in the family number."
+   "note": "Only in the with-beer number, never in the family number. Buy 3 for R225 was listed (ends 8 November 2026); the basket buys one, so that deal is not applied."
   }
  ],
  "comparables": [],
@@ -184,8 +184,8 @@
   "budget": {
    "label": "The budget braai",
    "meat_zar": 259.97,
-   "total_zar": 665.86,
-   "with_beer_zar": 770.85,
+   "total_zar": 668.86,
+   "with_beer_zar": 773.85,
    "meat": [
     {
      "name": "Boerewors",
@@ -193,7 +193,7 @@
      "qty": "1 kg",
      "zar": 99.99,
      "store": "Checkers Sixty60 (online)",
-     "as_of": "2026-10-22",
+     "as_of": "2026-10-29",
      "note": "Per-kilogram price of the listed Value Pack (1000g–1200g). A SAVE badge was shown with no explanation; the listed per-kilogram price is the one used."
     },
     {
@@ -202,7 +202,7 @@
      "qty": "1 kg",
      "zar": 79.99,
      "store": "Checkers Sixty60 (online)",
-     "as_of": "2026-10-22",
+     "as_of": "2026-10-29",
      "note": "Per-kilogram price of the listed (700g–900g) pack."
     },
     {
@@ -211,23 +211,23 @@
      "qty": "1 kg",
      "zar": 79.99,
      "store": "Checkers Sixty60 (online)",
-     "as_of": "2026-10-22",
+     "as_of": "2026-10-29",
      "note": "Per-kilogram price of the listed 16-piece pack (1100g–1300g). A SAVE badge was shown with no explanation; the listed per-kilogram price is the one used."
     }
    ]
   },
   "classic": {
    "label": "The classic braai",
-   "meat_zar": 274.97,
-   "total_zar": 680.86,
-   "with_beer_zar": 785.85,
+   "meat_zar": 269.97,
+   "total_zar": 678.86,
+   "with_beer_zar": 783.85,
    "note": "Meat lines are the itemised basket on this page."
   },
   "high_end": {
    "label": "The high-end braai",
-   "meat_zar": 559.97,
-   "total_zar": 965.86,
-   "with_beer_zar": 1070.85,
+   "meat_zar": 569.97,
+   "total_zar": 978.86,
+   "with_beer_zar": 1083.85,
    "meat": [
     {
      "name": "Boerewors",
@@ -235,16 +235,16 @@
      "qty": "1 kg",
      "zar": 99.99,
      "store": "Checkers Sixty60 (online)",
-     "as_of": "2026-10-22",
+     "as_of": "2026-10-29",
      "note": "Per-kilogram price of the listed Value Pack (1000g–1200g). A SAVE badge was shown with no explanation; the listed per-kilogram price is the one used."
     },
     {
      "name": "Rump steak",
      "product": "Steakhouse Classic Rump Beef Steak (500g-700g)",
      "qty": "1 kg",
-     "zar": 219.99,
+     "zar": 229.99,
      "store": "Checkers Sixty60 (online)",
-     "as_of": "2026-10-22",
+     "as_of": "2026-10-29",
      "note": "Per-kilogram price of the listed (500g–700g) pack."
     },
     {
@@ -253,7 +253,7 @@
      "qty": "1 kg",
      "zar": 239.99,
      "store": "Checkers Sixty60 (online)",
-     "as_of": "2026-10-22",
+     "as_of": "2026-10-29",
      "note": "Per-kilogram price of the listed (350g–550g) pack."
     }
    ]

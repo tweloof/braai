@@ -1,0 +1,32 @@
+# One-off preview for the 2–8 November Index branch.
+# Deploys this branch only. Production stays --branch=main in deploy.yml.
+# Remove this file once the preview URL is up.
+
+name: Preview this Index branch
+
+on:
+  push:
+    branches: [cursor/braai-index-week-2026-11-02-d372]
+
+permissions:
+  contents: read
+
+jobs:
+  preview:
+    if: github.ref == 'refs/heads/cursor/braai-index-week-2026-11-02-d372'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Refuse anything except this preview branch
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REF" = "refs/heads/cursor/braai-index-week-2026-11-02-d372"
+          echo "preview ref: $GITHUB_REF"
+
+      - name: Deploy preview
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: 784c671afe40889cab393265339deea9
+          command: pages deploy --branch=cursor/braai-index-week-2026-11-02-d372 --commit-dirty=true

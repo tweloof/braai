@@ -2,9 +2,10 @@
  "id": "braai-index-v2",
  "label": "National Braai Index",
  "basket": "v2",
- "week_start": "2026-10-26",
- "week_label": "26 October – 1 November 2026",
- "as_of_range": "29 October 2026",
+ "week_start": "2026-11-02",
+ "week_label": "2 – 8 November 2026",
+ "as_of_range": "5 November 2026",
+ "source": "Checkers Sixty60 shelf read, 5 November 2026",
  "currency": "ZAR",
  "complete": true,
  "total_zar": 678.86,
@@ -37,7 +38,7 @@
    "qty": "1 kg",
    "zar": 99.99,
    "store": "Checkers Sixty60 (online)",
-   "as_of": "2026-10-29",
+   "as_of": "2026-11-05",
    "note": "Per-kilogram price of the listed Value Pack (1000g–1200g). A SAVE badge was shown with no explanation; the listed per-kilogram price is the one used."
   },
   {
@@ -47,7 +48,7 @@
    "qty": "1 kg",
    "zar": 109.99,
    "store": "Checkers Sixty60 (online)",
-   "as_of": "2026-10-29",
+   "as_of": "2026-11-05",
    "note": "Per-kilogram price of the listed (300g–500g) pack."
   },
   {
@@ -57,8 +58,8 @@
    "qty": "1 kg",
    "zar": 59.99,
    "store": "Checkers Sixty60 (online)",
-   "as_of": "2026-10-29",
-   "note": "Per-kilogram price of the listed 8-piece braai pack (1000g–2000g). A SAVE badge was shown with no explanation; the listed per-kilogram price is the one used."
+   "as_of": "2026-11-05",
+   "note": "Per-kilogram price of the listed 8-piece braai pack (1000g–2000g). The shelf showed an OUT OF STOCK badge, and Add to Basket was still shown. The listed per-kilogram price is the one used."
   },
   {
    "section": "Fire",
@@ -67,7 +68,7 @@
    "qty": "4 kg bag",
    "zar": 64.99,
    "store": "Checkers Sixty60 (online)",
-   "as_of": "2026-10-29"
+   "as_of": "2026-11-05"
   },
   {
    "section": "Fire",
@@ -76,7 +77,7 @@
    "qty": "12 pack",
    "zar": 21.99,
    "store": "Checkers Sixty60 (online)",
-   "as_of": "2026-10-29",
+   "as_of": "2026-11-05",
    "note": "A SAVE badge was shown with no explanation; the listed price is the one used."
   },
   {
@@ -86,7 +87,7 @@
    "qty": "1 box",
    "zar": 1.99,
    "store": "Checkers Sixty60 (online)",
-   "as_of": "2026-10-29"
+   "as_of": "2026-11-05"
   },
   {
    "section": "Sides",
@@ -95,7 +96,7 @@
    "qty": "6 pack",
    "zar": 24.99,
    "store": "Checkers Sixty60 (online)",
-   "as_of": "2026-10-29"
+   "as_of": "2026-11-05"
   },
   {
    "section": "Sides",
@@ -104,8 +105,8 @@
    "qty": "500 g tub",
    "zar": 69.99,
    "store": "Checkers Sixty60 (online)",
-   "as_of": "2026-10-29",
-   "note": "Buy any 2 selected Simply Great salads, save 20%, was listed (ends 8 November 2026); the basket buys one, so that deal is not applied."
+   "as_of": "2026-11-05",
+   "note": "The shelf showed an OUT OF STOCK badge, and Add to Basket was still shown. The shelf price R69.99 is the one used. Buy any 2 selected Simply Great salads, save 20%, was listed (ends 8 November 2026); the basket buys one, so that deal is not applied."
   },
   {
    "section": "Sides",
@@ -114,7 +115,7 @@
    "qty": "4 cobs",
    "zar": 34.99,
    "store": "Checkers Sixty60 (online)",
-   "as_of": "2026-10-29"
+   "as_of": "2026-11-05"
   },
   {
    "section": "Sides",
@@ -123,7 +124,7 @@
    "qty": "410 g tin",
    "zar": 25.99,
    "store": "Checkers Sixty60 (online)",
-   "as_of": "2026-10-29",
+   "as_of": "2026-11-05",
    "note": "Single-tin shelf price. Buy 2 for R40 was listed (ends 8 November 2026); the basket buys one, so that deal is not applied."
   },
   {
@@ -133,7 +134,7 @@
    "qty": "400 g",
    "zar": 49.99,
    "store": "Checkers Sixty60 (online)",
-   "as_of": "2026-10-29",
+   "as_of": "2026-11-05",
    "note": "Single-unit shelf price. Buy any 2 Marina Braai Salt 400g for R85 was listed (ends 10 January 2027); the basket buys one, so that deal is not applied."
   },
   {
@@ -143,7 +144,7 @@
    "qty": "700 ml",
    "zar": 34.99,
    "store": "Checkers Sixty60 (online)",
-   "as_of": "2026-10-29",
+   "as_of": "2026-11-05",
    "note": "Live promotional shelf price. Was R41.99; the SAVE R7 deal ends 8 November 2026. The live price is the one used."
   },
   {
@@ -153,7 +154,7 @@
    "qty": "5 m roll",
    "zar": 49.99,
    "store": "Checkers Sixty60 (online)",
-   "as_of": "2026-10-29"
+   "as_of": "2026-11-05"
   },
   {
    "section": "Drinks",
@@ -162,7 +163,7 @@
    "qty": "2 L",
    "zar": 28.99,
    "store": "Checkers Sixty60 (online)",
-   "as_of": "2026-10-29",
+   "as_of": "2026-11-05",
    "note": "Single-bottle shelf price. Buy 2 for R47 was listed (ends 8 November 2026); the basket buys one, so that deal is not applied."
   },
   {
@@ -172,7 +173,7 @@
    "qty": "6 × 500 ml",
    "zar": 104.99,
    "store": "Checkers Sixty60 (online)",
-   "as_of": "2026-10-29",
+   "as_of": "2026-11-05",
    "variant": "with_beer",
    "note": "Only in the with-beer number, never in the family number. Buy 3 for R225 was listed (ends 8 November 2026); the basket buys one, so that deal is not applied."
   }
@@ -193,7 +194,7 @@
      "qty": "1 kg",
      "zar": 99.99,
      "store": "Checkers Sixty60 (online)",
-     "as_of": "2026-10-29",
+     "as_of": "2026-11-05",
      "note": "Per-kilogram price of the listed Value Pack (1000g–1200g). A SAVE badge was shown with no explanation; the listed per-kilogram price is the one used."
     },
     {
@@ -202,7 +203,7 @@
      "qty": "1 kg",
      "zar": 79.99,
      "store": "Checkers Sixty60 (online)",
-     "as_of": "2026-10-29",
+     "as_of": "2026-11-05",
      "note": "Per-kilogram price of the listed (700g–900g) pack."
     },
     {
@@ -211,7 +212,7 @@
      "qty": "1 kg",
      "zar": 79.99,
      "store": "Checkers Sixty60 (online)",
-     "as_of": "2026-10-29",
+     "as_of": "2026-11-05",
      "note": "Per-kilogram price of the listed 16-piece pack (1100g–1300g). A SAVE badge was shown with no explanation; the listed per-kilogram price is the one used."
     }
    ]
@@ -235,7 +236,7 @@
      "qty": "1 kg",
      "zar": 99.99,
      "store": "Checkers Sixty60 (online)",
-     "as_of": "2026-10-29",
+     "as_of": "2026-11-05",
      "note": "Per-kilogram price of the listed Value Pack (1000g–1200g). A SAVE badge was shown with no explanation; the listed per-kilogram price is the one used."
     },
     {
@@ -244,7 +245,7 @@
      "qty": "1 kg",
      "zar": 229.99,
      "store": "Checkers Sixty60 (online)",
-     "as_of": "2026-10-29",
+     "as_of": "2026-11-05",
      "note": "Per-kilogram price of the listed (500g–700g) pack."
     },
     {
@@ -253,7 +254,7 @@
      "qty": "1 kg",
      "zar": 239.99,
      "store": "Checkers Sixty60 (online)",
-     "as_of": "2026-10-29",
+     "as_of": "2026-11-05",
      "note": "Per-kilogram price of the listed (350g–550g) pack."
     }
    ]

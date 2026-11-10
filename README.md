@@ -10,7 +10,7 @@ National Braai Day is 24 September, Heritage Day, every year. In 2026 that was a
 ## What this is
 
 - `public/` — the static site (EN + Afrikaans `/af/` + isiZulu `/zu/`), a PWA
-  ("Die Braai" installs to your phone), 15 recipes, guides, the Braaictionary,
+  ("Die Braai" installs to your phone), 16 recipes, guides, the Braaictionary,
   `/vuur/` (sports-score communal fire), `/braai-index/` (National Braai Index),
   `/tonight/` (who is braaiing tonight), `/app/` (installable phone companion:
   the same index, tonight map, offline recipes/cuts/fire rules, and a vuur log).

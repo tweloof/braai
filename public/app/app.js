@@ -13,6 +13,7 @@
     ['boerewors-rolls', 'Boerewors rolls'],
     ['braaibroodjies', 'Braaibroodjies'],
     ['lamb-tjops', 'Lamb tjops'],
+    ['rump-steak', 'Rump steak'],
     ['butterflied-lamb', 'Butterflied lamb'],
     ['chicken-sosaties', 'Chicken sosaties'],
     ['pork-spare-ribs', 'Pork spare ribs'],
@@ -315,7 +316,7 @@
 
   var SAVE_URLS = ['/recipes/', '/cuts/', '/fire/', '/assets/photos/fire.webp', '/assets/photos/recipes.webp', '/assets/diagrams/fire-stages.svg']
     .concat(RECIPES.map(function (r) { return '/recipes/' + r[0] + '/'; }))
-    .concat(RECIPES.filter(function (r) { return r[0] !== 'snoek'; }).map(function (r) { return '/assets/photos/' + r[0] + '.webp'; }));
+    .concat(RECIPES.filter(function (r) { return r[0] !== 'snoek' && r[0] !== 'rump-steak'; }).map(function (r) { return '/assets/photos/' + r[0] + '.webp'; }));
 
   document.getElementById('saveBtn').addEventListener('click', function () {
     var btn = document.getElementById('saveBtn');

@@ -1,0 +1,412 @@
+/* Draft scroll story. The shared stylesheet supplies fonts, the brand and focus rings. */
+
+.scroll-body {
+  background: #070504;
+  color: #f7f1e6;
+  overflow-x: hidden;
+}
+
+.scroll-body h1,
+.scroll-body h2,
+.scroll-body h3 {
+  color: #f7f1e6;
+}
+
+html { scroll-padding-top: 0; scrollbar-width: none; }
+html::-webkit-scrollbar { display: none; width: 0; height: 0; }
+html.gl-on { scroll-behavior: auto; }
+
+.scroll-head {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  /* Solid. A fade to transparent let the cream page colour and the grey
+     photo show through as a light band over the footer. */
+  background: #070504;
+  border-bottom: 0;
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+.scroll-head .wrap {
+  padding-top: 16px;
+  padding-bottom: 22px;
+}
+
+.menu-btn {
+  font: inherit;
+  font-size: .9rem;
+  font-weight: 600;
+  color: #f7f1e6;
+  background: rgba(8, 6, 5, .35);
+  border: 1px solid rgba(244, 157, 55, .5);
+  border-radius: 999px;
+  padding: 7px 14px;
+  cursor: pointer;
+}
+
+.menu-btn:hover { color: var(--flame); }
+
+.scroll-menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 0 24px 16px;
+  padding: 10px;
+  background: rgba(12, 9, 7, .94);
+  border: 1px solid rgba(244, 157, 55, .2);
+  border-radius: 16px;
+  max-width: 1100px;
+}
+
+.scroll-menu[hidden] { display: none; }
+
+#gl {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  display: block;
+  /* The bitmap is already device pixels. Don't hint a second scale. */
+  image-rendering: auto;
+}
+
+html:not(.gl-on) #gl { display: none; }
+
+.scroll-main {
+  position: relative;
+  z-index: 1;
+}
+
+.beat {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: max(14vh, calc(var(--head-h, 96px) + 3.25rem)) 9vw 12vh;
+  position: relative;
+  scroll-snap-align: start;
+  scroll-margin-top: calc(var(--head-h, 96px) + env(safe-area-inset-top, 0px));
+}
+
+.copy { max-width: 40rem; }
+
+.plate {
+  position: relative;
+  isolation: isolate;
+  padding: .15rem 0;
+}
+
+/* Legibility sits on the words, not on a full-frame veil. */
+.plate::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -0.55rem -0.9rem -0.7rem;
+  border-radius: 1.05rem;
+  background: rgba(5, 3, 2, .92);
+  pointer-events: none;
+}
+
+#index .plate::before { background: rgba(5, 3, 2, .94); }
+
+.beat-end { align-items: flex-end; text-align: right; }
+.beat-end .copy { margin-left: auto; }
+
+.kicker {
+  font-family: Inter, sans-serif;
+  font-size: .78rem;
+  font-weight: 650;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: #e39a45;
+  margin: 0 0 .85rem;
+}
+
+.beat h1,
+.beat h2 {
+  font-weight: 560;
+  font-size: clamp(2.7rem, 6.2vw, 5.5rem);
+  line-height: 1.02;
+  letter-spacing: -.03em;
+  max-width: 12em;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, .9);
+}
+
+.beat-end h2 { margin-left: auto; }
+
+.beat em {
+  font-style: italic;
+  font-weight: 520;
+  color: #ef5d12;
+}
+
+.lede {
+  margin-top: 1.15rem;
+  font-size: clamp(1.02rem, 1.5vw, 1.2rem);
+  line-height: 1.55;
+  color: #e4dcd2;
+  max-width: 38rem;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, .85);
+}
+
+.more {
+  display: inline-block;
+  margin-top: 1.35rem;
+  color: #f49d37;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.more:hover { color: #ffe0b8; text-decoration: underline; }
+
+.idx-week,
+.idx-meta,
+.idx-extra {
+  margin-top: .7rem;
+  color: #e4dcd2;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, .85);
+}
+
+.idx-meta { font-size: .92rem; letter-spacing: .04em; }
+
+.tiers {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  width: min(920px, 100%);
+  margin-top: 1.5rem;
+  min-height: 148px;
+}
+
+.tier {
+  background: rgba(8, 6, 5, .62);
+  border: 1px solid rgba(227, 154, 69, .38);
+  border-radius: 16px;
+  padding: 16px 16px 18px;
+  text-align: left;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .28);
+}
+
+.tier.is-classic {
+  border-color: #ef5d12;
+  background: rgba(42, 16, 6, .66);
+}
+
+.tier-k {
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: #e39a45;
+}
+
+.tier h3 {
+  font-size: 1.05rem;
+  font-weight: 520;
+  margin: 8px 0 12px;
+  line-height: 1.25;
+}
+
+.rand {
+  font-family: Fraunces, Georgia, serif;
+  font-size: clamp(1.8rem, 3vw, 2.45rem);
+  font-weight: 560;
+  letter-spacing: -.03em;
+  color: #f7f1e6;
+}
+
+.idx-miss { margin-top: 1rem; }
+
+.dots {
+  position: fixed;
+  z-index: 35;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dots a {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: 1px solid rgba(247, 241, 230, .75);
+  background: transparent;
+  overflow: hidden;
+  text-indent: 14px;
+  white-space: nowrap;
+}
+
+.dots a[aria-current="true"] {
+  background: #ef5d12;
+  border-color: #ef5d12;
+}
+
+.scroll-foot {
+  position: relative;
+  z-index: 2;
+  background: #070504;
+  scroll-margin-top: calc(var(--head-h, 96px) + env(safe-area-inset-top, 0px));
+  padding-top: calc(var(--head-h, 96px) + env(safe-area-inset-top, 0px) + 1.25rem);
+}
+
+.trans-note {
+  position: relative;
+  z-index: 2;
+  background: #070504;
+  scroll-margin-top: calc(var(--head-h, 96px) + env(safe-area-inset-top, 0px));
+}
+
+.credits {
+  margin-top: 10px;
+  max-width: 46rem;
+  line-height: 1.5;
+}
+
+.draft-stamp { font-size: .75rem; color: var(--smoke-2); }
+
+/* Static photos only when WebGL is off. No full-frame scrim — the copy block carries the contrast. */
+html.static-photos .beat[data-scene="0"] {
+  background: #070504 url("/assets/scroll/fire-sm.webp") center / cover no-repeat;
+}
+html.static-photos .beat[data-scene="2"] {
+  background: #070504 url("/assets/scroll/sear.webp") center / cover no-repeat;
+}
+html.static-photos .beat[data-scene="1"],
+html.static-photos .beat[data-scene="3"] {
+  background: #070504 url("/assets/scroll/coals-sm.webp") center / cover no-repeat;
+}
+
+@media (min-width: 1200px), (min-resolution: 2dppx) {
+  html.static-photos .beat[data-scene="0"] {
+    background-image: url("/assets/scroll/fire-hi.webp");
+  }
+  html.static-photos .beat[data-scene="1"],
+  html.static-photos .beat[data-scene="3"] {
+    background-image: url("/assets/scroll/coals-hi.webp");
+  }
+}
+
+@media (orientation: portrait) and (max-width: 900px) {
+  html.static-photos .beat[data-scene="0"] {
+    background-image: url("/assets/scroll/fire-port.webp");
+  }
+  html.static-photos .beat[data-scene="1"] {
+    background-image: url("/assets/scroll/coals-port.webp");
+  }
+  html.static-photos .beat[data-scene="2"] {
+    background-image: url("/assets/scroll/sear-port.webp");
+  }
+}
+
+html.gl-on .beat { background: none; }
+
+/* The finale ends on charcoal, not on the grey of the coal photograph. */
+html.static-photos #index.beat {
+  background-image:
+    linear-gradient(to bottom, rgba(7, 5, 4, 0) 0%, rgba(7, 5, 4, 0) 34%, #070504 70%),
+    url("/assets/scroll/coals-sm.webp");
+  background-size: auto, cover;
+  background-position: center;
+}
+html.gl-on #index.beat {
+  background: linear-gradient(to bottom, rgba(7, 5, 4, 0) 0%, rgba(7, 5, 4, 0) 34%, #070504 70%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+  .beat { scroll-snap-align: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-snap-type: y proximity; }
+}
+
+/* The index copy is taller than the screen, so it starts at the padding
+   rather than sitting in the vertical centre. Keep the title below the
+   header's fade so it stays fully opaque at the snap. */
+#index.beat {
+  justify-content: flex-start;
+  padding-top: calc(14vh + 1.75rem);
+  scroll-margin-top: calc(var(--head-h, 96px) + env(safe-area-inset-top, 0px));
+}
+
+@media (max-width: 760px) {
+  .beat {
+    padding: max(18vh, calc(var(--head-h, 96px) + 3.25rem)) 22px 14vh 22px;
+  }
+  #index.beat { padding-top: calc(18vh + 2.45rem); }
+  .beat-end { align-items: flex-start; text-align: left; }
+  .beat-end .copy,
+  .beat-end h2 { margin-left: 0; }
+  .tiers { grid-template-columns: 1fr; min-height: 0; }
+  .dots { right: 8px; }
+  .scroll-menu { margin: 0 12px 12px; }
+}
+
+@media (max-width: 420px) {
+  .dots { display: none; }
+}
+
+/* Phone portrait only. The photograph is the hero. The caption sits in the
+   bottom third, tight to the words, and feathers into the photo. Desktop
+   and the Index plate are untouched. */
+@media (orientation: portrait) and (max-width: 900px) {
+  .beat:not(#index) {
+    justify-content: flex-end;
+    padding: 0 18px max(0.85rem, env(safe-area-inset-bottom, 0px));
+  }
+  .beat:not(#index) .copy {
+    width: 100%;
+    max-width: 28rem;
+  }
+  .beat:not(#index) .plate {
+    isolation: auto;
+    padding: 0;
+  }
+  .beat:not(#index) .plate::before {
+    /* The fade finishes at the first line. The words sit on 58% charcoal. */
+    inset: -8vh -18px -2.5rem;
+    border-radius: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(7, 5, 4, 0) 0,
+      rgba(7, 5, 4, 0.42) 4vh,
+      rgba(7, 5, 4, 0.58) 8vh,
+      rgba(7, 5, 4, 0.58) 100%
+    );
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 8vh, #000 100%);
+    mask-image: linear-gradient(to bottom, transparent 0, #000 8vh, #000 100%);
+  }
+  .beat:not(#index) .kicker {
+    font-size: .68rem;
+    letter-spacing: .16em;
+    margin: 0 0 .32rem;
+    color: #ffe4c8;
+  }
+  .beat:not(#index) h1,
+  .beat:not(#index) h2 {
+    font-size: clamp(1.7rem, 7.1vw, 2.12rem);
+    line-height: 1.02;
+  }
+  .beat:not(#index) em { color: #ffd0a4; }
+  .beat:not(#index) .lede {
+    margin-top: .42rem;
+    font-size: .95rem;
+    line-height: 1.34;
+    color: #f7f1e6;
+  }
+  .beat:not(#index) .more {
+    margin-top: .62rem;
+    color: #ffe4c8;
+  }
+}

@@ -17,7 +17,8 @@ National Braai Day is 24 September, Heritage Day, every year. In 2026 that was a
 - `functions/api/` — Cloudflare Pages Functions: `vuur.js` (The Braai — one communal fire
   with real shared state, event-sourced from D1), `tonight.js` (who is braaiing tonight,
   `braais_tonight` table created IF NOT EXISTS on the same `VUUR_DB`), `subscribe.js`
-  (newsletter via Resend), `contribute.js` (community submissions).
+  (the Braai Letter via Resend, and the free weekly Index list in KV binding
+  `SUBSCRIBERS` when that binding exists), `contribute.js` (community submissions).
 - `public/data/braai-index.json` — National Braai Index source file (basket v1).
 - `wrangler.toml` — Pages config + D1 binding (`VUUR_DB` → database `braai-vuur`).
 - `public/_redirects` — **17 years of legacy backlinks. Never remove rules.**
@@ -28,6 +29,10 @@ Production deploys are made by the maintainer agent with wrangler after merges t
 (`npx wrangler pages deploy --branch=main` from the repo root — the Pages project uses
 direct upload, so this repo is the source of truth and wrangler is the ship lane). Secrets
 (`RESEND_API_KEY`) live as Pages project secrets, never in this repo.
+The weekly Index list stores `{email, lang, ts}` only after a KV namespace is
+created in the Cloudflare dashboard and bound as `SUBSCRIBERS` on the Pages
+project. That binding is not in `wrangler.toml`. Until it exists, Index signups
+get a 503 and the page points at lekker@braai.co.za.
 Do **not** deploy a partial tree — a static-only deploy kills the live API.
 
 ## The standing agents

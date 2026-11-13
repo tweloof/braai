@@ -9,6 +9,7 @@ name: Deploy to Cloudflare Pages
 on:
   push:
     branches: [main]
+  pull_request:
   workflow_dispatch: # lets you hit "Run workflow" by hand from the Actions tab
 
 concurrency:
@@ -34,6 +35,12 @@ jobs:
             [ -f "functions/api/$f" ] || { echo "::error::functions/api/$f missing"; exit 1; }
           done
           grep -q 'braai-vuur' wrangler.toml || { echo "::error::wrangler.toml lost the braai-vuur binding"; exit 1; }
+          node --check functions/api/subscribe.js
+          node --check functions/api/vuur.js
+          node --check functions/api/contribute.js
+          node --check scripts/check-index-meta.js
+          node scripts/check-index-meta.js
+          node scripts/check-index-subscribe.mjs
 
       - name: Check deploy secret is set
         id: secret
@@ -48,7 +55,7 @@ jobs:
           fi
 
       - name: Deploy
-        if: steps.secret.outputs.ready == 'true'
+        if: steps.secret.outputs.ready == 'true' && github.ref == 'refs/heads/main'
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -56,7 +63,7 @@ jobs:
           command: pages deploy --branch=main --commit-dirty=true
 
       - name: Verify live
-        if: steps.secret.outputs.ready == 'true'
+        if: steps.secret.outputs.ready == 'true' && github.ref == 'refs/heads/main'
         run: |
           set -euo pipefail
           sleep 20

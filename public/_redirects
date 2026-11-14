@@ -69,3 +69,20 @@
 /national-braai-day* /braai-day/ 301
 /erfenisdag* /af/braai-day/ 301
 /braaidag* /af/braai-day/ 301
+
+# Old WordPress patterns still returning 404, appended 13 Nov 2026.
+# Not duplicated above: /author/* , /feed* and /category/* are already 301s.
+# /category/braai-recipes* is already caught by /category/* (to /) and, under
+# /blog/, by /blog/category/braai-recipes/* or the later /blog/* catch-all.
+# A later copy would never run, because Cloudflare uses the first match.
+# /?p=* is a query string, which this file cannot match, so it is not added.
+# /blog/tag/* is already inside /blog/* . These rules are only the gaps.
+/tag/* /recipes/ 301
+/category.aspx / 301
+/wp-content/* / 301
+/wp-includes/* / 301
+/wp-admin/* / 301
+/wp-login.php / 301
+/xmlrpc.php / 301
+/wp-json/* / 301
+/wp-sitemap* / 301

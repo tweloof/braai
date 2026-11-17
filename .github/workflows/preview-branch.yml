@@ -1,0 +1,23 @@
+# One-off preview for cursor/hub-h1-queries-721b. Removed before the PR diff.
+# Does not deploy production. .github/workflows/deploy.yml still deploys main only.
+name: Preview branch
+
+on:
+  push:
+    branches: [cursor/hub-h1-queries-721b]
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Preview deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: 784c671afe40889cab393265339deea9
+          command: pages deploy --branch=cursor/hub-h1-queries-721b --commit-dirty=true

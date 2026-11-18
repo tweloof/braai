@@ -136,6 +136,17 @@ img, svg { display: block; max-width: 100%; }
 
 .hero h1 em { font-style: italic; color: var(--flame); }
 
+.hero p.hero-kicker {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(1.45rem, 3vw, 2.05rem);
+  line-height: 1.2;
+  color: var(--cream);
+  max-width: 820px;
+  margin: -6px auto 18px;
+}
+.hero p.hero-kicker em { font-style: italic; color: var(--flame); }
+
 .hero p.lead {
   font-size: clamp(1.05rem, 2vw, 1.25rem);
   color: var(--cream-3);
@@ -654,7 +665,8 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   .site-head, .site-foot, .newsletter, .count-strip, .hero .cta-row, .skip-link { display: none !important; }
   body { background: #fff; color: #000; }
   .hero { background: none; color: #000; padding: 12px 0; text-align: left; }
-  .hero h1, .hero p.lead { color: #000; margin: 6px 0; }
+  .hero h1, .hero p.lead, .hero p.hero-kicker { color: #000; margin: 6px 0; }
+  .hero p.hero-kicker em { color: #000; }
   .recipe { border: 1px solid #999; break-inside: avoid; page-break-inside: avoid; margin-bottom: 16px; }
   details.engview { display: block; }
   details.engview > summary { display: none; }

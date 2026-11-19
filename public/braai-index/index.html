@@ -42,8 +42,8 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
 {"@type":"Question","name":"What is the National Braai Index?","acceptedAnswer":{"@type":"Answer","text":"One published rand figure for a family Saturday braai in South Africa: the meat, the fire, the sides, the extras and a cooldrink, taken from confirmed public prices. It is not a shop and it does not rank retailers."}},
-{"@type":"Question","name":"What does the published family braai cost?","acceptedAnswer":{"@type":"Answer","text":"For the week of 26 October – 1 November 2026, basket v2 is complete. The family braai is R678.86. The same basket with a 6-pack of lager is R783.85. The budget braai is R668.86 and the high-end braai is R978.86. A 6-pack adds R104.99 and is not part of the family number. These totals are the ones published in https://braai.co.za/data/braai-index.json."}},
-{"@type":"Question","name":"When were the Braai Index prices confirmed?","acceptedAnswer":{"@type":"Answer","text":"The published basket is dated 29 October 2026, for the week of 26 October – 1 November 2026. Each line is one confirmed public guest price. A missing line would stay a gap; this basket is marked complete."}}
+{"@type":"Question","name":"What does the published family braai cost?","acceptedAnswer":{"@type":"Answer","text":"For the week of 16 – 22 November 2026, the latest published family braai is R723.16. That total includes a flagged substitution: Marina Sea Salt Braai Salt with Pepper 400g was not listed, and Marina Braai Salt with Spices 400g at R59.99 is used in its place. Excluding salt, the same lines come to R663.17. The same basket with a 6-pack of lager is R828.15. The high-end braai is R1023.16. The budget braai is a gap: Farmer's Choice Fresh Chicken 16 Piece Drumsticks & Wings was not listed, and no substitute was used, so no budget total is published. A 6-pack adds R104.99 and is not part of the family number. These totals are the ones published in https://braai.co.za/data/braai-index.json."}},
+{"@type":"Question","name":"When were the Braai Index prices confirmed?","acceptedAnswer":{"@type":"Answer","text":"The latest published basket is dated 19 November 2026, for the week of 16 – 22 November 2026. Each priced line is one confirmed public guest price. The braai-salt line is a flagged substitution. The budget tier stays a gap."}}
 ]}
 </script>
 </head>
@@ -76,10 +76,10 @@
   <span class="overline">National Braai Index · basket v2</span>
   <h1>National Braai Index: what a South African family braai costs</h1>
   <p class="idx-kicker" id="idxKicker">Latest published family braai</p>
-  <p class="idx-rand" id="idxRand" aria-live="polite">R678.86</p>
-  <p class="idx-week" id="idxWeek">26 October – 1 November 2026 · basket v2, complete</p>
-  <p class="idx-week idx-beer" id="idxBeer">With a 6-pack of lager: R783.85</p>
-  <p class="idx-week" id="idxTiers">Budget braai: R668.86 · High-end braai: R978.86</p>
+  <p class="idx-rand" id="idxRand" aria-live="polite">R723.16</p>
+  <p class="idx-week" id="idxWeek">16 – 22 November 2026 · basket v2, family published, budget gap</p>
+  <p class="idx-week idx-beer" id="idxBeer">With a 6-pack of lager: R828.15</p>
+  <p class="idx-week" id="idxTiers">Budget braai: gap · High-end braai: R1023.16</p>
   <p class="lead idx-lead" id="idxLead">The latest published family Saturday fire — the meat, the fire, the table and the cooldrink. Citations, not a shop.</p>
 </div>
 
@@ -90,7 +90,11 @@
     </div>
 
     <div class="callout" id="idxTierBox">
-      <strong>Three braais, one table:</strong> the fire, the sides, the extras and the cooldrink stay the same — only the meat changes. Budget (boerewors, pork braai chops, chicken drumsticks &amp; wings): <b>R668.86</b>. Classic: <b>R678.86</b>. High-end (boerewors, rump steak, lamb loin chops): <b>R978.86</b>. A 6-pack of lager adds R104.99 to any of them.
+      <strong>Three braais, one table:</strong> the fire, the sides, the extras and the cooldrink stay the same — only the meat changes. Budget (boerewors, pork braai chops, chicken drumsticks &amp; wings): <b>gap</b>. Classic: <b>R723.16</b>. High-end (boerewors, rump steak, lamb loin chops): <b>R1023.16</b>. A 6-pack of lager adds R104.99 to a tier that has a published total. It is not added where a line is missing.
+    </div>
+
+    <div class="callout" id="idxSalt">
+      <strong>Salt substitution, week of 16 – 22 November 2026.</strong> Marina Sea Salt Braai Salt with Pepper 400g was not listed. Marina Braai Salt with Spices 400g at R59.99 is used in its place, and the family total includes it. Excluding salt, the same lines come to R663.17. This is not a guess at the missing line’s price.
     </div>
 
     <h2>What is in the basket</h2>
@@ -106,9 +110,16 @@
       <ul id="idxGapList"></ul>
     </div>
 
+    <h2>Earlier published weeks</h2>
+    <p>The figure at the top is the latest published week. Two weeks that had not landed in the file are folded in below. They are not the latest published week.</p>
+    <ul id="idxHistory">
+      <li>9 – 15 November 2026. Family R723.16. With a 6-pack of lager R828.15. High-end R1023.16. Budget braai: gap — Farmer's Choice Fresh Chicken 16 Piece Drumsticks &amp; Wings was not listed, and no substitute was used. Braai salt is a flagged substitution: Marina Sea Salt Braai Salt with Pepper 400g was not listed; Marina Braai Salt with Spices 400g at R59.99 is included in the family total. Excluding salt, R663.17. Checkers Sixty60 shelf read, 12 November 2026.</li>
+      <li>2 – 8 November 2026. Family R678.86. With a 6-pack of lager R783.85. Budget R668.86. High-end R978.86. All basket lines were listed. Folded in from the unpublished week on pull request 21. Checkers Sixty60 shelf read, 5 November 2026.</li>
+    </ul>
+
     <p>Got a public guest price for a missing line — a shelf ticket, a weekly specials page anyone can open without an account? Send it to <a href="mailto:lekker@braai.co.za">lekker@braai.co.za</a> with the shop, the town, the date and a photo of the ticket. An agent or a person will check it.</p>
 
-    <p class="idx-source">Checkers Sixty60 shelf read, 29 October 2026. Source file: <a href="/data/braai-index.json"><code>public/data/braai-index.json</code></a>. Also in <a href="/af/braai-index/" hreflang="af">Afrikaans</a> and <a href="/zu/braai-index/" hreflang="zu">isiZulu</a>. Line names in the list are the English names published in that file.</p>
+    <p class="idx-source">Checkers Sixty60 shelf read, 19 November 2026. Source file: <a href="/data/braai-index.json"><code>public/data/braai-index.json</code></a>. Also in <a href="/af/braai-index/" hreflang="af">Afrikaans</a> and <a href="/zu/braai-index/" hreflang="zu">isiZulu</a>. Line names in the list are the English names published in that file.</p>
   </div>
 </section>
 
@@ -135,6 +146,10 @@
     if (!isFinite(x)) return null;
     return 'R' + x.toFixed(2);
   }
+  function priced(n) {
+    if (n === null || typeof n === 'undefined' || n === '') return null;
+    return rand(n);
+  }
   fetch('/data/braai-index.json', { cache: 'no-store' })
     .then(function (r) { return r.json(); })
     .then(function (d) {
@@ -145,32 +160,45 @@
       var week = document.getElementById('idxWeek');
       var lead = document.getElementById('idxLead');
       var beerEl = document.getElementById('idxBeer');
+      var budgetGap = !!(d.tiers && d.tiers.budget && d.tiers.budget.total_zar == null);
+      var highGap = !!(d.tiers && d.tiers.high_end && d.tiers.high_end.total_zar == null);
+      var status = complete ? (budgetGap || highGap ? ', family published' : ', complete') : ', incomplete';
+      if (budgetGap) status += ', budget gap';
+      if (highGap) status += ', high-end gap';
       if (complete) {
         el.textContent = rand(fam.total_zar);
-        week.textContent = (d.week_label || '') + ' \u00b7 basket ' + (d.basket || 'v2') + ', complete';
+        week.textContent = (d.week_label || '') + ' \u00b7 basket ' + (d.basket || 'v2') + status;
       } else {
         el.textContent = 'R\u2014';
-        week.textContent = (d.week_label || 'Latest published') + ' \u00b7 basket ' + (d.basket || 'v2') + ', incomplete';
+        week.textContent = (d.week_label || 'Latest published') + ' \u00b7 basket ' + (d.basket || 'v2') + status;
         lead.textContent = 'The shareable number waits. A basket line still needs a public price we can publish. Guessing would make a prettier screenshot and a worse index.';
       }
       if (beerEl) {
         if (beer && beer.total_zar != null) { beerEl.textContent = 'With a 6-pack of lager: ' + rand(beer.total_zar); }
         else { beerEl.hidden = true; }
       }
+      function tierMoney(tier) {
+        var p = priced(tier && tier.total_zar);
+        return p == null ? 'gap' : p;
+      }
       var tiersEl = document.getElementById('idxTiers');
       if (tiersEl && d.tiers && d.tiers.budget && d.tiers.high_end) {
-        tiersEl.textContent = 'Budget braai: ' + rand(d.tiers.budget.total_zar) + ' \u00b7 High-end braai: ' + rand(d.tiers.high_end.total_zar);
+        tiersEl.textContent = 'Budget braai: ' + tierMoney(d.tiers.budget) + ' \u00b7 High-end braai: ' + tierMoney(d.tiers.high_end);
       }
       var tierBox = document.getElementById('idxTierBox');
       if (tierBox && d.tiers && d.tiers.budget && d.tiers.high_end) {
         var meats = function (t) { return (t.meat || []).map(function (m) { return m.name.toLowerCase(); }).join(', '); };
-        var addBeer = (beer && beer.total_zar != null && fam.total_zar != null)
-          ? ' A 6-pack of lager adds ' + rand(Math.round((beer.total_zar - fam.total_zar) * 100) / 100) + ' to any of them.'
-          : '';
+        var addBeer = '';
+        if (beer && beer.total_zar != null && fam.total_zar != null) {
+          var add = rand(Math.round((beer.total_zar - fam.total_zar) * 100) / 100);
+          addBeer = (budgetGap || highGap)
+            ? ' A 6-pack of lager adds ' + add + ' to a tier that has a published total. It is not added where a line is missing.'
+            : ' A 6-pack of lager adds ' + add + ' to any of them.';
+        }
         tierBox.innerHTML = '<strong>Three braais, one table:</strong> the fire, the sides, the extras and the cooldrink stay the same \u2014 only the meat changes. ' +
-          'Budget (' + esc(meats(d.tiers.budget)) + '): <b>' + esc(rand(d.tiers.budget.total_zar)) + '</b>. ' +
+          'Budget (' + esc(meats(d.tiers.budget)) + '): <b>' + esc(tierMoney(d.tiers.budget)) + '</b>. ' +
           'Classic: <b>' + esc(rand(fam.total_zar)) + '</b>. ' +
-          'High-end (' + esc(meats(d.tiers.high_end)) + '): <b>' + esc(rand(d.tiers.high_end.total_zar)) + '</b>.' + addBeer;
+          'High-end (' + esc(meats(d.tiers.high_end)) + '): <b>' + esc(tierMoney(d.tiers.high_end)) + '</b>.' + addBeer;
       }
       var meatEl = document.getElementById('idxMeat');
       if (meatEl && d.meat_subtotal_zar != null) {
@@ -211,6 +239,12 @@
         document.getElementById('idxGaps').hidden = false;
         document.getElementById('idxGapList').innerHTML = gaps.map(function (g) {
           return '<li>' + esc(g) + '</li>';
+        }).join('');
+      }
+      var hist = document.getElementById('idxHistory');
+      if (hist && d.history && d.history.length) {
+        hist.innerHTML = d.history.map(function (w) {
+          return '<li>' + esc(w.summary || w.week_label || '') + '</li>';
         }).join('');
       }
 

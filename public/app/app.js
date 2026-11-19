@@ -149,17 +149,35 @@
     var fam = (d.variants && d.variants.family) || { total_zar: d.total_zar, complete: d.complete };
     var beer = d.variants && d.variants.with_beer;
     var complete = !!(fam && fam.complete && fam.total_zar != null);
+    var budgetGap = !!(d.tiers && d.tiers.budget && d.tiers.budget.total_zar == null);
+    var highGap = !!(d.tiers && d.tiers.high_end && d.tiers.high_end.total_zar == null);
     var el = document.getElementById('idxRand');
     el.textContent = complete ? rand(fam.total_zar) : 'R\u2014';
     var week = document.getElementById('idxWeek');
-    week.textContent = (d.week_label || 'Latest published') + ' \u00b7 basket ' + (d.basket || 'v2') + (complete ? ', complete' : ', incomplete');
+    var status = complete ? (budgetGap || highGap ? ', family published' : ', complete') : ', incomplete';
+    if (budgetGap) status += ', budget gap';
+    if (highGap) status += ', high-end gap';
+    week.textContent = (d.week_label || 'Latest published') + ' \u00b7 basket ' + (d.basket || 'v2') + status;
     var beerEl = document.getElementById('idxBeer');
     if (beer && beer.total_zar != null) beerEl.textContent = 'With a 6-pack of lager: ' + rand(beer.total_zar);
     else beerEl.textContent = '';
+    function money(n) {
+      if (n == null || n === '') return null;
+      var x = Number(n);
+      if (!isFinite(x)) return null;
+      return 'R' + x.toFixed(2);
+    }
     var tiers = document.getElementById('idxTiers');
-    if (d.tiers && d.tiers.budget && d.tiers.budget.total_zar != null && d.tiers.high_end && d.tiers.high_end.total_zar != null) {
-      tiers.textContent = 'Budget ' + rand(d.tiers.budget.total_zar) + ' \u00b7 High-end ' + rand(d.tiers.high_end.total_zar);
-    } else tiers.textContent = '';
+    var parts = [];
+    if (d.tiers && d.tiers.budget) {
+      var budgetMoney = money(d.tiers.budget.total_zar);
+      parts.push(budgetMoney == null ? 'Budget: gap' : 'Budget ' + budgetMoney);
+    }
+    if (d.tiers && d.tiers.high_end) {
+      var highMoney = money(d.tiers.high_end.total_zar);
+      parts.push(highMoney == null ? 'High-end: gap' : 'High-end ' + highMoney);
+    }
+    tiers.textContent = parts.join(' \u00b7 ');
     var live = document.getElementById('idxLive');
     if (!complete) {
       live.textContent = 'The shareable number waits until every basket line has a public price. We do not fill a gap.';

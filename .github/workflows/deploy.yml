@@ -34,6 +34,7 @@ jobs:
             [ -f "functions/api/$f" ] || { echo "::error::functions/api/$f missing"; exit 1; }
           done
           grep -q 'braai-vuur' wrangler.toml || { echo "::error::wrangler.toml lost the braai-vuur binding"; exit 1; }
+          node scripts/check-no-retailer-links.js
 
       - name: Check deploy secret is set
         id: secret

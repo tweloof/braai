@@ -61,6 +61,18 @@ function rel(file) {
   return path.relative(root, file);
 }
 
+function retailerHits(text) {
+  const hits = [];
+  const lower = String(text).toLowerCase();
+  for (const host of RETAILER_HOSTS) {
+    if (lower.includes(host)) hits.push('host ' + host);
+  }
+  if (lower.includes('checkers%2eco%2eza')) hits.push('percent-encoded checkers.co.za URL');
+  if (/href\s*=\s*["'][^"']*checkers\.co\.za/i.test(text)) hits.push('checkers.co.za href');
+  if (/https?:\/\/(?:www\.)?checkers\.co\.za/i.test(text)) hits.push('checkers.co.za URL');
+  return hits;
+}
+
 function walk(dir, acc) {
   for (const name of fs.readdirSync(dir)) {
     if (name === 'node_modules' || name.startsWith('.')) continue;
@@ -85,15 +97,34 @@ function scriptBodies(html) {
 }
 
 const files = walk(publicDir, []);
-for (const file of files) {
-  if (!TEXT_EXT.has(path.extname(file).toLowerCase())) continue;
-  const text = fs.readFileSync(file, 'utf8').toLowerCase();
-  for (const host of RETAILER_HOSTS) {
-    if (text.includes(host)) {
-      errors.push(rel(file) + ' contains retailer host ' + host);
-    }
+const extraRoots = [path.join(root, 'scripts')];
+for (const dir of extraRoots) {
+  if (!fs.existsSync(dir)) continue;
+  for (const file of walk(dir, [])) {
+    if (path.resolve(file) === path.resolve(__filename)) continue;
+    files.push(file);
   }
 }
+
+for (const file of files) {
+  if (!TEXT_EXT.has(path.extname(file).toLowerCase())) continue;
+  const text = fs.readFileSync(file, 'utf8');
+  for (const hit of retailerHits(text)) {
+    errors.push(rel(file) + ' contains retailer ' + hit);
+  }
+}
+
+const probes = [
+  '<a href="https://www.checkers.co.za/product/boerewors">wors</a>',
+  'https://checkers.co.za/c/meat',
+  'href="https://checkers.co.za/All-Departments/Food"',
+  'see checkers%2Eco%2Eza/product'
+];
+probes.forEach(function (probe) {
+  if (!retailerHits(probe).length) {
+    errors.push('detector missed a checkers.co.za href/URL probe');
+  }
+});
 
 let data;
 try {
